@@ -184,7 +184,7 @@ panel_menu() {
 while true; do
     clear
     echo -e "${ORANGE}====== 面板管理类 ======${RESET}"
-    echo -e "${YELLOW}[01] 3XUI${RESET}"
+    echo -e "${YELLOW}[01] 3X-UI${RESET}"
     echo -e "${YELLOW}[02] S-UI${RESET}"
     echo -e "${YELLOW}[03] H-UI${RESET}"
     echo -e "${YELLOW}[04] Xboard${RESET}"
