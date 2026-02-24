@@ -400,7 +400,7 @@ execute_choice() {
         92) bash <(curl -sL https://raw.githubusercontent.com/sistarry/toolbox/main/toy/GProxy.sh) ;;
         93) bash <(curl -sL https://raw.githubusercontent.com/sistarry/toolbox/main/toy/AkileDNS.sh) ;;
         94) sed -i 's/disable_command_execute: false/disable_command_execute: true/' /opt/nezha/agent/config.yml && systemctl restart nezha-agent ;;
-        95) bash <(curl -sL https://raw.githubusercontent.com/Polarisiu/app-store/main/nzagent.sh) ;;
+        95) bash <(curl -sL https://raw.githubusercontent.com/sistarry/toolbox/main/Docker/nzagent.sh) ;;
         96) sudo systemctl stop komari-agent && sudo systemctl disable komari-agent && sudo rm -f /etc/systemd/system/komari-agent.service && sudo systemctl daemon-reload && sudo rm -rf /opt/komari /var/log/komari ;;
 
 
