@@ -227,7 +227,7 @@ show_menu() {
     echo -e " ${GREEN}8. 处理端口占用 (修复启动失败)${PLAIN}"
     echo -e " ${GREEN}9. 卸载 Caddy${PLAIN}"
     echo -e " ${GREEN}0. 退出${PLAIN}"
-    read -p "$(echo -e "${GREEN}请输入数字 [0-9]: ${PLAIN}")" num < /dev/tty
+    read -p "$(echo -e "${GREEN} 请输入数字[0-9]: ${PLAIN}")" num < /dev/tty
     
     case "$num" in
         1) install_base; install_caddy ;;
