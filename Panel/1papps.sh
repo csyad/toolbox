@@ -34,13 +34,14 @@ cp -rf "$LOCAL_PATH/appstore-localApps/apps/"* "$LOCAL_PATH/"
 # 清理临时文件
 rm -rf "$LOCAL_PATH/appstore-localApps" "$LOCAL_PATH/localApps.zip"
 
-# 自动重启 1Panel
-echo "🔄 正在重启 1Panel 服务..."
-if systemctl list-units --type=service | grep -q "1panel"; then
-    systemctl restart 1panel
-    echo "✅ 1Panel 服务已重启"
+# 自动重启 1Panel（改为 1pctl restart）
+echo "🔄 正在重启 1Panel..."
+if command -v 1pctl >/dev/null 2>&1; then
+    1pctl restart
+    echo "✅ 1Panel 已成功重启"
 else
-    echo "⚠️ 未检测到 systemd 管理的 1Panel 服务，请手动重启"
+    echo "⚠️ 未检测到 1pctl 命令，请确认 1Panel 是否正确安装"
+    echo "你可以手动执行：1pctl restart"
 fi
 
 echo "✅ 本地应用更新完成！"
