@@ -106,6 +106,9 @@ run_update() {
     update_one "panel" "panel.sh" \
     "https://raw.githubusercontent.com/sistarry/toolbox/main/Panel/panel.sh"
 
+    update_one "nat" "nat.sh" \
+    "https://raw.githubusercontent.com/sistarry/toolbox/main/toy/NAT.sh"
+
     if [ ${#UPDATED_LIST[@]} -gt 0 ]; then
         MSG="🚀 脚本已更新
 服务器: ${SERVER_NAME}
