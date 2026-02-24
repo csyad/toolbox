@@ -403,7 +403,7 @@ uninstall_flow() {
 
   if [ -n "${WORKDIR}" ] && [ -d "${WORKDIR}" ]; then
     rm -rf "${WORKDIR}"
-    echo -e "${GREEN}已删除 ${WORKDIR}${RESET}"
+    echo -e "${GREEN}已删除${RESET}"
   else
     echo -e "${YELLOW}目录不存在，跳过删除。${RESET}"
   fi
