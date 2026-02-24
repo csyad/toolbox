@@ -178,7 +178,7 @@ MAIN_MENU=(
 # 二级菜单（编号去掉前导零，显示时格式化为两位数）
 SUB_MENU[1]="1 更新系统|2 系统信息|3 修改root密码|4 root密码登录管理|5 root公钥登录管理|6 修改SSH端口|7 修改时区|8 切换v4V6|9 开放所有端口|10 更换系统源|11 DDdebian12|12 DDwindows10|13 DDNAT|14 DD飞牛|15 修改语言|16 修改主机名|17 美化命令|18 VPS重启"
 SUB_MENU[2]="19 代理工具|20 FRP管理|21 BBRv3优化|22 WARP|23 BBR+TCP智能调参|24 Reality|25 SurgeSnell|26 Shadowsocks|27 自定义DNS解锁|28 DDNS|29 Hysteria2|30 3X-UI|31 Realm|32 GOST|33 哆啦A梦转发面板|34 easytier组网"
-SUB_MENU[3]="35 NodeQuality脚本|36 融合怪测试|37 YABS测试|38 网络质量体检脚本|39 简单回程测试|40 完整路由检测|41 流媒体解锁|42 三网延迟测速|43 解锁Instagram音频测试|44 检查25端口开放|45 网络工具"
+SUB_MENU[3]="35 NodeQuality脚本|36 融合怪测试|37 YABS测试|38 网络质量体检脚本|39 简单回程测试|40 完整路由检测|41 流媒体解锁|42 三网延迟测速|43 |43 硬件质量体检脚本|44 检查25端口开放|45 网络工具"
 SUB_MENU[4]="46 Docker管理|47 DockerCompose管理|48 DockerCompose备份恢复|49 DockerCompose自动更新"
 SUB_MENU[5]="50 应用管理|51 面板管理|52 监控管理|53 视频下载工具|54 镜像加速|55 异次元数卡|56 小雅全家桶|57 qbittorrent"
 SUB_MENU[6]="58 NGINXV4反代|59 NGINXV6反代|60 Caddy反代|61 NginxProxyManager面板|62 证书备份与恢复"
@@ -350,7 +350,7 @@ execute_choice() {
         40) bash <(curl -Ls https://Net.Check.Place) -R ;;
         41) bash <(curl -L -s https://raw.githubusercontent.com/lmc999/RegionRestrictionCheck/main/check.sh) ;;
         42) bash <(curl -sL https://raw.githubusercontent.com/sistarry/toolbox/main/VPS/speed.sh) ;;
-        43) bash <(curl -L -s check.unlock.media) -R 88 ;;
+        43) bash <(curl -Ls https://Hardware.Check.Place) ;;
         44) bash <(curl -sL https://raw.githubusercontent.com/sistarry/toolbox/main/VPS/Telnet.sh) ;;
         45) bash <(curl -sL https://raw.githubusercontent.com/sistarry/toolbox/main/VPS/Networktool.sh) ;; 
         46) bash <(curl -sL https://raw.githubusercontent.com/sistarry/toolbox/main/Docker/Docker.sh) ;;
