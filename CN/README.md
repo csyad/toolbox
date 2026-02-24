@@ -17,3 +17,7 @@ bash <(curl -sL https://v6.gh-proxy.org/https://raw.githubusercontent.com/sistar
 ```bash
 bash <(curl -sL https://v6.gh-proxy.org/https://raw.githubusercontent.com/sistarry/toolbox/main/CN/CNupdate.sh)
 ```
+### 国内VPS Docker安装管理脚本
+```bash
+bash <(curl -sL https://v6.gh-proxy.org/https://raw.githubusercontent.com/sistarry/toolbox/main/Docker/Docker.sh)
+```
