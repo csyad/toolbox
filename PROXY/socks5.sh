@@ -399,17 +399,17 @@ modify_flow() {
 }
 
 uninstall_flow() {
-  ensure_workdir
   stop_socks
 
   if [ -n "${WORKDIR}" ] && [ -d "${WORKDIR}" ]; then
     rm -rf "${WORKDIR}"
-    echo -e "${GREEN}"已删除 ${WORKDIR}${RESET}"
+    echo -e "${GREEN}已删除 ${WORKDIR}${RESET}"
   else
-    echo -e "${GREEN}"目录不存在，跳过删除。${RESET}"
+    echo -e "${YELLOW}目录不存在，跳过删除。${RESET}"
   fi
 
-  echo -e "${RED}"卸载完成!${RESET}"
+  echo -e "${RED}卸载完成${RESET}"
+  sleep 1
   exit 0
 }
 
