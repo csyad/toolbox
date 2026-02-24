@@ -400,14 +400,17 @@ modify_flow() {
 
 uninstall_flow() {
   ensure_workdir
-  prompt "确认卸载并删除所有文件？输入 y 确认" "N" CONFIRM
-  if [ "${CONFIRM}" != "y" ]; then
-    echo "已取消卸载。"
-    return 0
-  fi
   stop_socks
-  rm -rf "${WORKDIR}" && echo "已删除 ${WORKDIR}" || echo "删除 ${WORKDIR} 时出错或该目录不存在。"
-  return 0
+
+  if [ -n "${WORKDIR}" ] && [ -d "${WORKDIR}" ]; then
+    rm -rf "${WORKDIR}"
+    echo -e "${GREEN}"已删除 ${WORKDIR}${RESET}"
+  else
+    echo -e "${GREEN}"目录不存在，跳过删除。${RESET}"
+  fi
+
+  echo -e "${RED}"卸载完成!${RESET}"
+  exit 0
 }
 
 status_flow() {
