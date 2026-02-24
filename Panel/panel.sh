@@ -94,7 +94,7 @@ menu() {
             chmod +x "$SCRIPT_PATH"
             ln -sf "$SCRIPT_PATH" "$BIN_LINK_DIR/p"
             ln -sf "$SCRIPT_PATH" "$BIN_LINK_DIR/P"
-            echo -e "${GREEN}✅ 脚本已更新，可使用 p / P 启动${RESET}"
+            echo -e "${GREEN}✅ 脚本已更新${RESET}"
             exec "$SCRIPT_PATH"
             ;;
 
