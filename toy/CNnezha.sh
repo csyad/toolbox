@@ -10,12 +10,12 @@ YELLOW="\033[33m"
 RED="\033[31m"
 RESET="\033[0m"
 
-INSTALL_DIR="/opt/nezha"
+INSTALL_DIR="/opt/nezha/agent"
 SERVICE_FILE="/etc/systemd/system/nezha-agent.service"
 AGENT_URL="https://v6.gh-proxy.org/https://github.com/nezhahq/agent/releases/download/v2.0.1/nezha-agent_linux_amd64.zip"
-SERVICE_URL="https://v6.gh-proxy.org/https://raw.githubusercontent.com/sistarry/toolbox/refs/heads/main/NEZHA/nezha-agent.service"
-
-echo -e "${GREEN}==== 哪吒探针 Agent 一键安装 ====${RESET}"
+SERVICE_URL="https://v6.gh-proxy.org/https://raw.githubusercontent.com/sistarry/toolbox/refs/heads/main/toy/nezha-agent.service"
+CONFIG_URL="https://v6.gh-proxy.org/https://raw.githubusercontent.com/sistarry/toolbox/refs/heads/main/toy/config.yml"
+echo -e "${GREEN}====国内VPS哪吒探针 Agent 一键安装 ====${RESET}"
 
 # =============================
 # 检测 root
@@ -82,19 +82,35 @@ echo -e "${YELLOW}下载 systemd 服务文件...${RESET}"
 wget -O ${SERVICE_FILE} ${SERVICE_URL}
 
 # =============================
-# 写入配置
+# 下载配置文件
+# =============================
+echo -e "${YELLOW}下载默认配置文件...${RESET}"
+wget -O ${INSTALL_DIR}/config.yml ${CONFIG_URL}
+
+if [ $? -ne 0 ]; then
+    echo -e "${RED}配置文件下载失败！${RESET}"
+    exit 1
+fi
+
+# =============================
+# 写入面板信息
 # =============================
 echo -e "${GREEN}请输入哪吒面板信息${RESET}"
-read -p "请输入 client_secret: " CLIENT_SECRET
-read -p "请输入 server (例如 data.example.com:8008): " SERVER_ADDR
+read -p "请输入 client_secret(密钥): " CLIENT_SECRET
+read -p "请输入 server (例如 data.example.com:443): " SERVER_ADDR
 
-cat > ${INSTALL_DIR}/config.yml <<EOF
-client_secret: ${CLIENT_SECRET}
-server: ${SERVER_ADDR}
-EOF
+# 替换配置
+sed -i "s|^client_secret:.*|client_secret: ${CLIENT_SECRET}|" ${INSTALL_DIR}/config.yml
+sed -i "s|^server:.*|server: ${SERVER_ADDR}|" ${INSTALL_DIR}/config.yml
 
-echo -e "${GREEN}配置文件已生成${RESET}"
+# 强制开启 TLS
+if grep -q "^tls:" ${INSTALL_DIR}/config.yml; then
+    sed -i "s|^tls:.*|tls: true|" ${INSTALL_DIR}/config.yml
+else
+    echo "tls: true" >> ${INSTALL_DIR}/config.yml
+fi
 
+echo -e "${GREEN}配置文件已修改完成${RESET}"
 # =============================
 # 启动服务
 # =============================
@@ -106,5 +122,4 @@ systemctl restart nezha-agent
 echo -e "${GREEN}=====================================${RESET}"
 echo -e "${GREEN}安装完成！${RESET}"
 echo -e "${GREEN}查看状态： systemctl status nezha-agent${RESET}"
-echo -e "${GREEN}查看日志： journalctl -u nezha-agent -f${RESET}"
 echo -e "${GREEN}=====================================${RESET}"
