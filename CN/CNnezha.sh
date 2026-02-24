@@ -96,12 +96,27 @@ fi
 # 写入面板信息
 # =============================
 echo -e "${GREEN}请输入哪吒面板信息${RESET}"
+
 read -p "请输入 client_secret(密钥): " CLIENT_SECRET
 read -p "请输入 server (例如 data.example.com:443): " SERVER_ADDR
+read -p "请输入 uuid (留空则自动生成): " UUID
+
+# 如果没输入 UUID 自动生成
+if [ -z "$UUID" ]; then
+    UUID=$(cat /proc/sys/kernel/random/uuid)
+    echo -e "${YELLOW}未输入 UUID，已自动生成: ${UUID}${RESET}"
+fi
 
 # 替换配置
 sed -i "s|^client_secret:.*|client_secret: ${CLIENT_SECRET}|" ${INSTALL_DIR}/config.yml
 sed -i "s|^server:.*|server: ${SERVER_ADDR}|" ${INSTALL_DIR}/config.yml
+
+# 写入 uuid
+if grep -q "^uuid:" ${INSTALL_DIR}/config.yml; then
+    sed -i "s|^uuid:.*|uuid: ${UUID}|" ${INSTALL_DIR}/config.yml
+else
+    echo "uuid: ${UUID}" >> ${INSTALL_DIR}/config.yml
+fi
 
 # 强制开启 TLS
 if grep -q "^tls:" ${INSTALL_DIR}/config.yml; then
