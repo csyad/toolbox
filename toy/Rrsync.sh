@@ -127,8 +127,9 @@ generate_and_setup_ssh() {
 # 任务管理
 #################################
 list_tasks() {
-    [[ ! -s "$CONFIG_FILE" ]] && { echo "暂无任务"; return; }
-    awk -F'|' '{printf "%d) %s  %s -> %s [%s]\n",NR,$1,$2,$3,$5}' "$CONFIG_FILE"
+    [[ ! -s "$CONFIG_FILE" ]] && { echo -e "${YELLOW}暂无任务${RESET}"; return; }
+    awk -F'|' -v YELLOW="$YELLOW" -v RESET="$RESET" \
+    '{printf YELLOW "%d) %s  %s -> %s [%s]" RESET "\n", NR, $1, $2, $3, $5}' "$CONFIG_FILE"
 }
 
 add_task() {
