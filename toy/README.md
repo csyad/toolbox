@@ -42,7 +42,3 @@ bash <(curl -sL https://raw.githubusercontent.com/sistarry/toolbox/main/toy/CFSS
 bash <(curl -sL https://raw.githubusercontent.com/sistarry/toolbox/main/toy/systemdresolved.sh)
 ```
 
-### 国内VPS哪吒探针 Agent 一键安装脚本
-```bash
-bash <(curl -sL https://raw.githubusercontent.com/sistarry/toolbox/main/toy/CNnezha.sh)
-```
