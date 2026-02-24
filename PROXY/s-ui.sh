@@ -42,7 +42,7 @@ menu_sui() {
                 systemctl daemon-reload
                 rm -rf /usr/local/s-ui
                 clear
-                echo -e "${green}✅ Sui 面板已卸载${reset}"
+                echo -e "${green}✅ S-UI 面板已卸载${reset}"
                 pause_and_return
                 ;;
             0)
