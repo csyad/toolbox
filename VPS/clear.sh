@@ -133,7 +133,6 @@ while true; do
             clean_docker
             ;;
         0)
-            echo -e "${GREEN}退出${RESET}"
             exit 0
             ;;
         *)
