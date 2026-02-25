@@ -180,7 +180,7 @@ declare -A apps=(
     [12,4]="NEWAPI大模型资产管理"
     [12,5]="Antigravity Tools "
     [12,6]="CLI Proxy API"
-    [12,7]="openclaw"
+    [12,7]="ClawBot"
 
 )
 
@@ -321,7 +321,7 @@ declare -A commands=(
     [12,4]='bash <(curl -sL https://raw.githubusercontent.com/sistarry/toolbox/main/Docker/NewAPI.sh)'
     [12,5]='bash <(curl -sL https://raw.githubusercontent.com/sistarry/toolbox/main/Docker/AntigravityManager.sh)'
     [12,6]='bash <(curl -sL https://raw.githubusercontent.com/sistarry/toolbox/main/Docker/CLIProxyAPI.sh)'
-    [12,7]='bash <(curl -sL kejilion.sh) app openclaw'
+    [12,7]='bash <(curl -sL https://raw.githubusercontent.com/sistarry/toolbox/main/Docker/Clawbot.sh)'
 )
 
 # ================== 菜单显示函数 ==================
