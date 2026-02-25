@@ -8,6 +8,8 @@ VIDEO_DIR="/opt/yt-dlp"
 URL_FILE="$VIDEO_DIR/urls.txt"
 
 GREEN="\033[32m"
+RED="\033[31m"
+YELLOW="\033[33m"
 RESET="\033[0m"
 
 mkdir -p "$VIDEO_DIR"
@@ -92,9 +94,9 @@ show_list() {
 while true; do
     clear
     if [ -x "/usr/local/bin/yt-dlp" ]; then
-        STATUS="${GREEN}已安装${RESET}"
+        STATUS="${YELLOW}已安装${RESET}"
     else
-        STATUS="${GREEN}未安装${RESET}"
+        STATUS="${YELLOW}未安装${RESET}"
     fi
 
     echo -e "${GREEN}=================================${RESET}"
@@ -123,7 +125,7 @@ while true; do
         9) delete_video ;;
         10) show_list ;;
         0) exit 0 ;;
-        *) echo -e "${GREEN}无效选项${RESET}" ;;
+        *) echo -e "${RED}无效选项${RESET}" ;;
     esac
 
     read -p "$(echo -e ${GREEN}按回车继续...${RESET})"
