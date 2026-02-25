@@ -171,15 +171,15 @@ choose_time() {
     echo -e "${GREEN}3) 自定义 cron${RESET}"
     read -p "$(echo -e ${GREEN}选择:${RESET}) " mode
     if [ "$mode" = "1" ]; then
-        read -p "几点执行(默认1): " hour
-        hour=${hour:-1}
+        read -p "几点执行(默认0): " hour
+        hour=${hour:-0}
         CRON_EXP="0 $hour * * *"
     elif [ "$mode" = "2" ]; then
-        read -p "几点执行(默认1): " hour
-        hour=${hour:-1}
+        read -p "几点执行(默认0): " hour
+        hour=${hour:-0}
         echo "0=周日 1=周一 ... 6=周六"
-        read -p "星期(默认0): " week
-        week=${week:-0}
+        read -p "星期(默认1): " week
+        week=${week:-1}
         CRON_EXP="0 $hour * * $week"
     else
         echo "示例: */30 * * * *"
