@@ -198,7 +198,9 @@ while true; do
     echo -e "${YELLOW}[01] 3X-UI${RESET}"
     echo -e "${YELLOW}[02] S-UI${RESET}"
     echo -e "${YELLOW}[03] H-UI${RESET}"
-    echo -e "${YELLOW}[04] Xboard${RESET}"
+    echo -e "${YELLOW}[04] X-UI${RESET}"
+    echo -e "${YELLOW}[05] yg-X-UI${RESET}"
+    echo -e "${YELLOW}[06] Xboard${RESET}"
     echo -e "${GREEN}[0]  返回${RESET}"
     echo -e "${GREEN}[x]  退出${RESET}"
     
@@ -208,7 +210,9 @@ while true; do
         01) bash <(curl -sL https://raw.githubusercontent.com/sistarry/toolbox/main/PROXY/3xui.sh) ; pause_return ;;
         02) bash <(curl -fsSL https://raw.githubusercontent.com/sistarry/toolbox/main/PROXY/s-ui.sh) ; pause_return ;;
         03) bash <(curl -fsSL https://raw.githubusercontent.com/sistarry/toolbox/main/PROXY/H-UI.sh) ; pause_return ;;
-        04) bash <(curl -fsSL https://raw.githubusercontent.com/sistarry/toolbox/main/PROXY/Xboard.sh) ; pause_return ;;
+        04) bash <(curl -Ls https://raw.githubusercontent.com/vaxilu/x-ui/master/install.sh) ; pause_return ;;
+        05) bash <(wget -qO- https://raw.githubusercontent.com/yonggekkk/x-ui-yg/main/install.sh) ; pause_return ;;
+        06) bash <(curl -fsSL https://raw.githubusercontent.com/sistarry/toolbox/main/PROXY/Xboard.sh) ; pause_return ;;
         0) return ;;
         *) echo -e "${RED}无效选项${RESET}"; sleep 1 ;;
     esac
