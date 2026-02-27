@@ -63,8 +63,9 @@ start_web(){
     [ ! -z "$WEB_STOP" ] && systemctl start $WEB_STOP
 }
 
+
 # ===============================
-# 安装证书
+# 安装证书并自动重载 Nginx（如果存在）
 # ===============================
 install_cert(){
     domain=$1
@@ -74,7 +75,11 @@ install_cert(){
         --fullchain-file $SSL_DIR/$domain/cert.crt
     green "证书安装完成"
     green "路径: $SSL_DIR/$domain/"
-    green "如需生效请手动重载Nginx或Caddy服务"
+    
+    # 自动重载 nginx（存在就重载，没安装就跳过）
+    if command -v nginx >/dev/null 2>&1; then
+        systemctl is-active nginx >/dev/null 2>&1 && systemctl reload nginx && green "Nginx 已自动重载"
+    fi
 }
 
 # ===============================
@@ -120,12 +125,18 @@ dns_issue(){
     [ $? -eq 0 ] && install_cert $domain || red "证书申请失败"
 }
 
+
 # ===============================
-# 续期
+# 续期所有证书并自动重载 Nginx（如果存在）
 # ===============================
 renew_all(){
     $ACME_HOME/acme.sh --cron -f
     green "全部证书已尝试续期"
+
+    # 自动重载 nginx
+    if command -v nginx >/dev/null 2>&1; then
+        systemctl is-active nginx >/dev/null 2>&1 && systemctl reload nginx && green "Nginx 已自动重载"
+    fi
 }
 
 # ===============================
