@@ -12,16 +12,16 @@ menu() {
     while true; do
         clear
         echo -e "${GREEN}=== 3X-UI 安装菜单 ===${RESET}"
-        echo -e "${GREEN}1) 原版-3X-UI安装${RESET}"
-        echo -e "${GREEN}2) 中文版-3X-UI安装${RESET}"
-        echo -e "${GREEN}3) Alpine-3X-UI安装${RESET}"
-        echo -e "${GREEN}4) Docker-3X-UI安装${RESET}"
+        echo -e "${GREEN}1) 3X-UI${RESET}"
+        echo -e "${GREEN}2) 中文版-3X-UI${RESET}"
+        echo -e "${GREEN}3) Alpine-3X-UI${RESET}"
+        echo -e "${GREEN}4) Docker-3X-UI{RESET}"
         echo -e "${GREEN}0) 退出${RESET}"
         read -p $'\033[32m请选择操作: \033[0m' choice
 
         case $choice in
             1)
-                echo -e "${GREEN}正在安装原版 3X-UI...${RESET}"
+                echo -e "${GREEN}正在安装 3X-UI...${RESET}"
                 bash <(curl -fsSL https://raw.githubusercontent.com/mhsanaei/3x-ui/master/install.sh)
                 pause
                 ;;
