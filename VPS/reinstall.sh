@@ -28,7 +28,7 @@ systems=(
 "6|ubuntu22.04|Ubuntu|MollyLau|root|LeitboGi0ro|22|bash InstallNET.sh -ubuntu 22.04"
 "7|ubuntu20.04|Ubuntu|MollyLau|root|LeitboGi0ro|22|bash InstallNET.sh -ubuntu 20.04"
 "8|ubuntu18.04|Ubuntu|MollyLau|root|LeitboGi0ro|22|bash InstallNET.sh -ubuntu 18.04"
-"9|rocky10|RedHat系|bin456789|root|123@@@|22|bash reinstall.sh rocky"
+" 9|rocky10|RedHat系|bin456789|root|123@@@|22|bash reinstall.sh rocky"
 "10|rocky9|RedHat系|bin456789|root|123@@@|22|bash reinstall.sh rocky 9"
 "11|alma10|RedHat系|bin456789|root|123@@@|22|bash reinstall.sh almalinux"
 "12|alma9|RedHat系|bin456789|root|123@@@|22|bash reinstall.sh almalinux 9"
