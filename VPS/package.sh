@@ -176,7 +176,7 @@ show_menu() {
         fi
     done
     echo -e "${GREEN} [99] 卸载已安装工具${RESET}"
-    echo -e "${GREEN} [00] 退出${RESET}"
+    echo -e "${GREEN} [ 0] 退出${RESET}"
     echo -e "${GREEN}===================================${RESET}"
 }
 
