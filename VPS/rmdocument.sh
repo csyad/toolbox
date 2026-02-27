@@ -7,7 +7,7 @@ GREEN="\033[32m"
 YELLOW="\033[33m"
 RESET="\033[0m"
 
-echo -e "${YELLOW}请输入要删除的文件或目录（支持通配符，例如 *.log）:${RESET}"
+echo -e "${YELLOW}请输入要删除的文件路径或目录（支持通配符，例如 *.log）:${RESET}"
 read target
 
 # 检查输入是否为空
