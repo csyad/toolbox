@@ -128,6 +128,7 @@ dns_issue(){
 renew_all(){
     $ACME_HOME/acme.sh --cron -f
     green "全部证书已尝试续期"
+}
 
 # ===============================
 # 删除证书
