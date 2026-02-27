@@ -37,6 +37,11 @@ bash <(curl -sL https://raw.githubusercontent.com/sistarry/toolbox/main/toy/dl.s
 bash <(curl -sL https://raw.githubusercontent.com/sistarry/toolbox/main/toy/CFSSL.sh)
 ```
 
+### acme 申请证书脚本
+```bash
+bash <(curl -sL https://raw.githubusercontent.com/sistarry/toolbox/main/toy/ACMESSL.sh)
+```
+
 ### systemd-resolved 一键修复脚本
 ```bash
 bash <(curl -sL https://raw.githubusercontent.com/sistarry/toolbox/main/toy/systemdresolved.sh)
