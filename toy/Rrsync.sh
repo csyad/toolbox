@@ -315,7 +315,6 @@ fi
 # 首次运行安装快捷命令
 #################################
 if [ ! -f "$SCRIPT_PATH" ]; then
-    echo -e "${GREEN}首次运行，下载脚本到本地...${RESET}"
     curl -fsSL -o "$SCRIPT_PATH" "$SCRIPT_URL"
     chmod +x "$SCRIPT_PATH"
     ln -sf "$SCRIPT_PATH" "$BIN_LINK_DIR/s"
