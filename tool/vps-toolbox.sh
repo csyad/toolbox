@@ -193,7 +193,7 @@ MAIN_MENU=(
     "网络检测"
     "Docker管理"
     "应用商店"
-    "证书安全"
+    "证书管理"
     "系统管理"
     "工具箱合集"
     "玩具熊ʕ•ᴥ•ʔ"
@@ -209,8 +209,8 @@ SUB_MENU[4]="49 Docker管理|50 DockerCompose管理|51 DockerCompose备份恢复
 SUB_MENU[5]="53 应用管理|54 面板管理|55 监控管理|56 yt-dlp视频下载|57 镜像加速|58 异次元数卡|59 小雅全家桶|60 qbittorrent"
 SUB_MENU[6]="61 NGINXV4反代|62 NGINXV6反代|63 Caddy反代|64 NginxProxyManager面板|65 acme申请证书|66 Cloudflare证书管理|67 证书备份与恢复"
 SUB_MENU[7]="68 系统清理|69 重装系统|70 系统组件|71 开发环境|72 添加SWAP|73 DNS管理|74 工作区管理|75 系统监控|76 防火墙管理|78 Fail2ban|79 定时任务"
-SUB_MENU[8]="80 科技lion工具箱|81 老王工具箱|82 酷雪云工具箱|83 Alpine工具箱|84 甲骨文工具箱|85 开小鸡工具箱"
-SUB_MENU[9]="86 VPS监控通知|87 脚本短链|89 网站部署|90 ClawBot|91 Emby反代|92 GProxy加速|93 Akile优先DNS|94 1panelapps管理|95 subs-check|96 关闭V1SSH|97 卸载哪吒Agent|98 卸载komariAgent"
+SUB_MENU[8]="80 科技lion工具箱|81 老王工具箱|82 酷雪云工具箱|83 Alpine工具箱|84 甲骨文工具箱|85 开小鸡工具箱|86 国内VPS工具箱"
+SUB_MENU[9]="87 VPS监控通知|89 脚本短链|90 网站部署|91 ClawBot|92 Emby反代|93 GProxy加速|94 Akile优先DNS|95 1panelapps管理|96 关闭V1SSH|97 卸载哪吒Agent|98 卸载komariAgent"
 SUB_MENU[10]="100 系统快照恢复|101 本地备份|102 Rsync同步|103 远程文件目录备份|104 Rclone备份|105 压缩文件|106 解压文件"
 SUB_MENU[11]="77 自动更新|88 更新脚本|99 卸载脚本"
 
@@ -419,15 +419,15 @@ execute_choice() {
         83) bash <(curl -sL https://raw.githubusercontent.com/sistarry/toolbox/main/Alpine/Alpine.sh) ;;
         84) bash <(curl -sL https://raw.githubusercontent.com/sistarry/toolbox/main/Oracle/oracle.sh) ;;
         85) bash <(curl -fsSL https://raw.githubusercontent.com/sistarry/toolbox/main/toy/NAT.sh) ;;
-        86) bash <(curl -sL https://raw.githubusercontent.com/sistarry/toolbox/main/toy/vpstg.sh) ;;
-        87) bash <(curl -sL https://raw.githubusercontent.com/sistarry/toolbox/main/toy/dl.sh) ;;
-        89) bash <(curl -sL https://raw.githubusercontent.com/sistarry/toolbox/main/toy/html.sh) ;;
-		90) bash <(curl -sL kejilion.sh) app openclaw ;;
-        91) bash <(curl -sL https://raw.githubusercontent.com/sistarry/toolbox/main/toy/Embyfd.sh) ;;
-        92) bash <(curl -sL https://raw.githubusercontent.com/sistarry/toolbox/main/toy/GProxy.sh) ;;
-        93) bash <(curl -sL https://raw.githubusercontent.com/sistarry/toolbox/main/toy/AkileDNS.sh) ;;
-        94) bash <(curl -sL https://raw.githubusercontent.com/sistarry/toolbox/main/toy/1panelapps.sh) ;;
-        95) bash <(curl -sL https://raw.githubusercontent.com/sistarry/toolbox/main/Docker/SubsCheck.sh) ;;
+        86) bash <(curl -sL https://v6.gh-proxy.org/https://raw.githubusercontent.com/sistarry/toolbox/main/CN/toolinstall.sh) ;;
+        87) bash <(curl -sL https://raw.githubusercontent.com/sistarry/toolbox/main/toy/vpstg.sh) ;;
+        89) bash <(curl -sL https://raw.githubusercontent.com/sistarry/toolbox/main/toy/dl.sh) ;;
+        90) bash <(curl -sL https://raw.githubusercontent.com/sistarry/toolbox/main/toy/html.sh) ;;
+		91) bash <(curl -sL kejilion.sh) app openclaw ;;
+        92) bash <(curl -sL https://raw.githubusercontent.com/sistarry/toolbox/main/toy/Embyfd.sh) ;;
+        93) bash <(curl -sL https://raw.githubusercontent.com/sistarry/toolbox/main/toy/GProxy.sh) ;;
+        94) bash <(curl -sL https://raw.githubusercontent.com/sistarry/toolbox/main/toy/AkileDNS.sh) ;;
+        95) bash <(curl -sL https://raw.githubusercontent.com/sistarry/toolbox/main/toy/1panelapps.sh) ;;
         96) sed -i 's/disable_command_execute: false/disable_command_execute: true/' /opt/nezha/agent/config.yml && systemctl restart nezha-agent ;;
         97) bash <(curl -sL https://raw.githubusercontent.com/sistarry/toolbox/main/Docker/nzagent.sh) ;;
         98) sudo systemctl stop komari-agent && sudo systemctl disable komari-agent && sudo rm -f /etc/systemd/system/komari-agent.service && sudo systemctl daemon-reload && sudo rm -rf /opt/komari /var/log/komari ;;
