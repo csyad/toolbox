@@ -83,7 +83,7 @@ $ACME_HOME/acme.sh --install-cert -d $domain \
 
 green "证书安装完成"
 green "路径: $SSL_DIR/$domain/"
-green "如需生效请手动重载 Web 服务"
+green "如需生效请手动重载Nginx或Caddy服务"
 }
 
 # ===============================
