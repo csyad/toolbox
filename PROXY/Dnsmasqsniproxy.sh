@@ -9,7 +9,7 @@ SCRIPT_URL="https://raw.githubusercontent.com/myxuchangbin/dnsmasq_sniproxy_inst
 menu() {
     clear
     echo -e "${GREEN}=== DnsmasqSNIproxy-One-click ===${RESET}"
-    echo -e "${GREEN}1) 安装{RESET}"
+    echo -e "${GREEN}1) 安装${RESET}"
     echo -e "${GREEN}2) 卸载${RESET}"
     echo -e "${GREEN}0) 退出${RESET}"
     read -p $'\033[32m请选择操作: \033[0m' choice
