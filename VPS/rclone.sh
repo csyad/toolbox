@@ -28,7 +28,6 @@ if [[ ! -f "$REMOTE_SCRIPT_PATH" ]]; then
     echo -e "${CYAN}📥 首次运行，下载远程脚本...${RESET}"
     curl -fsSL "https://raw.githubusercontent.com/sistarry/toolbox/main/VPS/rclone.sh" -o "$REMOTE_SCRIPT_PATH"
     chmod +x "$REMOTE_SCRIPT_PATH"
-    echo -e "${GREEN}✅ 远程脚本已下载到 $REMOTE_SCRIPT_PATH${RESET}"
     exec "$REMOTE_SCRIPT_PATH"
 fi
 
