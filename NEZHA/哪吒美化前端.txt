@@ -1348,7 +1348,79 @@ a.flex.items-center.gap-1.text-sm.font-medium.opacity-50:hover::after {
 <script src="https://cdn.jsdelivr.net/gh/sistarry/toolbox/NEZHA/kbn.js"></script>
 <script src="https://cdn.jsdelivr.net/gh/sistarry/toolbox/NEZHA/ipx.js"></script>
 
+<style>
+/* 流量 ≥ 1 M/s 变绿色 */
+.nezha-traffic-high {
+    color: #16c784 !important;
+    font-weight: 600;
+}
+</style>
 
+<script>
+(function () {
+    const THRESHOLD_MS = 1.0;
+
+    function parseSpeed(text) {
+        if (!text) return 0;
+        text = text.trim();
+
+        if (text.includes('M/s')) {
+            return parseFloat(text);
+        }
+        if (text.includes('K/s')) {
+            return parseFloat(text) / 1024;
+        }
+        return 0;
+    }
+
+    function highlight(node) {
+        if (!node || !node.innerText) return;
+
+        const text = node.innerText;
+        if (!/(M\/s|K\/s)/.test(text)) return;
+
+        const speed = parseSpeed(text);
+
+        if (speed >= THRESHOLD_MS) {
+            node.classList.add('nezha-traffic-high');
+        } else {
+            node.classList.remove('nezha-traffic-high');
+        }
+    }
+
+    function scan(node) {
+        if (!node) return;
+
+        if (node.nodeType === Node.ELEMENT_NODE) {
+            highlight(node);
+        }
+
+        node.querySelectorAll &&
+            node.querySelectorAll('*').forEach(highlight);
+    }
+
+    const observer = new MutationObserver(mutations => {
+        mutations.forEach(mutation => {
+            mutation.addedNodes.forEach(scan);
+
+            if (
+                mutation.type === 'characterData' &&
+                mutation.target.parentElement
+            ) {
+                highlight(mutation.target.parentElement);
+            }
+        });
+    });
+
+    observer.observe(document.body, {
+        childList: true,
+        subtree: true,
+        characterData: true
+    });
+
+    scan(document.body);
+})();
+</script>
 
 
 
