@@ -23,16 +23,16 @@ pause() {
 menu() {
     clear
     echo -e "${GREEN}==============================${RESET}"
-    echo -e "${GREEN}        Emby 反代管理         ${RESET}"
+    echo -e "${GREEN}        Emby反代管理         ${RESET}"
     echo -e "${GREEN}==============================${RESET}"
-    echo -e "${GREEN} 1) Nginx 反向代理${RESET}"
-    echo -e "${GREEN} 2) Caddy 反向代理${RESET}"
+    echo -e "${GREEN} 1) Nginx反向代理${RESET}"
+    echo -e "${GREEN} 2) Caddy反向代理${RESET}"
     echo -e "${GREEN} 0) 退出${RESET}"
     read -p $'\033[32m 请选择: \033[0m' choice
 
     case $choice in
-        1) run_script "$NGINX_URL" "Nginx 反代部署" ;;
-        2) run_script "$CADDY_URL" "Caddy 反代部署" ;;
+        1) run_script "$NGINX_URL" "Nginx反代部署" ;;
+        2) run_script "$CADDY_URL" "Caddy反代部署" ;;
         0) exit 0 ;;
         *)
             echo -e "${RED}输入错误，请重新选择${RESET}"
