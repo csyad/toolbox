@@ -78,11 +78,11 @@ install_v6dd() {
 while true; do
     clear
     echo -e "${GREEN}===================================${RESET}"
-    echo -e "${GREEN}       Windows 10 DD 安装脚本       ${RESET}"
+    echo -e "${GREEN}       Windows10 DD       ${RESET}"
     echo -e "${GREEN}===================================${RESET}"
     echo -e "${GREEN}1) 安装必要工具${RESET}"
-    echo -e "${GREEN}2) V4DD 安装 Windows 10${RESET}"
-    echo -e "${GREEN}3) V6DD 安装 Windows 10${RESET}"
+    echo -e "${GREEN}2) V4 DD安装Windows10${RESET}"
+    echo -e "${GREEN}3) V6 DD安装Windows10${RESET}"
     echo -e "${GREEN}4) 重启系统${RESET}"
     echo -e "${GREEN}0) 退出${RESET}"
     echo -ne "${GREEN}请输入编号: ${RESET}"
