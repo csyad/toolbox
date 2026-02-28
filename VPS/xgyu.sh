@@ -11,7 +11,7 @@ if [ "$EUID" -ne 0 ]; then
     exit 1
 fi
 
-echo -e "${GREEN}=== VPS 字体切换工具 ===${RESET}"
+echo -e "${GREEN}=== 字体切换工具 ===${RESET}"
 echo -e "${GREEN}1) 切换到中文字体${RESET}"
 echo -e "${GREEN}2) 切换到英文字体${RESET}"
 echo -e "${GREEN}0) 退出${RESET}"
