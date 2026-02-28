@@ -57,7 +57,7 @@ install_pkg() {
 
 detect_pm
 
-read -rp "请输入要解压的文件路径： " FILE
+read -rp $'\033[32m请输入要解压的文件路径：\033[0m' FILE
 
 if [[ ! -f "$FILE" ]]; then
     echo -e "${RED}文件不存在！退出${RESET}"
