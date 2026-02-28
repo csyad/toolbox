@@ -11,7 +11,6 @@ re="\033[0m"
 
 # 主菜单函数示例
 main_menu() {
-    echo -e "${green}返回主菜单${re}"
     # 这里可以调用你原来的菜单函数
     # 比如：./your_menu.sh
     exit 0
@@ -43,7 +42,7 @@ reinstall_os() {
             ./OsMutation.sh
             break
         elif [[ $confirm =~ ^[Nn]$ ]]; then
-            echo -e "${green}已取消重装，返回主菜单${re}"
+            echo -e "${green}已取消重装${re}"
             main_menu
         else
             echo -e "${red}无效输入，请输入 y 或 n${re}"
