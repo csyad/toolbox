@@ -349,7 +349,7 @@ fi
 while true; do
     load_config
     clear
-    echo -e "${CYAN}=== Docker compose 备份恢复管理 ===${RESET}"
+    echo -e "${GREEN}=== Docker compose 备份恢复管理 ===${RESET}"
     echo -e "${GREEN}1. 本地备份${RESET}"
     echo -e "${GREEN}2. 恢复项目${RESET}"
     echo -e "${GREEN}3. 设置SSH密钥自动登录${RESET}"
