@@ -1,8 +1,8 @@
 #!/bin/bash
 # VPS Toolbox
 INSTALL_PATH="$HOME/toolbox.sh"
-SHORTCUT_PATH="/usr/local/bin/c"
-SHORTCUT_PATH_UPPER="/usr/local/bin/C"
+SHORTCUT_PATH="/usr/local/bin/z"
+SHORTCUT_PATH_UPPER="/usr/local/bin/Z"
 
 # 颜色
 green="\033[32m"
@@ -193,13 +193,13 @@ MAIN_MENU=(
 
 # 二级菜单（编号去掉前导零，显示时格式化为两位数）
 SUB_MENU[1]="1 更新系统|2 系统信息|3 修改root密码|4 root密码登录管理|5 root公钥登录管理|6 修改SSH端口|7 修改时区|8 时间同步|9 切换v4V6|10 开放所有端口|11 更换系统源|12 DDdebian12|13 DDwindows10|14 DD飞牛|15 修改语言|16 修改主机名|17 美化命令|18 VPS重启"
-SUB_MENU[2]="19 BBR+TCP智能调参|20 Realm-xwPF|21 EZRealm|22 EZGost|23 流量狗|24 FRP工具|25 frpc-manager(客户端管理)|26 easytier组网"
-SUB_MENU[3]="27 网络测速 speedtest|28 路由追踪 nexttrace|29 网络性能测试 iperf3|30 网络诊断工具 MTR"
-SUB_MENU[4]="31 Docker管理"
-SUB_MENU[5]="32 系统清理|33 系统组件|34 开发环境|35 添加SWAP|36 DNS管理|37 工作区管理|38 系统监控|39 防火墙管理|40 Fail2ban|41 定时任务"
-SUB_MENU[6]="42 酷雪云工具箱"
-SUB_MENU[7]="43 GProxy加速|44 安装哪吒Agent|45 关闭V1SSH|46 卸载哪吒Agent|47 卸载komariAgent"
-SUB_MENU[8]="48 系统快照恢复|49 本地备份|50 Rsync同步|51 压缩文件|52 解压文件"
+SUB_MENU[2]="19 BBR+TCP智能调参|20 Realm-xwPF|21 EZRealm|22 EZGost|23 流量狗|24 FRP工具|25 frpc-manager客户端管理|26 easytier组网|27 Lucky内网穿透|28 LuckyDocker"
+SUB_MENU[3]="29 网络测速 speedtest|30 路由追踪 nexttrace|31 网络性能测试 iperf3|32 网络诊断工具 MTR"
+SUB_MENU[4]="33 Docker管理"
+SUB_MENU[5]="34 系统清理|35 系统组件|36 开发环境|37 添加SWAP|38 DNS管理|39 工作区管理|40 系统监控|41 防火墙管理|42 Fail2ban|43 定时任务"
+SUB_MENU[6]="44 酷雪云工具箱"
+SUB_MENU[7]="45 GProxy加速|46 安装哪吒Agent|47 关闭V1SSH|48 卸载哪吒Agent|49 卸载komariAgent"
+SUB_MENU[8]="50 系统快照恢复|51 本地备份|52 Rsync同步|53 压缩文件|54 解压文件"
 SUB_MENU[9]="77 自动更新|88 更新脚本|99 卸载脚本"
 
 # 显示一级菜单
@@ -349,32 +349,34 @@ execute_choice() {
         24) bash <(curl -sL https://v6.gh-proxy.org/https://raw.githubusercontent.com/nuro-hia/nuro-frp/main/install.sh) ;;
         25) bash <(curl -sL https://v6.gh-proxy.org/https://raw.githubusercontent.com/zeyu8023/frpc-manager/main/bootstrap.sh) ;; 
         26) bash <(curl -sL https://v6.gh-proxy.org/https://raw.githubusercontent.com/ceocok/c.cococ/refs/heads/main/easytier.sh) ;; 
-        27) bash <(curl -sL https://v6.gh-proxy.org/https://raw.githubusercontent.com/sistarry/toolbox/main/VPS/Speedtest.sh) ;;
-        28) bash <(curl -sL https://v6.gh-proxy.org/https://raw.githubusercontent.com/sistarry/toolbox/main/VPS/NextTrace.sh) ;;
-        29) bash <(curl -sL https://v6.gh-proxy.org/https://raw.githubusercontent.com/sistarry/toolbox/main/VPS/iperf3.sh) ;;
-        30) bash <(curl -sL https://v6.gh-proxy.org/https://raw.githubusercontent.com/sistarry/toolbox/main/VPS/mtr.sh) ;;
-        31) bash <(curl -sL https://v6.gh-proxy.org/https://raw.githubusercontent.com/sistarry/toolbox/main/Docker/Docker.sh) ;;
-        32) bash <(curl -sL https://v6.gh-proxy.org/https://raw.githubusercontent.com/sistarry/toolbox/main/VPS/clear.sh) ;;
-        33) bash <(curl -sL https://v6.gh-proxy.org/https://raw.githubusercontent.com/sistarry/toolbox/main/VPS/package.sh) ;;
-        34) bash <(curl -sL https://v6.gh-proxy.org/https://raw.githubusercontent.com/sistarry/toolbox/main/VPS/exploitation.sh) ;;
-        35) bash <(curl -sL https://v6.gh-proxy.org/https://raw.githubusercontent.com/sistarry/toolbox/main/VPS/WARP.sh) ;;
-        36) bash <(curl -fsSL https://v6.gh-proxy.org/https://raw.githubusercontent.com/sistarry/toolbox/main/VPS/dns.sh) ;;
-        37) bash <(curl -fsSL https://v6.gh-proxy.org/https://raw.githubusercontent.com/sistarry/toolbox/main/VPS/tmux.sh) ;;
-        38) bash <(curl -fsSL https://v6.gh-proxy.org/https://raw.githubusercontent.com/sistarry/toolbox/main/CN/xtjk.sh) ;;
-        39) bash <(curl -fsSL https://v6.gh-proxy.org/https://raw.githubusercontent.com/sistarry/toolbox/main/VPS/firewall.sh) ;;
-        40) bash <(curl -fsSL https://v6.gh-proxy.org/https://raw.githubusercontent.com/sistarry/toolbox/main/VPS/fail2ban.sh) ;;
-        41) bash <(curl -fsSL https://v6.gh-proxy.org/https://raw.githubusercontent.com/sistarry/toolbox/main/VPS/crontab.sh) ;;
-        42) bash <(curl -sL https://cdn.kxy.ovh/kxy.sh) ;;
-        43) bash <(curl -sL https://v6.gh-proxy.org/https://raw.githubusercontent.com/sistarry/toolbox/main/toy/GProxy.sh) ;;
-        44) bash <(curl -sL https://v6.gh-proxy.org/https://raw.githubusercontent.com/sistarry/toolbox/main/CN/CNnezha.sh) ;;
-        45) sed -i 's/disable_command_execute: false/disable_command_execute: true/' /opt/nezha/agent/config.yml && systemctl restart nezha-agent ;;
-        46) bash <(curl -sL https://v6.gh-proxy.org/https://raw.githubusercontent.com/sistarry/toolbox/main/Docker/nzagent.sh) ;;
-        47) sudo systemctl stop komari-agent && sudo systemctl disable komari-agent && sudo rm -f /etc/systemd/system/komari-agent.service && sudo systemctl daemon-reload && sudo rm -rf /opt/komari /var/log/komari ;;
-        48) bash <(curl -fsSL https://v6.gh-proxy.org/https://raw.githubusercontent.com/sistarry/toolbox/main/CN/cnrestore.sh) ;;
-        49) bash <(curl -fsSL https://v6.gh-proxy.org/https://raw.githubusercontent.com/sistarry/toolbox/main/VPS/beifen.sh) ;;
-        50) bash <(curl -fsSL https://v6.gh-proxy.org/https://raw.githubusercontent.com/sistarry/toolbox/main/toy/Rrsync.sh) ;;
-        51) bash <(curl -sL https://v6.gh-proxy.org/https://raw.githubusercontent.com/sistarry/toolbox/main/VPS/yasuo.sh) ;;
-        52) bash <(curl -fsSL https://v6.gh-proxy.org/https://raw.githubusercontent.com/sistarry/toolbox/main/VPS/tarzip.sh) ;;
+        27) wget -O  /tmp/install.sh "http://release.66666.host/install.sh" && sh /tmp/install.sh ;;
+        28) bash <(curl -sL https://v6.gh-proxy.org/https://raw.githubusercontent.com/sistarry/toolbox/main/CN/Lucky.sh) ;;
+        29) bash <(curl -sL https://v6.gh-proxy.org/https://raw.githubusercontent.com/sistarry/toolbox/main/VPS/Speedtest.sh) ;;
+        30) bash <(curl -sL https://v6.gh-proxy.org/https://raw.githubusercontent.com/sistarry/toolbox/main/VPS/NextTrace.sh) ;;
+        31) bash <(curl -sL https://v6.gh-proxy.org/https://raw.githubusercontent.com/sistarry/toolbox/main/VPS/iperf3.sh) ;;
+        32) bash <(curl -sL https://v6.gh-proxy.org/https://raw.githubusercontent.com/sistarry/toolbox/main/VPS/mtr.sh) ;;
+        33) bash <(curl -sL https://v6.gh-proxy.org/https://raw.githubusercontent.com/sistarry/toolbox/main/Docker/Docker.sh) ;;
+        34) bash <(curl -sL https://v6.gh-proxy.org/https://raw.githubusercontent.com/sistarry/toolbox/main/VPS/clear.sh) ;;
+        35) bash <(curl -sL https://v6.gh-proxy.org/https://raw.githubusercontent.com/sistarry/toolbox/main/VPS/package.sh) ;;
+        36) bash <(curl -sL https://v6.gh-proxy.org/https://raw.githubusercontent.com/sistarry/toolbox/main/VPS/exploitation.sh) ;;
+        37) bash <(curl -sL https://v6.gh-proxy.org/https://raw.githubusercontent.com/sistarry/toolbox/main/VPS/WARP.sh) ;;
+        38) bash <(curl -fsSL https://v6.gh-proxy.org/https://raw.githubusercontent.com/sistarry/toolbox/main/VPS/dns.sh) ;;
+        39) bash <(curl -fsSL https://v6.gh-proxy.org/https://raw.githubusercontent.com/sistarry/toolbox/main/VPS/tmux.sh) ;;
+        40) bash <(curl -fsSL https://v6.gh-proxy.org/https://raw.githubusercontent.com/sistarry/toolbox/main/CN/xtjk.sh) ;;
+        41) bash <(curl -fsSL https://v6.gh-proxy.org/https://raw.githubusercontent.com/sistarry/toolbox/main/VPS/firewall.sh) ;;
+        42) bash <(curl -fsSL https://v6.gh-proxy.org/https://raw.githubusercontent.com/sistarry/toolbox/main/VPS/fail2ban.sh) ;;
+        43) bash <(curl -fsSL https://v6.gh-proxy.org/https://raw.githubusercontent.com/sistarry/toolbox/main/VPS/crontab.sh) ;;
+        44) bash <(curl -sL https://cdn.kxy.ovh/kxy.sh) ;;
+        45) bash <(curl -sL https://v6.gh-proxy.org/https://raw.githubusercontent.com/sistarry/toolbox/main/toy/GProxy.sh) ;;
+        46) bash <(curl -sL https://v6.gh-proxy.org/https://raw.githubusercontent.com/sistarry/toolbox/main/CN/CNnezha.sh) ;;
+        47) sed -i 's/disable_command_execute: false/disable_command_execute: true/' /opt/nezha/agent/config.yml && systemctl restart nezha-agent ;;
+        48) bash <(curl -sL https://v6.gh-proxy.org/https://raw.githubusercontent.com/sistarry/toolbox/main/Docker/nzagent.sh) ;;
+        49) sudo systemctl stop komari-agent && sudo systemctl disable komari-agent && sudo rm -f /etc/systemd/system/komari-agent.service && sudo systemctl daemon-reload && sudo rm -rf /opt/komari /var/log/komari ;;
+        50) bash <(curl -fsSL https://v6.gh-proxy.org/https://raw.githubusercontent.com/sistarry/toolbox/main/CN/cnrestore.sh) ;;
+        51) bash <(curl -fsSL https://v6.gh-proxy.org/https://raw.githubusercontent.com/sistarry/toolbox/main/VPS/beifen.sh) ;;
+        52) bash <(curl -fsSL https://v6.gh-proxy.org/https://raw.githubusercontent.com/sistarry/toolbox/main/toy/Rrsync.sh) ;;
+        53) bash <(curl -sL https://v6.gh-proxy.org/https://raw.githubusercontent.com/sistarry/toolbox/main/VPS/yasuo.sh) ;;
+        54) bash <(curl -fsSL https://v6.gh-proxy.org/https://raw.githubusercontent.com/sistarry/toolbox/main/VPS/tarzip.sh) ;;
 
         #   自动更新
         77) bash <(curl -fsSL https://v6.gh-proxy.org/https://raw.githubusercontent.com/sistarry/toolbox/main/CN/toolupdate.sh) ;;
