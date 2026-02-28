@@ -18,9 +18,9 @@ menu() {
         STATUS="已启用 (${CUR_SWAP})"
     fi
 
-    echo -e "${GREEN}====== VPS SWAP 管理 =======${RESET}"
+    echo -e "${GREEN}====== VPS SWAP 管理 =========${RESET}"
     echo -e "${GREEN}当前 SWAP 状态: ${YELLOW}${STATUS}${RESET}"
-    echo -e "${GREEN}============================${RESET}"
+    echo -e "${GREEN}==============================${RESET}"
     echo -e "${GREEN}1. 添加SWAP(默认1G)${RESET}"
     echo -e "${GREEN}2. 删除SWAP${RESET}"
     echo -e "${GREEN}3. 查看SWAP${RESET}"
