@@ -6,6 +6,15 @@ YELLOW="\033[33m"
 RED="\033[31m"
 RESET="\033[0m"
 
+generate_random_email() {
+    RAND_STR=$(tr -dc a-z0-9 </dev/urandom | head -c 10)
+    echo "${RAND_STR}@gmail.com"
+}
+
+validate_email() {
+    [[ "$1" =~ ^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$ ]]
+}
+
 pause() {
     echo -ne "${YELLOW}按回车返回菜单...${RESET}"
     read
@@ -183,8 +192,41 @@ install_nginx() {
     configure_firewall
     systemctl daemon-reload
     systemctl enable --now nginx
+    echo
+    echo -ne "${YELLOW}是否现在配置反向代理并申请证书？(Y/n,默认Y): ${RESET}"
+    read CONFIRM
 
-    echo -ne "${GREEN}请输入邮箱地址: ${RESET}"; read EMAIL
+    # 默认 Y
+    CONFIRM=${CONFIRM:-Y}
+
+    if [[ ! "$CONFIRM" =~ ^[Yy]$ ]]; then
+        echo -e "${RED}已取消配置退出${RESET}"
+        exit 0
+    fi
+
+    EMAIL_FILE="/etc/nginx/.cert_emails"
+    # 如果已有邮箱记录，默认使用第一个
+    if [ -f "$EMAIL_FILE" ] && [ -s "$EMAIL_FILE" ]; then
+        DEFAULT_EMAIL=$(head -n1 "$EMAIL_FILE")
+    else
+        DEFAULT_EMAIL=$(generate_random_email)
+    fi
+
+    echo -ne "${GREEN}请输入邮箱地址 (回车自动生成: ${DEFAULT_EMAIL}): ${RESET}"
+    read EMAIL
+    EMAIL=${EMAIL:-$DEFAULT_EMAIL}
+
+    if ! validate_email "$EMAIL"; then
+        echo -e "${RED}邮箱格式不正确${RESET}"
+        pause
+        return
+    fi
+
+    echo -e "${GREEN}使用邮箱: ${EMAIL}${RESET}"
+
+    # 保存邮箱
+    echo "$EMAIL" >> "$EMAIL_FILE"
+    sort -u "$EMAIL_FILE" -o "$EMAIL_FILE"
     echo -ne "${GREEN}请输入域名: ${RESET}"; read DOMAIN
     check_domain_resolution "$DOMAIN"
     echo -ne "${GREEN}请输入反代目标: ${RESET}"; read TARGET
@@ -205,48 +247,58 @@ install_nginx() {
 
 add_config() {
     mkdir -p /etc/nginx/sites-available /etc/nginx/sites-enabled
-    echo -ne "${GREEN}请输入域名: ${RESET}"; read DOMAIN
+
+    echo -ne "${GREEN}请输入域名: ${RESET}"
+    read DOMAIN
     check_domain_resolution "$DOMAIN"
-    echo -ne "${GREEN}请输入反代目标: ${RESET}"; read TARGET
+
+    echo -ne "${GREEN}请输入反代目标: ${RESET}"
+    read TARGET
 
     EMAIL_FILE="/etc/nginx/.cert_emails"
-    if [ -f "$EMAIL_FILE" ]; then
-        EMAILS=($(cat "$EMAIL_FILE"))
+    # 如果已有邮箱记录，默认使用第一个
+    if [ -f "$EMAIL_FILE" ] && [ -s "$EMAIL_FILE" ]; then
+        DEFAULT_EMAIL=$(head -n1 "$EMAIL_FILE")
     else
-        EMAILS=()
+        DEFAULT_EMAIL=$(generate_random_email)
     fi
 
-    if [ ${#EMAILS[@]} -gt 0 ]; then
-        echo -e "${GREEN}已有邮箱列表:${RESET}"
-        for i in "${!EMAILS[@]}"; do
-            echo -e "${GREEN}$((i+1))) ${EMAILS[$i]}${RESET}"
-        done
-        echo -ne "${GREEN}请选择邮箱编号 (或输入新邮箱): ${RESET}"; read choice
-        if [[ "$choice" =~ ^[0-9]+$ ]] && [ "$choice" -ge 1 ] && [ "$choice" -le ${#EMAILS[@]} ]; then
-            EMAIL="${EMAILS[$((choice-1))]}"
-        else
-            EMAIL="$choice"
-            echo "$EMAIL" >> "$EMAIL_FILE"
-            sort -u "$EMAIL_FILE" -o "$EMAIL_FILE"
-        fi
-    else
-        echo -ne "${GREEN}请输入邮箱地址: ${RESET}"; read EMAIL
-        echo "$EMAIL" > "$EMAIL_FILE"
+    echo -ne "${GREEN}请输入邮箱地址 (回车自动生成: ${DEFAULT_EMAIL}): ${RESET}"
+    read EMAIL
+    EMAIL=${EMAIL:-$DEFAULT_EMAIL}
+
+    if ! validate_email "$EMAIL"; then
+        echo -e "${RED}邮箱格式不正确${RESET}"
+        pause
+        return
     fi
 
-    echo -ne "${GREEN}是否为 WebSocket 反代? (y/n，回车默认 y): ${RESET}"; read IS_WS
+    echo -e "${GREEN}使用邮箱: ${EMAIL}${RESET}"
+
+    echo "$EMAIL" >> "$EMAIL_FILE"
+    sort -u "$EMAIL_FILE" -o "$EMAIL_FILE"
+
+    echo -ne "${GREEN}是否为 WebSocket 反代? (y/n，回车默认 y): ${RESET}"
+    read IS_WS
     IS_WS=${IS_WS:-y}
 
     echo -ne "${GREEN}请输入最大上传大小 (默认 200M): ${RESET}"
     read MAX_SIZE
     MAX_SIZE=${MAX_SIZE:-200M}
 
-    [ -f "/etc/nginx/sites-available/$DOMAIN" ] && echo -e "${YELLOW}配置已存在${RESET}" && pause && return
+    if [ -f "/etc/nginx/sites-available/$DOMAIN" ]; then
+        echo -e "${YELLOW}配置已存在${RESET}"
+        pause
+        return
+    fi
 
     certbot certonly --nginx -d "$DOMAIN" --non-interactive --agree-tos -m "$EMAIL"
+
     generate_server_config "$DOMAIN" "$TARGET" "$IS_WS" "$MAX_SIZE"
     create_default_server
+
     nginx -t && systemctl reload nginx
+
     echo -e "${GREEN}添加完成！访问: https://$DOMAIN${RESET}"
     pause
 }
@@ -281,10 +333,24 @@ modify_config() {
     echo -ne "${GREEN}请输入最大上传大小 (默认 200M): ${RESET}"
     read MAX_SIZE
     MAX_SIZE=${MAX_SIZE:-200M}
-    echo -ne "${GREEN}是否更新邮箱? (y/n，回车默认 n): ${RESET}"; read c
+    echo -ne "${GREEN}是否更新邮箱? (y/n，回车默认 n): ${RESET}"
+    read c
     c=${c:-n}
+
     if [[ "$c" == "y" ]]; then
-        echo -ne "${GREEN}新邮箱: ${RESET}"; read EMAIL
+        DEFAULT_EMAIL=$(generate_random_email)
+        echo -ne "${GREEN}请输入新邮箱 (回车默认: ${DEFAULT_EMAIL}): ${RESET}"
+        read EMAIL
+        EMAIL=${EMAIL:-$DEFAULT_EMAIL}
+
+        if ! validate_email "$EMAIL"; then
+            echo -e "${RED}邮箱格式不正确${RESET}"
+            pause
+            return
+        fi
+
+        echo -e "${GREEN}使用邮箱: ${EMAIL}${RESET}"
+
         certbot certonly --nginx -d "$DOMAIN" --non-interactive --agree-tos -m "$EMAIL"
     fi
     generate_server_config "$DOMAIN" "$TARGET" "$IS_WS" "$MAX_SIZE"
