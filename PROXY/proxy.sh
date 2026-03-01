@@ -240,6 +240,7 @@ while true; do
     echo -e "${YELLOW}[06] Realm-xwPF${RESET}"
     echo -e "${YELLOW}[07] ZelayRealm转发面板${RESET}"
     echo -e "${YELLOW}[08] Realm转发(Web面板)${RESET}"
+    echo -e "${YELLOW}[09] NodePass${RESET}"
     echo -e "${GREEN}[0]  返回${RESET}"
     echo -e "${GREEN}[x]  退出${RESET}"
     
@@ -249,11 +250,12 @@ while true; do
         01) bash <(curl -fsSL https://raw.githubusercontent.com/Aurora-Admin-Panel/deploy/main/install.sh) ; pause_return ;;
         02) bash <(curl -fsSL https://raw.githubusercontent.com/sistarry/toolbox/main/PROXY/dlam.sh) ; pause_return ;;
         03) wget --no-check-certificate -O gost.sh https://raw.githubusercontent.com/qqrrooty/EZgost/main/gost.sh && chmod +x gost.sh && ./gost.sh ; pause_return ;;
-        04) bash <(curl -sL https://raw.githubusercontent.com/sistarry/toolbox/main/PROXY/GOSTPaneldocker.sh) ; pause_return ;;
+        04) bash <(curl -sL https://raw.githubusercontent.com/sistarry/toolbox/main/PROXY/GOSTPanel.sh) ; pause_return ;;
         05) wget -N https://raw.githubusercontent.com/qqrrooty/EZrealm/main/realm.sh && chmod +x realm.sh && ./realm.sh ; pause_return ;;
         06) wget -qO- https://raw.githubusercontent.com/zywe03/realm-xwPF/main/xwPF.sh | sudo bash -s install ; pause_return ;;
         07) bash <(curl -sL https://raw.githubusercontent.com/sistarry/toolbox/main/PROXY/ZelayRealm.sh) ; pause_return ;;
         08) bash <(curl -fsSL https://raw.githubusercontent.com/hiapb/hia-realm/main/install.sh) ; pause_return ;;
+        09) bash <(curl -sL https://raw.githubusercontent.com/sistarry/toolbox/main/PROXY/NodePass.sh) ; pause_return ;;
         0) return ;;
         *) echo -e "${RED}无效选项${RESET}"; sleep 1 ;;
     esac
@@ -271,7 +273,7 @@ while true; do
     echo -e "${ORANGE}╚══════════════════════╝${RESET}"
     echo -e "${YELLOW}[01] WireGuard${RESET}"
     echo -e "${YELLOW}[02] WG-Easy${RESET}"
-    echo -e "${YELLOW}[03] easytier组网${RESET}"
+    echo -e "${YELLOW}[03] Easytier组网${RESET}"
     echo -e "${YELLOW}[04] FRP-Panel(Web面板)${RESET}"
     echo -e "${YELLOW}[05] FRP工具(快速部署FRP服务端/客户端)${RESET}"
     echo -e "${YELLOW}[06] 安装frpc-manager(客户端管理)${RESET}"
