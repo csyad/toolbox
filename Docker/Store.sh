@@ -209,6 +209,7 @@ declare -A apps=(
     [12,8]="gcli2api"
     [12,9]="Sub2API"
     [12,10]="octopusAPI聚合"
+    [12,11]="AIClient2API"
 
 )
 
@@ -378,6 +379,7 @@ declare -A commands=(
     [12,8]='bash <(curl -sL https://raw.githubusercontent.com/sistarry/toolbox/main/Docker/gcli2api.sh)'
     [12,9]='bash <(curl -sL https://raw.githubusercontent.com/sistarry/toolbox/main/Docker/sub2api.sh)'
     [12,10]='bash <(curl -sL https://raw.githubusercontent.com/sistarry/toolbox/main/Docker/Octopus.sh)'
+    [12,11]='bash <(curl -sL https://raw.githubusercontent.com/sistarry/toolbox/main/Docker/AIClient2API.sh)'
 )
 
 # ================== 菜单显示函数 ==================
