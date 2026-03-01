@@ -82,7 +82,7 @@ show_menu() {
     echo -e "${GREEN}         🌍 通用时区管理${RESET}"
     echo -e "${GREEN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${RESET}"
     echo -e "${GREEN} 当前时区:${YELLOW} $(get_timezone)${RESET}"
-    echo -e "${GREEN} 1) 设置为 UTC全球标准${RESET}"
+    echo -e "${GREEN} 1) 设置为 Etc/UTC全球标准${RESET}"
     echo -e "${GREEN} 2) 设置为 Asia/Shanghai (中国)${RESET}"
     echo -e "${GREEN} 3) 设置为 America/New_York(美国)${RESET}"
     echo -e "${GREEN} 4) 设置为 Europe/London(英国)${RESET}"
@@ -97,7 +97,7 @@ while true; do
     read choice
     case "$choice" in 
         1)
-            set_timezone "UTC"
+            set_timezone "Etc/UTC"
             read -p "按回车继续..."
             ;;
         2)
