@@ -91,16 +91,26 @@ install_app() {
     ECN=true  # 固定开启
 
     # ===== 生成 Snell 配置文件 =====
-    cat > "$CONF_DIR/snell.conf" <<EOF
+if [[ "$IPv6" == "true" ]]; then
+    SNELL_LISTEN="[::]:$PORT"
+    LISTEN_ADDR="[::]:${TLS_PORT}"
+    SERVER_ADDR="[::1]:${PORT}"
+else
+    SNELL_LISTEN="0.0.0.0:$PORT"
+    LISTEN_ADDR="0.0.0.0:${TLS_PORT}"
+    SERVER_ADDR="127.0.0.1:${PORT}"
+fi
+
+cat > "$CONF_DIR/snell.conf" <<EOF
 [snell-server]
-listen = $( [[ "$IPv6" == "true" ]] && echo "::0" || echo "0.0.0.0" ):$PORT
+listen = $SNELL_LISTEN
 psk = $PSK
 ipv6 = $IPv6
 $( [[ "$OBFS" == "http" ]] && echo "obfs = http" && echo "obfs_host = $OBFS_HOST" )
 EOF
 
-    # ===== 生成 Docker Compose 文件 =====
-    cat > "$COMPOSE_FILE" <<EOF
+# ===== 生成 Docker Compose 文件 =====
+cat > "$COMPOSE_FILE" <<EOF
 services:
   snell:
     image: accors/snell:latest
@@ -120,12 +130,11 @@ services:
     environment:
       MODE: server
       V3: 1
-      LISTEN: 0.0.0.0:${TLS_PORT}
-      SERVER: 127.0.0.1:${PORT}
-      TLS: ${TLS_HOST}:443
-      PASSWORD: ${TLS_PASSWORD}
+      LISTEN: "${LISTEN_ADDR}"
+      SERVER: "${SERVER_ADDR}"
+      TLS: "${TLS_HOST}:443"
+      PASSWORD: "${TLS_PASSWORD}"
 EOF
-
     cd "$APP_DIR" || exit
     docker compose up -d
 
@@ -140,6 +149,7 @@ EOF
     echo -e "${YELLOW}🔑 Snell PSK: ${PSK}${RESET}"
     echo -e "${YELLOW}🔑 ShadowTLS 密码: ${TLS_PASSWORD}${RESET}"
     echo -e "${GREEN}📂 安装目录: $APP_DIR${RESET}"
+    echo -e "${YELLOW}📄 V6VPS替换IP地址为V6⭐${RESET}"
 
     echo -e "${GREEN}====== 客户端配置示例 ======${RESET}"
     echo -e "${YELLOW}ShadowTLS:${RESET}"
