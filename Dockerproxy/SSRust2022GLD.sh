@@ -162,7 +162,7 @@ EOF
     echo -e "${YELLOW}Shadowsocks Rust 配置：${RESET}"
     echo -e "${YELLOW}地址：$IP${RESET}"
     echo -e "${YELLOW}端口：$PORT${RESET}"
-    echo -e "${YELLOW} 密码：$PASSWORD${RESET}"
+    echo -e "${YELLOW}密码：$PASSWORD${RESET}"
     echo -e "${YELLOW}加密：$METHOD${RESET}"
     echo
     # 先生成 Base64
@@ -170,7 +170,7 @@ EOF
     SS_LINK_V4="ss://${BASE64_V4}"
     echo -e "${YELLOW}📄 V6VPS替换IP地址为V6 ★${RESET}"
     echo -e "${YELLOW}订阅链接：${RESET}"
-    echo -e "${YELLOW} $SS_LINK_V4#$NODE_NAME${RESET}"
+    echo -e "${YELLOW}$SS_LINK_V4#$NODE_NAME${RESET}"
     echo -e "${YELLOW}Surge配置：${RESET}"
     echo -e "${YELLOW}$NODE_NAME = ss, $IP,$PORT, encrypt-method=$METHOD, password=$PASSWORD, tfo=true, udp-relay=true, ecn=true${RESET}"
     echo
