@@ -152,17 +152,28 @@ EOF
     echo "=============================="
     echo -e "${GREEN}📂 安装目录: $APP_DIR${RESET}"
     echo -e "${YELLOW}📄 V6VPS替换IP地址为V6⭐${RESET}"
-    # 生成 ss 链接
-    BASE=$(echo -n "${METHOD}:${SS_PASSWORD}@${IP4}:${TLS_PORT}" | base64 -w 0)
+    # ===== 生成 SS + ShadowTLS v3 链接 =====
 
-    PLUGIN="shadow-tls%3Bhost%3D${TLS_HOST}%3Bpassword%3D${TLS_PASSWORD}%3Bv3%3D1"
+    # 获取服务器IP（优先 IPv4）
+    IP4=$(hostname -I | awk '{print $1}')
 
-    SS_LINK="ss://${BASE}?plugin=${PLUGIN}"
+    # 1️⃣ 生成 SS 主体 base64
+    SS_BASE=$(echo -n "${METHOD}:${SS_PASSWORD}" | base64 -w 0)
+
+
+    # 2️⃣ 生成 shadow-tls JSON（稳定版）
+    SHADOWTLS_JSON="{\"version\":\"3\",\"password\":\"${TLS_PASSWORD}\",\"host\":\"${TLS_HOST}\"}"
+ 
+    # 3️⃣ JSON 再 base64
+    SHADOWTLS_BASE=$(echo -n "$SHADOWTLS_JSON" | base64 -w 0)
+
+    # 4️⃣ 组合最终链接
+    SS_LINK="ss://${SS_BASE}@${IP4}:${TLS_PORT}?shadow-tls=${SHADOWTLS_BASE}#$HOSTNAME"
 
     echo
-    echo "ShadowTLS 专用链接："
+    echo "SS + ShadowTLS 链接："
     echo "----------------------------------"
-    echo -e "${YELLOW}$SS_LINK${RESET}"
+    echo -e "${YELLOW}${SS_LINK}${RESET}"
     echo "----------------------------------"
     echo "Surge配置:"
     echo -e "${YELLOW}$HOSTNAME = ss, $IP4, $TLS_PORT, encrypt-method=$METHOD, password=$SS_PASSWORD, shadow-tls-password=$TLS_PASSWORD, shadow-tls-sni=$TLS_HOST, shadow-tls-version=3, tfo=true, udp-relay=true, ecn=true ${RESET}"
