@@ -183,7 +183,7 @@ EOF
     # 4️⃣ 组合最终链接
     SS_LINK="ss://${SS_BASE}@${IP}:${TLS_PORT}?shadow-tls=${SHADOWTLS_BASE}#$HOSTNAME"
 
-    echo -e "${YELLOW}SS + ShadowTLS 链接：${RESET}"
+    echo -e "${YELLOW}SS + ShadowTLS 小火箭订阅链接：${RESET}"
     echo -e "${YELLOW}----------------------------------${RESET}"
     echo -e "${YELLOW}${SS_LINK}${RESET}"
     echo -e "${YELLOW}----------------------------------${RESET}"
