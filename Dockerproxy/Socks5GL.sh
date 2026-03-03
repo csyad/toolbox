@@ -124,6 +124,7 @@ EOF
     SOCKS_LINK="socks://${USERNAME}:${PASSWORD}@${IP}:${PORT}"
     TG_LINK="https://t.me/socks?server=${IP}&port=${PORT}&user=${USERNAME}&pass=${PASSWORD}"
     echo -e "${GREEN}📂 安装目录: $NODE_DIR${RESET}"
+    echo -e "${GREEN}📄 V6VPS替换IP地址为V6⭐${RESET}"
     echo -e "${GREEN}✅ 节点 $NODE_NAME 已启动${RESET}"
     echo -e "${YELLOW}Socks地址:${RESET} ${GREEN}$SOCKS_LINK${RESET}"
     echo -e "${YELLOW}Telegram快链:${RESET} ${GREEN}$TG_LINK${RESET}"
