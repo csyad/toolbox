@@ -164,9 +164,6 @@ while true; do
     echo -e "${YELLOW}[05] fscarmen-ArgoX${RESET}"
     echo -e "${YELLOW}[06] 233boySing-box${RESET}"
     echo -e "${YELLOW}[07] SS+SNELL${RESET}"
-    echo -e "${YELLOW}[08] 多个Reality${RESET}"
-    echo -e "${YELLOW}[09] 多个Snell${RESET}"
-    echo -e "${YELLOW}[10] 多个Socks5${RESET}"
     echo -e "${GREEN}[0]  返回${RESET}"
     echo -e "${GREEN}[x]  退出${RESET}"
 
