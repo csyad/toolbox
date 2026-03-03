@@ -306,7 +306,8 @@ show_all_status() {
     for node in "$APP_DIR"/*; do
         [ -d "$node" ] || continue
         NODE_NAME=$(basename "$node")
-        PORT=$(grep 'listen' "$node/snell-conf/snell.conf" | awk -F: '{print $2}' | tr -d ' ')
+        PORT=$(grep 'listen' "$node/snell-conf/snell.conf" \
+          | sed -E 's/.*:([0-9]+).*/\1/')
         TLS_PORT=$(grep 'LISTEN:' "$node/docker-compose.yml" | head -n1 | sed -E 's/.*:([0-9]+).*/\1/')
         STATUS=$(docker ps --filter "name=snell-$NODE_NAME" --format "{{.Status}}")
         [ -z "$STATUS" ] && STATUS="未启动"
@@ -321,15 +322,15 @@ menu() {
         echo -e "${GREEN}=== Snell + ShadowTLS 多节点管理菜单 ===${RESET}"
         echo -e "${GREEN}1) 安装新节点${RESET}"
         echo -e "${GREEN}2) 管理已有节点${RESET}"
-        echo -e "${GREEN}3) 批量操作节点${RESET}"
-        echo -e "${GREEN}4) 查看所有节点状态${RESET}"
+        echo -e "${GREEN}3) 查看所有节点状态${RESET}"
+        echo -e "${GREEN}4) 批量操作节点${RESET}"
         echo -e "${GREEN}0) 退出${RESET}"
         read -r -p $'\033[32m请选择操作: \033[0m' choice
         case $choice in
             1) install_node ;;
             2) node_action_menu ;;
-            3) batch_action ;;
-            4) show_all_status ;;
+            3) show_all_status ;;
+            4) batch_action ;;
             0) exit 0 ;;
             *) echo -e "${RED}无效选择${RESET}" ; sleep 1 ;;
         esac
