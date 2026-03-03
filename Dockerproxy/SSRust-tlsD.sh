@@ -156,7 +156,7 @@ EOF
     # 获取服务器IP（优先 IPv4）
     IP=$(get_public_ip)
     HOSTNAME=$(hostname -s | sed 's/ /_/g')
-
+    echo
     echo -e "${GREEN}📂 安装目录: $APP_DIR${RESET}${RESET}"
     echo -e "${GREEN}Shadowsocks + ShadowTLS部署完成${RESET}"
     echo -e "${YELLOW}==============================${RESET}"
