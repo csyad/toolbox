@@ -117,7 +117,7 @@ install_node() {
   "inbounds": [
     {
       "type": "tuic",
-      "listen": "0.0.0.0",
+      "listen": "::",
       "listen_port": ${PORT},
       "users": [
         {
@@ -159,9 +159,10 @@ EOF
     docker compose up -d
 
     SERVER_IP=$( hostname -I | awk '{print $1}')
-    echo -e "${GREEN}📂 安装目录: $NODE_DIR${RESET}"
-    echo -e "${GREEN}节点已启动${RESET}"
-    echo -e "${GREEN}tuic://${UUID}:${PASSWORD}@${SERVER_IP}:${PORT}?congestion_control=bbr&alpn=h3&sni=www.bing.com&udp_relay_mode=native&allow_insecure=1#$NODE_NAME${RESET}"
+    echo -e "${GREEN}📂 安装目录: $NODE_DIR⭐${RESET}"
+    echo -e "${GREEN}📄 V6VPS替换IP地址为V6⭐${RESET}"
+    echo -e "${GREEN}节点已启动⭐${RESET}"
+    echo -e "${GREEN}tuic://${UUID}:${PASSWORD}@${SERVER_IP}:${PORT}?congestion_control=bbr&alpn=h3&sni=www.bing.com&udp_relay_mode=native&allow_insecure=1#${NODE_NAME}${RESET}"
     read -p "按回车返回菜单..."
 }
 
