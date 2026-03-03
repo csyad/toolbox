@@ -150,6 +150,7 @@ EOF
 
     echo
     echo -e "${GREEN}📂 安装目录: $APP_DIR${RESET}"
+    echo -e "${GREEN}📄 V6VPS替换IP地址为V6⭐${RESET}"
     echo -e "${GREEN}✅ 安装完成${RESET}"
     echo -e "${YELLOW}${VLESS_LINK}${RESET}"
     read -p "按回车返回菜单..."
