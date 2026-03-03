@@ -158,7 +158,6 @@ EOF
     HOSTNAME=$(hostname -s | sed 's/ /_/g')
 
     echo -e "${GREEN}📂 安装目录: $APP_DIR${RESET}${RESET}"
-    echo
     echo -e "${GREEN}Shadowsocks + ShadowTLS部署完成${RESET}"
     echo -e "${YELLOW}==============================${RESET}"
     echo -e "${YELLOW}服务器IP: $IP${RESET}"
@@ -168,7 +167,6 @@ EOF
     echo -e "${YELLOW}ShadowTLS密码: $TLS_PASSWORD${RESET}"
     echo -e "${YELLOW}SNI: $TLS_HOST${RESET}"
     echo -e "${YELLOW}==============================${RESET}"
-    echo
     echo -e "${YELLOW}📄 V6VPS替换IP地址为V6 ★${RESET}${RESET}"
     # ===== 生成 SS + ShadowTLS v3 链接 =====
 
