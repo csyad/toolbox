@@ -136,9 +136,9 @@ EOF
     echo -e "${YELLOW}IP: ${SERVER_IP} 端口: ${PORT} 密码: ${PASSWORD}${RESET}"
     echo -e "${YELLOW}📄 V6VPS替换IP地址为V6⭐${RESET}"
     echo -e "${YELLOW}V2rayN:${RESET}"
-    echo -e "${YELLOW}anytls://${PASSWORD}@${SERVER_IP}:${PORT}/?sni=www.bing.com&insecure=1#$HOSTNAME${RESET}"
+    echo -e "${YELLOW}anytls://${PASSWORD}@${SERVER_IP}:${PORT}/?sni=www.bing.com&insecure=1#${NODE_NAME}${RESET}"
     echo -e "${YELLOW}Surge:${RESET}"
-    echo -e "${YELLOW}$NODE_NAME = anytls, ${SERVER_IP}, ${PORT}, password=${PASSWORD}, tfo=true, skip-cert-verify=true, reuse=false${RESET}"
+    echo -e "${YELLOW}${NODE_NAME} = anytls, ${SERVER_IP}, ${PORT}, password=${PASSWORD}, tfo=true, skip-cert-verify=true, reuse=false${RESET}"
     read -p "按回车返回菜单..."
 }
 
