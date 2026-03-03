@@ -252,7 +252,7 @@ batch_action() {
 
     [ $count -eq 0 ] && { echo -e "${GREEN}无节点${RESET}"; read -r -p $'\033[32m按回车返回菜单...\033[0m'; return; }
 
-    read -r -p $'\033[32m输入序号(空格)或 all:\033[0m ' input
+    read -r -p $'\033[32m 请输入节点序号（空格分隔，或 all 全选）:\033[0m ' input
 
     # 处理输入
     if [[ "$input" == "all" ]]; then
