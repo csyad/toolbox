@@ -326,7 +326,7 @@ batch_action() {
 
     [ $count -eq 0 ] && { echo -e "${YELLOW}无节点${RESET}"; read -p "回车返回..."; return; }
 
-    read -r -p $'\033[32m输入序号(空格分隔)或 all:\033[0m ' input
+    read -r -p $'\033[32m 请输入节点序号（空格分隔，或 all 全选）:\033[0m ' input
 
     if [[ "$input" == "all" ]]; then
         SELECTED=("${NODE_MAP[@]}")
