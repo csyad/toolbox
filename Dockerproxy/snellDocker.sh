@@ -9,7 +9,7 @@ RED="\033[31m"
 RESET="\033[0m"
 
 APP_NAME="snelldocker"
-APP_DIR="/root/$APP_NAME"
+APP_DIR="/opt/$APP_NAME"
 CONF_DIR="$APP_DIR/snell-conf"
 COMPOSE_FILE="$APP_DIR/docker-compose.yml"
 CONTAINER_NAME="snell"
