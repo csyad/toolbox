@@ -59,14 +59,16 @@ check_ufw(){
 # ================== 初始化环境 ==================
 init_env(){
 
-    for pkg in ipset iptables curl iptables-persistent; do
-        if ! dpkg -s "$pkg" >/dev/null 2>&1; then
-            echo "正在安装依赖..."
-            apt-get update -qq
-            apt-get install -y ipset iptables curl iptables-persistent >/dev/null 2>&1
-            break
-        fi
-    done
+    export DEBIAN_FRONTEND=noninteractive
+
+    apt-get update
+
+    apt-get install -y \
+        ipset \
+        iptables \
+        curl \
+        iptables-persistent \
+        netfilter-persistent
 
     check_iptables_mode >/dev/null 2>&1
     check_ufw >/dev/null 2>&1
