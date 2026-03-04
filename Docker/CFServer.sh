@@ -17,8 +17,25 @@ red(){ echo -e "${RED}$1${RESET}"; }
 CF_DIR="/opt/cfserver"
 SCRIPT_NAME="cfserver.sh"
 
+
+
+get_public_ip() {
+    local ip
+    for cmd in "curl -4s --max-time 5" "wget -4qO- --timeout=5"; do
+        for url in "https://api.ipify.org" "https://ip.sb" "https://checkip.amazonaws.com"; do
+            ip=$($cmd "$url" 2>/dev/null) && [[ -n "$ip" ]] && echo "$ip" && return
+        done
+    done
+    for cmd in "curl -6s --max-time 5" "wget -6qO- --timeout=5"; do
+        for url in "https://api64.ipify.org" "https://ip.sb"; do
+            ip=$($cmd "$url" 2>/dev/null) && [[ -n "$ip" ]] && echo "$ip" && return
+        done
+    done
+    echo "无法获取公网 IP 地址。"
+}
+
 # 获取服务器IP
-SERVER_IP=$(hostname -I | awk '{print $1}')
+SERVER_IP=$(get_public_ip)
 
 install_cf() {
 
