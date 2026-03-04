@@ -10,7 +10,7 @@ RESET="\033[0m"
 
 CONTAINER_NAME="xray-server"
 APP_NAME="xray-vmess-ws-tls"
-APP_DIR="/root/$APP_NAME"
+APP_DIR="/opt/$APP_NAME"
 COMPOSE_FILE="$APP_DIR/compose.yml"
 CONFIG_FILE="$APP_DIR/config.json"
 
