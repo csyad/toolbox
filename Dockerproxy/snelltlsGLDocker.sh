@@ -9,7 +9,7 @@ RED="\033[31m"
 RESET="\033[0m"
 
 APP_NAME="snelltls"
-APP_DIR="/opt/$APP_NAME"
+APP_DIR="/root/$APP_NAME"
 
 check_docker() {
     if ! command -v docker &>/dev/null; then
