@@ -9,7 +9,7 @@ RED="\033[31m"
 RESET="\033[0m"
 
 APP_NAME="ShadowsocksRust+shadow-tls"
-APP_DIR="/root/$APP_NAME"
+APP_DIR="/opt/$APP_NAME"
 COMPOSE_FILE="$APP_DIR/compose.yml"
 CONFIG_FILE="$APP_DIR/config.json"
 
