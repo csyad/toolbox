@@ -9,7 +9,7 @@ RED="\033[31m"
 RESET="\033[0m"
 
 APP_NAME="Singbox-tuicv5"
-APP_DIR="/opt/$APP_NAME"
+APP_DIR="/root/$APP_NAME"
 
 # =========================
 # Docker 检测
