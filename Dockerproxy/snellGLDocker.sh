@@ -154,7 +154,7 @@ EOF
     echo -e "${YELLOW}🔑 PSK: ${PSK}${RESET}"
     echo -e "${YELLOW}📄 V6VPS替换IP地址为V6 ★${RESET}"
     echo -e "${YELLOW}📄 客户端配置模板:${RESET}"
-    echo -e "${YELLOW} $NODE_NAME = snell, ${IP}, ${PORT}, psk=${PSK}, version=5, tfo=${TFO}, ecn=${ECN}${RESET}"
+    echo -e "${YELLOW}$NODE_NAME = snell, ${IP}, ${PORT}, psk=${PSK}, version=5, tfo=${TFO}, ecn=${ECN}${RESET}"
     read -r -p $'\033[32m按回车返回菜单...\033[0m'
 }
 
