@@ -10,7 +10,7 @@ RED="\033[31m"
 RESET="\033[0m"
 
 APP_NAME="hysteria"
-APP_DIR="/opt/$APP_NAME"
+APP_DIR="/root/$APP_NAME"
 MASQ_URL="https://bing.com"
 
 check_docker() {
