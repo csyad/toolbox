@@ -15,6 +15,22 @@ APP_DIR="/opt/qbittorrent"
 CONFIG_DIR="$APP_DIR/config"
 DOWNLOAD_DIR="$APP_DIR/downloads"
 
+get_public_ip() {
+    local ip
+    for cmd in "curl -4s --max-time 5" "wget -4qO- --timeout=5"; do
+        for url in "https://api.ipify.org" "https://ip.sb" "https://checkip.amazonaws.com"; do
+            ip=$($cmd "$url" 2>/dev/null) && [[ -n "$ip" ]] && echo "$ip" && return
+        done
+    done
+    for cmd in "curl -6s --max-time 5" "wget -6qO- --timeout=5"; do
+        for url in "https://api64.ipify.org" "https://ip.sb"; do
+            ip=$($cmd "$url" 2>/dev/null) && [[ -n "$ip" ]] && echo "$ip" && return
+        done
+    done
+    echo "无法获取公网 IP 地址。"
+}
+
+
 # 检查并创建目录
 mkdir -p "$CONFIG_DIR" "$DOWNLOAD_DIR"
 chown -R $(whoami):$(whoami) "$APP_DIR"
@@ -47,8 +63,9 @@ EOF
     sudo systemctl start qbittorrent
     sudo systemctl enable qbittorrent
 
+    SERVER_IP=$(get_public_ip)
     echo -e "${GREEN}qBittorrent-Nox 安装完成并已启动!${RESET}"
-    echo -e "${YELLOW}WebUI 访问地址: http://$(hostname -I | awk '{print $1}'):8080${RESET}"
+    echo -e "${YELLOW}WebUI 访问地址: http://${SERVER_IP}:8080${RESET}"
     echo -e "${YELLOW}默认用户名: admin, 默认密码:查看日志${RESET}"
     echo -e "${GREEN}配置目录: $CONFIG_DIR${RESET}"
     echo -e "${GREEN}下载目录: $DOWNLOAD_DIR${RESET}"
