@@ -10,7 +10,7 @@ RESET="\033[0m"
 
 APP_NAME="ShadowsocksRust+shadow-tls"
 APP_DIR="/opt/$APP_NAME"
-COMPOSE_FILE="$APP_DIR/compose.yml"
+COMPOSE_FILE="$APP_DIR/docker-compose.yml"
 CONFIG_FILE="$APP_DIR/config.json"
 
 METHOD="2022-blake3-aes-256-gcm"
