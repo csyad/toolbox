@@ -113,7 +113,32 @@ chmod +x $UPDATE_SCRIPT
 green "已设置每日 03:00 自动更新IP库"
 }
 
-# ================== 应用规则 ==================
+
+# ================== 原子更新 ipset ==================
+update_ipset(){
+    local SET_NAME=$1
+    local FILE=$2
+    local FAMILY=$3
+
+    [[ ! -s "$FILE" ]] && {
+        red "IP库文件为空，跳过 $SET_NAME"
+        return 1
+    }
+
+    ipset create $SET_NAME hash:net family $FAMILY -exist
+    ipset create ${SET_NAME}_tmp hash:net family $FAMILY -exist
+    ipset flush ${SET_NAME}_tmp
+
+    while read -r ip; do
+        [[ -n "$ip" ]] && ipset add ${SET_NAME}_tmp "$ip" 2>/dev/null
+    done < "$FILE"
+
+    ipset swap ${SET_NAME}_tmp $SET_NAME
+    ipset destroy ${SET_NAME}_tmp
+
+    return 0
+}
+
 apply_rules(){
 
     source $CONF 2>/dev/null
@@ -121,117 +146,60 @@ apply_rules(){
 
     SSH_PORT=$(get_ssh_port)
     [[ -z "$SSH_PORT" ]] && SSH_PORT=22
-    green "检测到 SSH 端口: $SSH_PORT"
 
-    # ===== 创建主链（不存在才创建）=====
-    iptables  -L GEO_CHAIN >/dev/null 2>&1 || iptables  -N GEO_CHAIN
-    ip6tables -L GEO_CHAIN >/dev/null 2>&1 || ip6tables -N GEO_CHAIN
+    green "SSH端口: $SSH_PORT"
 
-    iptables  -C INPUT -j GEO_CHAIN 2>/dev/null || iptables  -I INPUT -j GEO_CHAIN
+    iptables -N GEO_CHAIN 2>/dev/null
+    ip6tables -N GEO_CHAIN 2>/dev/null
+
+    iptables -C INPUT -j GEO_CHAIN 2>/dev/null || iptables -I INPUT -j GEO_CHAIN
     ip6tables -C INPUT -j GEO_CHAIN 2>/dev/null || ip6tables -I INPUT -j GEO_CHAIN
 
-    # ===== 基础放行规则（防重复）=====
-    iptables -C GEO_CHAIN -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT 2>/dev/null || \
-    iptables -A GEO_CHAIN -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
+    iptables -F GEO_CHAIN
+    ip6tables -F GEO_CHAIN
 
-    ip6tables -C GEO_CHAIN -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT 2>/dev/null || \
+    iptables -A GEO_CHAIN -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
     ip6tables -A GEO_CHAIN -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
 
     MYIP=$(get_my_ip)
-    [[ -n "$MYIP" ]] && \
-    iptables -C GEO_CHAIN -s $MYIP -j ACCEPT 2>/dev/null || \
-    iptables -A GEO_CHAIN -s $MYIP -j ACCEPT
+    [[ -n "$MYIP" ]] && iptables -A GEO_CHAIN -s $MYIP -j ACCEPT
 
-    iptables -C GEO_CHAIN -p tcp --dport $SSH_PORT -j ACCEPT 2>/dev/null || \
     iptables -A GEO_CHAIN -p tcp --dport $SSH_PORT -j ACCEPT
-
-    ip6tables -C GEO_CHAIN -p tcp --dport $SSH_PORT -j ACCEPT 2>/dev/null || \
     ip6tables -A GEO_CHAIN -p tcp --dport $SSH_PORT -j ACCEPT
 
-    # ===== 白名单 =====
     for ip in $WHITELIST; do
-        iptables  -C GEO_CHAIN -s $ip -j ACCEPT 2>/dev/null || \
-        iptables  -A GEO_CHAIN -s $ip -j ACCEPT
-
-        ip6tables -C GEO_CHAIN -s $ip -j ACCEPT 2>/dev/null || \
+        iptables -A GEO_CHAIN -s $ip -j ACCEPT
         ip6tables -A GEO_CHAIN -s $ip -j ACCEPT
     done
 
-    # ===== 国家规则 =====
     for CC in $COUNTRIES; do
         CC_L=$(echo $CC | tr A-Z a-z)
-
-        V4SET="geo_${CC_L}_v4"
-        V6SET="geo_${CC_L}_v6"
 
         V4FILE="/opt/geoip/${CC_L}.zone"
         V6FILE="/opt/geoip/${CC_L}.ipv6.zone"
 
-        # 下载IP库
         curl -s -o $V4FILE https://www.ipdeny.com/ipblocks/data/countries/$CC_L.zone
         curl -s -o $V6FILE https://www.ipdeny.com/ipv6/ipaddresses/aggregated/$CC_L-aggregated.zone
 
-        # 创建ipset（不删除旧数据）
-        ipset create $V4SET hash:net family inet -exist
-        ipset create $V6SET hash:net family inet6 -exist
+        update_ipset "geo_${CC_L}_v4" "$V4FILE" inet || continue
+        update_ipset "geo_${CC_L}_v6" "$V6FILE" inet6 || continue
 
-        while read -r ip; do
-            [[ -n "$ip" ]] && ipset add $V4SET "$ip" 2>/dev/null
-        done < "$V4FILE"
-
-        [[ -f "$V6FILE" ]] && while read -r ip; do
-            [[ -n "$ip" ]] && ipset add $V6SET "$ip" 2>/dev/null
-        done < "$V6FILE"
-
-        # ===== 应用iptables规则 =====
-        if [[ "$PORTS" == "all" ]]; then
-            for proto in tcp udp; do
-                if [[ "$MODE" == "block" ]]; then
-
-                    iptables  -C GEO_CHAIN -p $proto -m set --match-set $V4SET src -j DROP 2>/dev/null || \
-                    iptables  -A GEO_CHAIN -p $proto -m set --match-set $V4SET src -j DROP
-
-                    ip6tables -C GEO_CHAIN -p $proto -m set --match-set $V6SET src -j DROP 2>/dev/null || \
-                    ip6tables -A GEO_CHAIN -p $proto -m set --match-set $V6SET src -j DROP
-
-                else
-
-                    iptables  -C GEO_CHAIN -p $proto -m set ! --match-set $V4SET src -j DROP 2>/dev/null || \
-                    iptables  -A GEO_CHAIN -p $proto -m set ! --match-set $V4SET src -j DROP
-
-                    ip6tables -C GEO_CHAIN -p $proto -m set ! --match-set $V6SET src -j DROP 2>/dev/null || \
-                    ip6tables -A GEO_CHAIN -p $proto -m set ! --match-set $V6SET src -j DROP
-
-                fi
-            done
-        else
-            for p in $PORTS; do
-                for proto in tcp udp; do
-                    if [[ "$MODE" == "block" ]]; then
-
-                        iptables  -C GEO_CHAIN -p $proto --dport $p -m set --match-set $V4SET src -j DROP 2>/dev/null || \
-                        iptables  -A GEO_CHAIN -p $proto --dport $p -m set --match-set $V4SET src -j DROP
-
-                        ip6tables -C GEO_CHAIN -p $proto --dport $p -m set --match-set $V6SET src -j DROP 2>/dev/null || \
-                        ip6tables -A GEO_CHAIN -p $proto --dport $p -m set --match-set $V6SET src -j DROP
-
-                    else
-
-                        iptables  -C GEO_CHAIN -p $proto --dport $p -m set ! --match-set $V4SET src -j DROP 2>/dev/null || \
-                        iptables  -A GEO_CHAIN -p $proto --dport $p -m set ! --match-set $V4SET src -j DROP
-
-                        ip6tables -C GEO_CHAIN -p $proto --dport $p -m set ! --match-set $V6SET src -j DROP 2>/dev/null || \
-                        ip6tables -A GEO_CHAIN -p $proto --dport $p -m set ! --match-set $V6SET src -j DROP
-
-                    fi
-                done
-            done
-        fi
+        for proto in tcp udp; do
+            if [[ "$MODE" == "block" ]]; then
+                iptables  -A GEO_CHAIN -p $proto -m set --match-set geo_${CC_L}_v4 src -j DROP
+                ip6tables -A GEO_CHAIN -p $proto -m set --match-set geo_${CC_L}_v6 src -j DROP
+            else
+                iptables  -A GEO_CHAIN -p $proto -m set ! --match-set geo_${CC_L}_v4 src -j DROP
+                ip6tables -A GEO_CHAIN -p $proto -m set ! --match-set geo_${CC_L}_v6 src -j DROP
+            fi
+        done
     done
 
     netfilter-persistent save >/dev/null 2>&1
-    green "Geo v4/v6 防火墙规则已成功应用"
+    green "规则已成功应用"
 }
+
+
 
 # ================== 添加规则 ==================
 add_rule(){
