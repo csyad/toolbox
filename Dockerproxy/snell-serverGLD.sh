@@ -74,7 +74,7 @@ select_node() {
 
 install_node() {
     check_docker
-    read -p "请输入节点名称 [node$(date +%s)]: " NODE_NAME
+    read -p "请输入节点名称 [默认node$(date +%s)]: " NODE_NAME
     NODE_NAME=${NODE_NAME:-node$(date +%s)}
     NODE_DIR="$APP_DIR/$NODE_NAME"
     mkdir -p "$NODE_DIR/data"
