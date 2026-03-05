@@ -10,7 +10,7 @@ RESET="\033[0m"
 
 APP_NAME="xray-reality"
 APP_DIR="/opt/$APP_NAME"
-COMPOSE_FILE="$APP_DIR/compose.yml"
+COMPOSE_FILE="$APP_DIR/docker-compose.yml"
 CONFIG_FILE="$APP_DIR/config.json"
 CONTAINER_NAME="Xray-Reality"
 
