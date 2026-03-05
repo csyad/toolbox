@@ -39,7 +39,7 @@ download_script(){
     mkdir -p "$(dirname "$SCRIPT_PATH")"
     curl -sSL "$SCRIPT_URL" -o "$SCRIPT_PATH"
     chmod +x "$SCRIPT_PATH"
-    green "脚本已更新"
+    green "已更新"
 }
 
 # ================== 获取信息 ==================
@@ -292,7 +292,7 @@ menu(){
     echo -e "${GREEN}3 查看规则${RESET}"
     echo -e "${GREEN}4 添加白名单${RESET}"
     echo -e "${GREEN}5 删除白名单${RESET}"
-    echo -e "${GREEN}6 更新脚本${RESET}"
+    echo -e "${GREEN}6 更新${RESET}"
     echo -e "${GREEN}7 卸载${RESET}"
     echo -e "${GREEN}0 退出${RESET}"
     read -r -p $'\033[32m请选择: \033[0m' num
