@@ -29,8 +29,7 @@ get_public_ip() {
     echo "无法获取公网 IP 地址。"
 }
 
-# 获取服务器IP
-SERVER_IP=$(get_public_ip)
+
 
 
 
@@ -112,6 +111,8 @@ EOF
 
     cd "$APP_DIR" || exit
     docker compose up -d
+
+    SERVER_IP=$(get_public_ip)
 
     echo -e "${GREEN}✅ WG-Easy 已启动${RESET}"
     echo -e "${YELLOW}Web UI: http://${SERVER_IP}:${WEB_PORT}${RESET}"
