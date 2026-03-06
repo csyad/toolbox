@@ -18,6 +18,21 @@ gen_pass() {
     tr -dc A-Za-z0-9 </dev/urandom | head -c 16
 }
 
+get_public_ip() {
+    local ip
+    for cmd in "curl -4s --max-time 5" "wget -4qO- --timeout=5"; do
+        for url in "https://api.ipify.org" "https://ip.sb" "https://checkip.amazonaws.com"; do
+            ip=$($cmd "$url" 2>/dev/null) && [[ -n "$ip" ]] && echo "$ip" && return
+        done
+    done
+    for cmd in "curl -6s --max-time 5" "wget -6qO- --timeout=5"; do
+        for url in "https://api64.ipify.org" "https://ip.sb"; do
+            ip=$($cmd "$url" 2>/dev/null) && [[ -n "$ip" ]] && echo "$ip" && return
+        done
+    done
+    echo "无法获取公网 IP 地址。"
+}
+
 pause() {
     read -p "按回车返回菜单..."
 }
@@ -36,6 +51,7 @@ function menu() {
     echo -e "${GREEN} 8. 查看数据库信息${RESET}"
     echo -e "${GREEN} 9. 备份数据库${RESET}"
     echo -e "${GREEN}10. 恢复数据库${RESET}"
+    echo -e "${GREEN}11. 重启数据库${RESET}"
     echo -e "${GREEN} 0. 退出${RESET}"
     read -p "$(echo -e ${GREEN}请选择:${RESET}) " choice
     case $choice in
@@ -49,10 +65,13 @@ function menu() {
         8) show_info ;;
         9) backup_db ;;
         10) restore_db ;;
+        11) restart_mysql ;;
         0) exit 0 ;;
         *) echo -e "${RED}无效选择${RESET}"; sleep 1; menu ;;
     esac
 }
+
+
 
 # ==================== 安装 ====================
 function install_app() {
@@ -205,11 +224,14 @@ function restore_db() {
 # ==================== 查看信息 ====================
 function show_info() {
     source "$CONFIG_FILE"
+
+    SERVER_IP=$(get_public_ip)
+
     echo -e "${GREEN}📦 数据目录: $APP_DIR/data${RESET}"
     echo -e "${GREEN}⚙️ 配置目录: $APP_DIR/config${RESET}"
     echo -e "${YELLOW}🔑 root 密码: $ROOT_PASSWORD${RESET}"
     echo -e "${YELLOW}端口: $PORT ${RESET}"
-    echo -e "${YELLOW}地址: $(hostname -I | awk '{print $1}')${RESET}"
+    echo -e "${YELLOW}地址: ${SERVER_IP}${RESET}"
 
     # 列出已创建数据库
     echo -e "${GREEN}📂 已创建数据库:${RESET}"
@@ -224,7 +246,12 @@ function show_info() {
 }
 
 
-
+function restart_mysql() {
+    docker restart mysql
+    echo -e "${GREEN}✅ MySQL 已重启${RESET}"
+    pause
+    menu
+}
 
 # ==================== 查看日志 ====================
 function view_logs() {
