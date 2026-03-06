@@ -51,7 +51,7 @@ get_public_ip() {
 }
 
 
-SERVER_IP=$(get_public_ip)
+
 # ==============================
 # 菜单
 # ==============================
@@ -136,6 +136,7 @@ EOF
     cd "$APP_DIR" || exit
     docker compose up -d
 
+    SERVER_IP=$(get_public_ip)
     echo
     echo -e "${GREEN}✅ gcli2api 已启动${RESET}"
     echo -e "${YELLOW}🌐 Web 地址: http://${SERVER_IP}:${PORT}${RESET}"
