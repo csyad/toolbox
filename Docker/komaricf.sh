@@ -15,6 +15,22 @@ DATA_DIR="/opt/komari/data"
 CONTAINER_NAME="komari"
 PORT=25774
 
+get_public_ip() {
+    local ip
+    for cmd in "curl -4s --max-time 5" "wget -4qO- --timeout=5"; do
+        for url in "https://api.ipify.org" "https://ip.sb" "https://checkip.amazonaws.com"; do
+            ip=$($cmd "$url" 2>/dev/null) && [[ -n "$ip" ]] && echo "$ip" && return
+        done
+    done
+    for cmd in "curl -6s --max-time 5" "wget -6qO- --timeout=5"; do
+        for url in "https://api64.ipify.org" "https://ip.sb"; do
+            ip=$($cmd "$url" 2>/dev/null) && [[ -n "$ip" ]] && echo "$ip" && return
+        done
+    done
+    echo "无法获取公网 IP 地址。"
+}
+
+
 menu() {
     clear
     echo -e "${GREEN}=== Komari 管理菜单 ===${RESET}"
@@ -79,7 +95,10 @@ services:
 EOF
 
     docker compose -f "$COMPOSE_FILE" up -d
-    echo -e "${GREEN}✅ 部署完成！访问地址: http://$(curl -s https://api.ipify.org):$PORT${RESET}"
+
+    SERVER_IP=$(get_public_ip)
+
+    echo -e "${GREEN}✅ 部署完成！访问地址: http://${SERVER_IP}:$PORT${RESET}"
     echo -e "${GREEN}用户名: $ADMIN_USERNAME  密码: $ADMIN_PASSWORD${RESET}"
     echo -e "${GREEN}📂 数据目录: /opt/komari${RESET}"
     read -p "按回车返回菜单..." && menu
