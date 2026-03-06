@@ -71,7 +71,7 @@ install_app() {
         echo -e "${YELLOW}首次运行，正在生成默认配置文件...${RESET}"
 
         docker run -d --name ${APP_NAME}-latest \
-            -p ${PORT}:80 \
+            -p 127.0.0.1:${PORT}:80 \
             --restart always \
             $IMAGE_NAME
 
