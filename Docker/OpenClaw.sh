@@ -153,6 +153,13 @@ change_tg_bot_code() {
 }
 
 show_webui() {
+
+     if ! pgrep -f openclaw-gateway >/dev/null 2>&1; then
+        echo -e "${RED}Gateway 未运行${RESET}"
+        read -p "回车继续..."
+        return
+    fi
+    
     echo -e "${GREEN}========OpenClaw WebUI 访问地址=============${RESET}"
 
     local_ip="127.0.0.1"
