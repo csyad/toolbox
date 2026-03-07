@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 GREEN="\033[32m"
 RED="\033[31m"
@@ -8,18 +8,19 @@ SCRIPT_URL="https://raw.githubusercontent.com/sistarry/toolbox/main/Alpine/AZAPR
 
 install_reality() {
     echo -e "${GREEN}正在安装 Reality...${RESET}"
-    bash <(curl -sL $SCRIPT_URL)
+    sh -c "$(curl -sL $SCRIPT_URL)"
     pause
 }
 
 uninstall_reality() {
     echo -e "${GREEN}正在卸载 Reality...${RESET}"
-    bash <(curl -sL $SCRIPT_URL) uninstall
+    sh -c "$(curl -sL $SCRIPT_URL)" uninstall
     pause
 }
 
 pause() {
-    read -p $'\033[32m按回车返回菜单...\033[0m'
+    printf "\033[32m按回车返回菜单...\033[0m"
+    read
     menu
 }
 
@@ -31,9 +32,11 @@ menu() {
     echo -e "${GREEN} 1) 安装 Reality${RESET}"
     echo -e "${GREEN} 2) 卸载 Reality${RESET}"
     echo -e "${GREEN} 0) 退出${RESET}"
-    read -p $'\033[32m 请选择: \033[0m' choice
 
-    case $choice in
+    printf "\033[32m 请选择: \033[0m"
+    read choice
+
+    case "$choice" in
         1) install_reality ;;
         2) uninstall_reality ;;
         0) exit 0 ;;
