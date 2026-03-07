@@ -61,9 +61,9 @@ menu() {
     echo -ne "${RED}请输入操作编号: ${RESET}"
     read choice
     case "$choice" in
-        1) apk update && apk add --no-cache bash curl wget vim tar sudo git 2>/dev/null \
-              || (apt update && apt install -y curl wget vim tar sudo git) \
-              || (yum install -y curl wget vim tar sudo git) ;;
+        1) apk update && apk add --no-cache bash curl wget vim tar sudo git gzip 2>/dev/null \
+              || (apt update && apt install -y curl wget vim tar sudo git gzip) \
+              || (yum install -y curl wget vim tar sudo git gzip) ;;
         2) bash <(curl -fsSL https://raw.githubusercontent.com/sistarry/toolbox/main/Alpine/apsdk.sh) ;;
         3) bash <(curl -fsSL https://raw.githubusercontent.com/sistarry/toolbox/main/Alpine/apfeew.sh) ;;
         4) bash <(curl -fsSL https://raw.githubusercontent.com/sistarry/toolbox/main/Alpine/apFail2Ban.sh) ;;
@@ -75,7 +75,7 @@ menu() {
         10) bash <(curl -sL https://raw.githubusercontent.com/sistarry/toolbox/main/Alpine/AZAPReality.sh) ;;
         11) bash <(curl -sL https://raw.githubusercontent.com/sistarry/toolbox/main/Alpine/AZAPHysteria2.sh) ;;
         12) bash <(wget -qO- https://raw.githubusercontent.com/fscarmen/sing-box/main/sing-box.sh) ;;
-        13) bash <(curl -sL https://raw.githubusercontent.com/sistarry/toolbox/main/Alpine/3xuiAlpine.sh) ;;
+        13) bash <(curl -Ls https://raw.githubusercontent.com/56idc/3x-ui-alpine/master/install_alpine.sh) ;;
         14) wget -qO- https://raw.githubusercontent.com/zywe03/realm-xwPF/main/xwPF.sh | sudo bash -s install ;;
         15) bash <(curl -fsSL https://raw.githubusercontent.com/sistarry/toolbox/main/Docker/Store.sh) ;;
         88)
