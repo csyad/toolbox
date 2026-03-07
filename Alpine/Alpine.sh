@@ -49,10 +49,12 @@ menu() {
     echo -e "${YELLOW}[07] 切换字体${RESET}"
     echo -e "${YELLOW}[08] 修改主机名${RESET}"
     echo -e "${YELLOW}[09] Docker管理${RESET}"
-    echo -e "${YELLOW}[10] 代理工具箱${RESET}"
-    echo -e "${YELLOW}[11] 3X-UI面板${RESET}"
-    echo -e "${YELLOW}[12] Realm转发${RESET}"
-    echo -e "${YELLOW}[13] 应用商店${RESET}"
+    echo -e "${YELLOW}[10] Reality${RESET}"
+    echo -e "${YELLOW}[11] Hysteria2${RESET}"
+    echo -e "${YELLOW}[12] fsSing-box${RESET}"
+    echo -e "${YELLOW}[13] 3X-UI面板${RESET}"
+    echo -e "${YELLOW}[14] Realm-xwPF${RESET}"
+    echo -e "${YELLOW}[15] 应用商店${RESET}"
     echo -e "${GREEN}[88] 更新脚本${RESET}"
     echo -e "${GREEN}[99] 卸载脚本${RESET}"
     echo -e "${YELLOW}[00] 退出${RESET}"
@@ -70,10 +72,12 @@ menu() {
         7) bash <(curl -fsSL https://raw.githubusercontent.com/sistarry/toolbox/main/Alpine/apcn.sh) ;;
         8) bash <(curl -fsSL https://raw.githubusercontent.com/sistarry/toolbox/main/Alpine/aphome.sh) ;;
         9) bash <(curl -fsSL https://raw.githubusercontent.com/sistarry/toolbox/main/Alpine/apdocker.sh) ;;
-        10) bash <(curl -sL https://raw.githubusercontent.com/sistarry/toolbox/main/PROXY/proxy.sh) ;;
-        11) bash <(curl -sL https://raw.githubusercontent.com/sistarry/toolbox/main/Alpine/3xuiAlpine.sh) ;;
-        12) wget -qO- https://raw.githubusercontent.com/zywe03/realm-xwPF/main/xwPF.sh | sudo bash -s install ;;
-        13) bash <(curl -fsSL https://raw.githubusercontent.com/sistarry/toolbox/main/Docker/Store.sh) ;;
+        10) bash <(curl -sL https://raw.githubusercontent.com/sistarry/toolbox/main/Alpine/AZAPReality.sh) ;;
+        11) bash <(curl -sL https://raw.githubusercontent.com/sistarry/toolbox/main/Alpine/AZAPHysteria2.sh) ;;
+        12) bash <(wget -qO- https://raw.githubusercontent.com/fscarmen/sing-box/main/sing-box.sh) ;;
+        13) bash <(curl -sL https://raw.githubusercontent.com/sistarry/toolbox/main/Alpine/3xuiAlpine.sh) ;;
+        14) wget -qO- https://raw.githubusercontent.com/zywe03/realm-xwPF/main/xwPF.sh | sudo bash -s install ;;
+        15) bash <(curl -fsSL https://raw.githubusercontent.com/sistarry/toolbox/main/Docker/Store.sh) ;;
         88)
             echo -e "${YELLOW}🔄 正在更新脚本...${RESET}"
             curl -fsSL -o "$SCRIPT_PATH" "$SCRIPT_URL" || {
