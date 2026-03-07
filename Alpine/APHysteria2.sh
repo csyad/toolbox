@@ -65,7 +65,7 @@ if [ "$ACTION" = "update" ] && [ -f "/etc/hysteria/config.yaml" ]; then
 
 else
 
-    echo -e "${RED}执行新安装 / 覆盖安装${NC}"
+    echo -e "${RED}执行安装${NC}"
 
     read -p "请输入端口 (默认: 57891): " HY_PORT
     [ -z "$HY_PORT" ] && HY_PORT=57891
