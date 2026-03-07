@@ -74,6 +74,7 @@ EOF
 
     echo -e "${GREEN}✅ $APP_NAME 已启动${RESET}"
     echo -e "${GREEN}🌐 访问地址: http://127.0.0.1:${port}${RESET}"
+    echo -e "${GREEN}🌐 账号/密码: admin/admin${RESET}"
     echo -e "${GREEN}📂 音乐目录: $music_dir${RESET}"
     echo -e "${GREEN}📂 配置目录: $config_dir${RESET}"
     echo -e "${GREEN}📂 下载目录: $download_dir${RESET}"
