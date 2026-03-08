@@ -159,6 +159,10 @@ EOF
     echo -e "${YELLOW}📄 V6VPS替换IP地址为V6 ★${RESET}"
     echo -e "${YELLOW}📄 客户端配置:${RESET}"
     echo -e "${YELLOW}$NODE_NAME = snell, ${IP}, ${PORT}, psk=${PSK}, version=5, reuse=true, tfo=${TFO}, ecn=${ECN}${RESET}"
+    cat > "$NODE_DIR/node.txt" <<EOF
+客户端配置
+$NODE_NAME = snell, ${IP}, ${PORT}, psk=${PSK}, version=5, reuse=true, tfo=${TFO}, ecn=${ECN}
+EOF
     read -r -p $'\033[32m按回车返回菜单...\033[0m'
 }
 node_action_menu() {
@@ -170,6 +174,7 @@ node_action_menu() {
         echo -e "${GREEN}3) 更新${RESET}"
         echo -e "${GREEN}4) 查看日志${RESET}"
         echo -e "${GREEN}5) 卸载${RESET}"
+        echo -e "${GREEN}6) 查看节点信息${RESET}"
         echo -e "${GREEN}0) 返回主菜单${RESET}"
         read -r -p $'\033[32m请选择操作: \033[0m' choice
         case $choice in
@@ -185,6 +190,7 @@ node_action_menu() {
                echo -e "${GREEN}✅ 节点 $NODE_NAME 已卸载${RESET}"
                return
                ;;
+            6) cat "$NODE_DIR/node.txt" ;;
             0) return ;;
             *) echo -e "${RED}无效选择${RESET}" ;;
         esac
