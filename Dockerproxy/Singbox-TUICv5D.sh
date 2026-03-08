@@ -13,6 +13,10 @@ APP_DIR="/opt/$APP_NAME"
 COMPOSE_FILE="$APP_DIR/docker-compose.yml"
 CONFIG_FILE="$APP_DIR/config.json"
 CONTAINER_NAME="Singbox-TUICv5"
+NODE_INFO_FILE="$APP_DIR/node.txt"
+JUMP_START=""
+JUMP_END=""
+PORT=""
 
 check_docker() {
     if ! command -v docker &>/dev/null; then
@@ -48,6 +52,73 @@ get_public_ip() {
     echo "无法获取公网 IP 地址。" && return
 }
 
+
+add_port_jump_rules() {
+
+    if [[ -z "$JUMP_START" || -z "$JUMP_END" ]]; then
+        return
+    fi
+
+    echo -e "${YELLOW}添加端口跳跃规则: $JUMP_START-$JUMP_END -> $PORT${RESET}"
+
+    # 获取本机主IP（不依赖外网）
+    SERVER_IP=$(hostname -I | awk '{print $1}')
+
+    if [[ -z "$SERVER_IP" ]]; then
+        echo -e "${RED}无法获取服务器IP，跳跃规则添加失败${RESET}"
+        return
+    fi
+
+    echo -e "${GREEN}服务器IP: $SERVER_IP${RESET}"
+
+    # 关闭 rp_filter（否则部分机器不转发）
+    sysctl -w net.ipv4.conf.all.rp_filter=0 >/dev/null 2>&1
+    sysctl -w net.ipv4.conf.default.rp_filter=0 >/dev/null 2>&1
+
+    # 删除旧规则（防止重复）
+    while iptables -t nat -C PREROUTING -p udp \
+        --dport $JUMP_START:$JUMP_END \
+        -j DNAT --to-destination ${SERVER_IP}:$PORT 2>/dev/null
+    do
+        iptables -t nat -D PREROUTING -p udp \
+            --dport $JUMP_START:$JUMP_END \
+            -j DNAT --to-destination ${SERVER_IP}:$PORT
+    done
+
+    # 添加新规则（插入到最前面，避免被抢）
+    iptables -t nat -I PREROUTING 1 -p udp \
+        --dport $JUMP_START:$JUMP_END \
+        -j DNAT --to-destination ${SERVER_IP}:$PORT
+
+    # 放行 FORWARD（部分系统必须）
+    iptables -C FORWARD -p udp --dport $PORT -j ACCEPT 2>/dev/null || \
+    iptables -I FORWARD -p udp --dport $PORT -j ACCEPT
+
+    echo -e "${GREEN}✅ 端口跳跃规则添加完成${RESET}"
+}
+remove_port_jump_rules() {
+
+    if [[ -z "$JUMP_START" || -z "$JUMP_END" ]]; then
+        return
+    fi
+
+    echo -e "${YELLOW}清理端口跳跃规则: $JUMP_START-$JUMP_END -> $PORT${RESET}"
+
+    SERVER_IP=$(hostname -I | awk '{print $1}')
+
+    while iptables -t nat -C PREROUTING -p udp \
+        --dport $JUMP_START:$JUMP_END \
+        -j DNAT --to-destination ${SERVER_IP}:$PORT 2>/dev/null
+    do
+        iptables -t nat -D PREROUTING -p udp \
+            --dport $JUMP_START:$JUMP_END \
+            -j DNAT --to-destination ${SERVER_IP}:$PORT
+    done
+
+    echo -e "${GREEN}✅ 跳跃规则已清理${RESET}"
+}
+
+
 menu() {
     while true; do
         clear
@@ -57,7 +128,8 @@ menu() {
         echo -e "${GREEN}3) 重启${RESET}"
         echo -e "${GREEN}4) 查看日志${RESET}"
         echo -e "${GREEN}5) 查看状态${RESET}"
-        echo -e "${GREEN}6) 卸载${RESET}"
+        echo -e "${GREEN}6) 查看节点信息${RESET}"
+        echo -e "${GREEN}7) 卸载${RESET}"
         echo -e "${GREEN}0) 退出${RESET}"
         read -p "$(echo -e ${GREEN}请选择:${RESET}) " choice
 
@@ -67,7 +139,8 @@ menu() {
             3) restart_app ;;
             4) view_logs ;;
             5) check_status ;;
-            6) uninstall_app ;;
+            6) view_node_info ;;
+            7) uninstall_app ;;
             0) exit 0 ;;
             *) echo -e "${RED}无效选择${RESET}"; sleep 1 ;;
         esac
@@ -93,6 +166,53 @@ install_app() {
     fi
 
     check_port "$PORT" || return
+
+
+    read -p "是否启用端口跳跃 [Y/n,回车默认Y]: " enable_jump
+    enable_jump=$(echo "$enable_jump" | tr -d ' ')
+    enable_jump=${enable_jump:-Y}
+
+    case "$enable_jump" in
+        Y|y)
+            while true; do
+                read -p "请输入端口范围起始端口 (10000-65535): " firstport
+                read -p "请输入端口范围末尾端口: " endport
+
+                if ! [[ "$firstport" =~ ^[0-9]+$ && "$endport" =~ ^[0-9]+$ ]]; then
+                    echo "端口必须为数字"
+                    continue
+                fi
+
+                if (( firstport < 10000 || firstport > 65535 || endport < 10000 || endport > 65535 )); then
+                    echo "端口必须在 10000-65535"
+                    continue
+                fi
+
+                if (( firstport >= endport )); then
+                    echo "起始端口必须小于结束端口"
+                    continue
+                fi
+
+                if (( PORT >= firstport && PORT <= endport )); then
+                    echo "跳跃范围不能包含监听端口 $PORT"
+                    continue
+                fi
+
+                JUMP_START=$firstport
+                JUMP_END=$endport
+                break
+            done
+            ;;
+        N|n)
+            echo "已关闭端口跳跃"
+            ;;
+        *)
+            echo "输入无效，默认启用"
+            ;;
+    esac
+
+    add_port_jump_rules
+
 
     # 生成 UUID 和 密码
     UUID=$(cat /proc/sys/kernel/random/uuid)
@@ -165,11 +285,21 @@ EOF
     echo -e "${YELLOW}🔌 端口: ${PORT}${RESET}"
     echo -e "${YELLOW}🆔 UUID: ${UUID}${RESET}"
     echo -e "${YELLOW}🔑 密码: ${PASSWORD}${RESET}"
+    if [[ -n "$JUMP_START" ]]; then
+        echo -e "${YELLOW}🟢 端口跳跃: $JUMP_START-$JUMP_END -> $PORT${RESET}"
+    else
+        echo -e "${YELLOW}🟢 端口跳跃: 未启用${RESET}"
+    fi
     echo
     echo -e "${YELLOW}📄 V6VPS替换IP地址为V6 ★${RESET}"
+    echo -e "${GREEN}📄 端口跳跃只适配V4 ★${RESET}"
     echo -e "${YELLOW}📄 客户端链接:${RESET}"
     echo -e "${YELLOW}tuic://${UUID}:${PASSWORD}@${SERVER_IP}:${PORT}?congestion_control=bbr&alpn=h3&sni=www.bing.com&udp_relay_mode=native&allow_insecure=1#${HOSTNAME}${RESET}"
     echo
+    cat > "$NODE_INFO_FILE" <<EOF
+tuic://${UUID}:${PASSWORD}@${SERVER_IP}:${PORT}?congestion_control=bbr&alpn=h3&sni=www.bing.com&udp_relay_mode=native&allow_insecure=1#${HOSTNAME}
+EOF
+    
     read -p "按回车返回菜单..."
 }
 update_app() {
@@ -196,12 +326,29 @@ check_status() {
     read -p "按回车返回菜单..."
 }
 
+view_node_info() {
+
+    if [ ! -f "$NODE_INFO_FILE" ]; then
+        echo -e "${RED}未找到节点信息${RESET}"
+        read -p "按回车返回菜单..."
+        return
+    fi
+
+    echo
+    echo -e "${GREEN}=== TUIC 节点信息 ===${RESET}"
+    echo
+    cat "$NODE_INFO_FILE"
+    echo
+    read -p "按回车返回菜单..."
+}
+
 uninstall_app() {
+    remove_port_jump_rules
     docker stop ${CONTAINER_NAME}
     docker rm ${CONTAINER_NAME}
     rm -rf "$APP_DIR"
     echo -e "${RED}✅ Singbox-TUICv5 已卸载${RESET}"
-    read -p "按回车返回菜单..."
+    exit 0
 }
 
 menu
