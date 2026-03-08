@@ -5,6 +5,7 @@
 # ========================================
 
 GREEN="\033[32m"
+YELLOW="\033[33m"
 RED="\033[31m"
 RESET="\033[0m"
 
@@ -35,6 +36,7 @@ check_port() {
     fi
 }
 
+
 get_public_ip() {
     local ip
     for cmd in "curl -4s --max-time 5" "wget -4qO- --timeout=5"; do
@@ -48,6 +50,55 @@ get_public_ip() {
         done
     done
     echo "无法获取公网 IP 地址。" && return
+}
+
+add_jump_rules() {
+
+    if [[ -z "$JUMP_START" || -z "$JUMP_END" ]]; then
+        return
+    fi
+
+    SERVER_IP=$(hostname -I | awk '{print $1}')
+
+    echo -e "${YELLOW}添加端口跳跃规则: $JUMP_START-$JUMP_END -> $PORT${RESET}"
+    echo -e "${GREEN}服务器IP: $SERVER_IP${RESET}"
+
+    # 防止重复
+    while iptables -t nat -C PREROUTING -p udp \
+        --dport $JUMP_START:$JUMP_END \
+        -j DNAT --to-destination ${SERVER_IP}:$PORT 2>/dev/null
+    do
+        iptables -t nat -D PREROUTING -p udp \
+            --dport $JUMP_START:$JUMP_END \
+            -j DNAT --to-destination ${SERVER_IP}:$PORT
+    done
+
+    # 插入最前面
+    iptables -t nat -I PREROUTING 1 -p udp \
+        --dport $JUMP_START:$JUMP_END \
+        -j DNAT --to-destination ${SERVER_IP}:$PORT
+
+    echo -e "${GREEN}端口跳跃规则添加完成${RESET}"
+}
+
+remove_jump_rules() {
+
+    if [[ -z "$JUMP_START" || -z "$JUMP_END" ]]; then
+        return
+    fi
+
+    SERVER_IP=$(hostname -I | awk '{print $1}')
+
+    while iptables -t nat -C PREROUTING -p udp \
+        --dport $JUMP_START:$JUMP_END \
+        -j DNAT --to-destination ${SERVER_IP}:$PORT 2>/dev/null
+    do
+        iptables -t nat -D PREROUTING -p udp \
+            --dport $JUMP_START:$JUMP_END \
+            -j DNAT --to-destination ${SERVER_IP}:$PORT
+    done
+
+    echo -e "${GREEN}端口跳跃规则已清理${RESET}"
 }
 
 # =========================
@@ -116,6 +167,24 @@ install_node() {
     PORT=${input_port:-$(shuf -i 1025-65535 -n1)}
     check_port "$PORT" || return
 
+    read -p "是否启用端口跳跃 [Y/n,回车默认Y]: " enable_jump
+    enable_jump=$(echo "$enable_jump" | tr -d ' ')
+    enable_jump=${enable_jump:-Y}
+
+    if [[ "$enable_jump" =~ ^[Nn]$ ]]; then
+        echo "已关闭端口跳跃"
+        JUMP_START=""
+        JUMP_END=""
+    else
+        read -p "起始端口: " JUMP_START
+        read -p "结束端口: " JUMP_END
+    fi
+
+    add_jump_rules
+    echo "PORT=$PORT" > "$NODE_DIR/jump.conf"
+    echo "JUMP_START=$JUMP_START" >> "$NODE_DIR/jump.conf"
+    echo "JUMP_END=$JUMP_END" >> "$NODE_DIR/jump.conf"
+
     UUID=$(cat /proc/sys/kernel/random/uuid)
     PASSWORD=$(tr -dc A-Za-z0-9 </dev/urandom | head -c8)
 
@@ -183,11 +252,21 @@ EOF
     echo -e "${YELLOW}🔌 端口: ${PORT}${RESET}"
     echo -e "${YELLOW}🆔 UUID: ${UUID}${RESET}"
     echo -e "${YELLOW}🔑 密码: ${PASSWORD}${RESET}"
+    if [[ -n "$JUMP_START" ]]; then
+        echo -e "${YELLOW}🟢 端口跳跃: $JUMP_START-$JUMP_END -> $PORT${RESET}"
+    else
+        echo -e "${YELLOW}🟢 端口跳跃: 未启用${RESET}"
+    fi
     echo
     echo -e "${YELLOW}📄 V6VPS替换IP地址为V6 ★${RESET}"
+    echo -e "${YELLOW}📄 端口跳跃只适配V4 ★${RESET}"
     echo -e "${YELLOW}📄 客户端链接:${RESET}"
     echo -e "${YELLOW}tuic://${UUID}:${PASSWORD}@${SERVER_IP}:${PORT}?congestion_control=bbr&alpn=h3&sni=www.bing.com&udp_relay_mode=native&allow_insecure=1#${NODE_NAME}${RESET}"
     echo
+    cat > "$NODE_DIR/node.txt" <<EOF
+跳跃端口: ${JUMP_START:-未启用}-${JUMP_END:-未启用}
+tuic://${UUID}:${PASSWORD}@${SERVER_IP}:${PORT}?congestion_control=bbr&alpn=h3&sni=www.bing.com&udp_relay_mode=native&allow_insecure=1#$NODE_NAME
+EOF
     read -r -p $'\033[32m按回车返回菜单...\033[0m'
 }
 
@@ -204,6 +283,7 @@ node_action_menu() {
         echo -e "${GREEN}3) 更新${RESET}"
         echo -e "${GREEN}4) 查看日志${RESET}"
         echo -e "${GREEN}5) 卸载${RESET}"
+        echo -e "${GREEN}6) 查看节点信息${RESET}"
         echo -e "${GREEN}0) 返回${RESET}"
 
         # ✅ 输入存到 choice
@@ -214,7 +294,14 @@ node_action_menu() {
             2) docker restart "$NODE_NAME" ;;
             3) docker compose -f "$NODE_DIR/docker-compose.yml" pull && docker compose -f "$NODE_DIR/docker-compose.yml" up -d ;;
             4) docker logs -f "$NODE_NAME" ;;
-            5) docker compose -f "$NODE_DIR/docker-compose.yml" down && rm -rf "$NODE_DIR"; return ;;
+            5)
+               source "$NODE_DIR/jump.conf" 2>/dev/null
+               remove_jump_rules
+               docker compose -f "$NODE_DIR/docker-compose.yml" down
+               rm -rf "$NODE_DIR"
+               return
+               ;;
+            6) cat "$NODE_DIR/node.txt" ;;
             0) return ;;
             *) echo -e "${RED}无效选择${RESET}" ;;
         esac
@@ -273,7 +360,12 @@ batch_action() {
             1) docker pause "$NODE_NAME" ;;
             2) docker restart "$NODE_NAME" ;;
             3) docker compose pull && docker compose up -d ;;
-            4) docker compose down && rm -rf "$NODE_DIR" ;;
+            4)
+               source "$NODE_DIR/jump.conf" 2>/dev/null
+               remove_jump_rules
+               docker compose down
+               rm -rf "$NODE_DIR"
+               ;;
         esac
 
         echo -e "${GREEN}已操作 $NODE_NAME${RESET}"
