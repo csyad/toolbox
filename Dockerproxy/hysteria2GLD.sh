@@ -287,7 +287,7 @@ node_action_menu() {
                rm -rf "$NODE_DIR"
                echo -e "${RED}已卸载 $NODE_NAME${RESET}"
                return
-            ;;
+               ;;
             6) cat "$NODE_DIR/node.txt" ;;
             0) return ;;
             *) echo -e "${RED}无效选择${RESET}" ;;
