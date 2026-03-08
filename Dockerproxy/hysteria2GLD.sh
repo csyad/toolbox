@@ -362,7 +362,7 @@ batch_action() {
                remove_jump_rules
                docker compose down
                rm -rf "$NODE_DIR"
-            ;;
+               ;;
         esac
         echo -e "${GREEN}已操作 $NODE_NAME${RESET}"
     done
