@@ -160,13 +160,14 @@ uninstall_script() {
     exit
 }
 
+# =================== 脚本安装 ===================
 install_script() {
-    if [ "$0" != "$SCRIPT_PATH" ]; then
-        echo -e "${GREEN}正在安装...${RESET}"
+    if [ ! -f "$SCRIPT_PATH" ]; then
+        echo -e "${GREEN}首次运行，正在安装 clean-server...${RESET}"
         curl -sL $SCRIPT_URL -o $SCRIPT_PATH
         chmod +x $SCRIPT_PATH
-        echo -e "${GREEN}安装完成${RESET}"
-        echo -e "${YELLOW}运行命令: clean-server${RESET}"
+        echo -e "${GREEN}安装完成！${RESET}"
+        echo -e "${YELLOW}请运行命令: clean-server${RESET}"
         return
     fi
 }
