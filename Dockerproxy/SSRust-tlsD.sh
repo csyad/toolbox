@@ -12,6 +12,7 @@ APP_NAME="ShadowsocksRust+shadow-tls"
 APP_DIR="/opt/$APP_NAME"
 COMPOSE_FILE="$APP_DIR/docker-compose.yml"
 CONFIG_FILE="$APP_DIR/config.json"
+NODE_INFO_FILE="$APP_DIR/node.txt"
 
 METHOD="2022-blake3-aes-256-gcm"
 
@@ -50,7 +51,8 @@ menu() {
         echo -e "${GREEN}3) 重启${RESET}"
         echo -e "${GREEN}4) 查看日志${RESET}"
         echo -e "${GREEN}5) 查看状态${RESET}"
-        echo -e "${GREEN}6) 卸载${RESET}"
+        echo -e "${GREEN}6) 查看节点信息${RESET}"
+        echo -e "${GREEN}7) 卸载${RESET}"
         echo -e "${GREEN}0) 退出${RESET}"
         read -p "$(echo -e ${GREEN}请选择:${RESET}) " choice
 
@@ -60,7 +62,8 @@ menu() {
             3) restart_app ;;
             4) view_logs ;;
             5) check_status ;;
-            6) uninstall_app ;;
+            6) view_node_info ;;
+            7) uninstall_app ;;
             0) exit 0 ;;
             *) echo -e "${RED}无效选择${RESET}"; sleep 1 ;;
         esac
@@ -189,7 +192,12 @@ EOF
     echo -e "${YELLOW}----------------------------------${RESET}"
     echo -e "${YELLOW}Surge配置:${RESET}"
     echo -e "${YELLOW}$HOSTNAME = ss, $IP, $TLS_PORT, encrypt-method=$METHOD, password=$SS_PASSWORD, shadow-tls-password=$TLS_PASSWORD, shadow-tls-sni=$TLS_HOST, shadow-tls-version=3, tfo=true, udp-relay=true, ecn=true ${RESET}"
-
+    cat > "$NODE_INFO_FILE" <<EOF
+SS+ShadowTLS小火箭订阅链接
+${SS_LINK}
+Surge配置
+$HOSTNAME = ss, $IP, $TLS_PORT, encrypt-method=$METHOD, password=$SS_PASSWORD, shadow-tls-password=$TLS_PASSWORD, shadow-tls-sni=$TLS_HOST, shadow-tls-version=3, tfo=true, udp-relay=true, ecn=true
+EOF
     read -p "按回车返回菜单..."
 }
 update_app() {
@@ -211,6 +219,22 @@ view_logs() {
     cd "$APP_DIR" || return
     echo -e "${YELLOW}按 Ctrl+C 退出日志${RESET}"
     docker compose logs -f
+}
+
+view_node_info() {
+
+    if [ ! -f "$NODE_INFO_FILE" ]; then
+        echo -e "${RED}未找到节点信息${RESET}"
+        read -p "按回车返回菜单..."
+        return
+    fi
+
+    echo
+    echo -e "${GREEN}=== 节点信息 ===${RESET}"
+    echo
+    cat "$NODE_INFO_FILE"
+    echo
+    read -p "按回车返回菜单..."
 }
 
 check_status() {
