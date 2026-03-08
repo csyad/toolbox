@@ -197,3 +197,32 @@ if [ -n "$IP6" ]; then
 fi
 
 echo "------------------------------------------------"
+# 8. 保存节点信息
+NODE_FILE="/etc/xray/node.txt"
+
+cat > ${NODE_FILE} <<EOF
+================ Xray Reality 节点信息 ================
+
+服务器: $(hostname)
+端口: ${PORT}
+伪装域名: ${DEST_DOMAIN}
+UUID: ${UUID}
+PublicKey: ${PUBLIC_KEY}
+ShortID: ${SHORT_ID}
+
+---------------- IPv4 ----------------
+vless://${UUID}@${IP4}:${PORT}?encryption=none&flow=xtls-rprx-vision&security=reality&sni=${DEST_DOMAIN}&fp=random&pbk=${PUBLIC_KEY}&sid=${SHORT_ID}&type=tcp&headerType=none#${HOSTNAME}
+
+Clash:
+- {name: $HOSTNAME, type: vless, server: ${IP4}, port: ${PORT}, uuid: ${UUID}, udp: true, tls: true, flow: xtls-rprx-vision, servername: ${DEST_DOMAIN}, network: tcp, reality-opts: {public-key: ${PUBLIC_KEY}, short-id: ${SHORT_ID}}, client-fingerprint: random}
+
+---------------- IPv6 ----------------
+vless://${UUID}@[${IP6}]:${PORT}?encryption=none&flow=xtls-rprx-vision&security=reality&sni=${DEST_DOMAIN}&fp=random&pbk=${PUBLIC_KEY}&sid=${SHORT_ID}&type=tcp&headerType=none#${HOSTNAME}
+
+Clash:
+- {name: $HOSTNAME, type: vless, server: '${IP6}', port: ${PORT}, uuid: ${UUID}, udp: true, tls: true, flow: xtls-rprx-vision, servername: ${DEST_DOMAIN}, network: tcp, reality-opts: {public-key: ${PUBLIC_KEY}, short-id: ${SHORT_ID}}, client-fingerprint: random}
+
+=======================================================
+EOF
+
+echo -e "${GREEN}节点信息已保存: ${NODE_FILE}${NC}"
