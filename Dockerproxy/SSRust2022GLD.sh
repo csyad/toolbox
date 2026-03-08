@@ -174,6 +174,12 @@ EOF
     echo -e "${YELLOW}Surge配置：${RESET}"
     echo -e "${YELLOW}$NODE_NAME = ss, $IP,$PORT, encrypt-method=$METHOD, password=$PASSWORD, tfo=true, udp-relay=true, ecn=true${RESET}"
     echo
+    cat > "$NODE_DIR/node.txt" <<EOF
+订阅链接
+$SS_LINK_V4#$NODE_NAME
+Surge配置
+$NODE_NAME = ss, $IP,$PORT, encrypt-method=$METHOD, password=$PASSWORD, tfo=true, udp-relay=true, ecn=true
+EOF
     read -r -p $'\033[32m按回车返回菜单...\033[0m'
 }
 
@@ -190,6 +196,7 @@ node_action_menu() {
         echo -e "${GREEN}3) 更新${RESET}"
         echo -e "${GREEN}4) 查看日志${RESET}"
         echo -e "${GREEN}5) 卸载${RESET}"
+        echo -e "${GREEN}6) 查看节点信息${RESET}"
         echo -e "${GREEN}0) 返回${RESET}"
 
         read -r -p $'\033[32m请选择操作:\033[0m ' choice
@@ -200,6 +207,7 @@ node_action_menu() {
             3) cd "$NODE_DIR" && docker compose pull && docker compose up -d ;;
             4) docker logs -f "$NODE_NAME" ;;
             5) cd "$NODE_DIR" && docker compose down && rm -rf "$NODE_DIR"; return ;;
+            6) cat "$NODE_DIR/node.txt" ;;
             0) return ;;
             *) echo -e "${RED}无效选择${RESET}" ;;
         esac
