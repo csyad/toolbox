@@ -127,6 +127,12 @@ EOF
     echo -e "${YELLOW}anytls://${PASSWORD}@${SERVER_IP}:${PORT}/?insecure=1#$NODE_NAME${RESET}"
     echo -e "${YELLOW}Surge:${RESET}" 
     echo -e "${YELLOW}$NODE_NAME = anytls, ${SERVER_IP}, ${PORT}, password=${PASSWORD}, tfo=true, skip-cert-verify=true, reuse=false${RESET}"
+    cat > "$NODE_DIR/node.txt" <<EOF
+V2rayN
+anytls://${PASSWORD}@${SERVER_IP}:${PORT}/?insecure=1#$NODE_NAME
+Surge
+$NODE_NAME = anytls, ${SERVER_IP}, ${PORT}, password=${PASSWORD}, tfo=true, skip-cert-verify=true, reuse=false
+EOF
     read -r -p $'\033[32m按回车返回菜单...\033[0m'
 }
 
@@ -140,6 +146,7 @@ node_action_menu() {
         echo -e "${GREEN}3) 更新${RESET}"
         echo -e "${GREEN}4) 查看日志${RESET}"
         echo -e "${GREEN}5) 卸载${RESET}"
+        echo -e "${GREEN}6) 查看节点信息${RESET}"
         echo -e "${GREEN}0) 返回主菜单${RESET}"
         read -r -p $'\033[32m请选择操作: \033[0m' choice
         case $choice in
@@ -148,6 +155,7 @@ node_action_menu() {
             3) docker compose -f "$NODE_DIR/docker-compose.yml" pull && docker compose -f "$NODE_DIR/docker-compose.yml" up -d ;;
             4) docker compose -f "$NODE_DIR/docker-compose.yml" logs -f ;;
             5) docker compose -f "$NODE_DIR/docker-compose.yml" down && rm -rf "$NODE_DIR" && return ;;
+            6) cat "$NODE_DIR/node.txt" ;;
             0) return ;;
             *) echo -e "${RED}无效选择${RESET}" ;;
         esac
