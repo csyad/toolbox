@@ -59,6 +59,10 @@ EOF
     echo -e "${YELLOW}🌐 Web UI 地址: http://127.0.0.1:$PORT${RESET}"
     echo -e "${YELLOW}🌐 账号/密码: admin/admin${RESET}"
     echo -e "${GREEN}📂 数据目录: $APP_DIR/data${RESET}"
+    echo -e "${YELLOW}要启用 TSDB，需要在$APP_DIR/data/config.yaml 中添加：${RESET}"
+    echo -e "${YELLOW}tsdb:${RESET}"
+    echo -e "${YELLOW}  data_path: data/tsdb${RESET}"
+    echo -e "${YELLOW}设置此路径后重启即可启用 TSDB${RESET}"
     read -p "按回车返回菜单..."
     menu
 }
