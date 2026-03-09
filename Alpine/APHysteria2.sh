@@ -97,10 +97,11 @@ if [ "$ACTION" = "update" ] && [ -f "/etc/hysteria/config.yaml" ]; then
     HY_PORT=$(grep 'listen:' /etc/hysteria/config.yaml | cut -d':' -f3)
 else
     echo -e "${RED}执行安装${NC}"
-    read -p "请输入 Hysteria2 端口 (默认: 57891): " HY_PORT
-    [ -z "$HY_PORT" ] && HY_PORT=57891
-
-    echo "使用端口: $HY_PORT"
+    read -p "请输入 Hysteria2 端口 (直接回车使用随机端口): " HY_PORT
+    if [ -z "$HY_PORT" ]; then
+        HY_PORT=$((RANDOM%45535+20000))
+        echo "使用随机端口: $HY_PORT"
+    fi
 
     # 生成证书
     openssl req -x509 -nodes -newkey rsa:2048 \
