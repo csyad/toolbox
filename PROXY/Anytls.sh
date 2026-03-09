@@ -47,11 +47,17 @@ ZIP_FILE="/tmp/anytls_0.0.12_linux_${BINARY_ARCH}.zip"
 # 获取公网 IP
 get_ip() {
     local ip
-    ip=$(ip -o -4 addr show scope global | awk '{print $4}' | cut -d'/' -f1 | head -n1)
-    [ -z "$ip" ] && ip=$(ifconfig 2>/dev/null | grep -oP 'inet \K[\d.]+' | grep -v '127.0.0.1' | head -n1)
-    [ -z "$ip" ] && ip=$(curl -4 -s --connect-timeout 3 ifconfig.me 2>/dev/null || curl -4 -s --connect-timeout 3 icanhazip.com 2>/dev/null)
-    [ -z "$ip" ] && read -p "请输入服务器IP: " ip
-    echo "$ip"
+    for cmd in "curl -4s --max-time 5" "wget -4qO- --timeout=5"; do
+        for url in "https://api.ipify.org" "https://ip.sb" "https://checkip.amazonaws.com"; do
+            ip=$($cmd "$url" 2>/dev/null) && [[ -n "$ip" ]] && echo "$ip" && return
+        done
+    done
+    for cmd in "curl -6s --max-time 5" "wget -6qO- --timeout=5"; do
+        for url in "https://api64.ipify.org" "https://ip.sb"; do
+            ip=$($cmd "$url" 2>/dev/null) && [[ -n "$ip" ]] && echo "$ip" && return
+        done
+    done
+    echo "无法获取公网 IP 地址。" && return
 }
 
 # 操作完成后按回车返回菜单
@@ -102,7 +108,7 @@ install_anytls() {
 
     read -s -p "设置密码（留空随机生成）: " PASSWORD
     echo
-    [ -z "$PASSWORD" ] && PASSWORD=$(openssl rand -base64 12)
+    [ -z "$PASSWORD" ] && PASSWORD=$(tr -dc A-Za-z0-9 </dev/urandom | head -c16)
 
     echo "[3/5] 配置 systemd 服务..."
     cat > /etc/systemd/system/$SERVICE_NAME.service <<EOF
