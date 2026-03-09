@@ -176,7 +176,7 @@ show_node_info() {
     echo -e "${YELLOW}服务器 IP: $SERVER_IP${RESET}"
     echo -e "${YELLOW}V6VPS替换IP地址为V6${RESET}"
     echo -e "${GREEN}V2rayN:${GREEN}"
-    echo -e "${YELLOW}anytls://$PASSWORD@$SERVER_IP:$PORT/?insecure=1#$HOSTNAME${GREEN}"
+    echo -e "${YELLOW}anytls://$PASSWORD@$SERVER_IP:$PORT?insecure=1#$HOSTNAME${GREEN}"
     echo -e "${GREEN}Surge:${GREEN}"
     echo -e "${YELLOW}$HOSTNAME = anytls, $SERVER_IP, $PORT, password=$PASSWORD, tfo=true, skip-cert-verify=true, reuse=false${GREEN}"
 
