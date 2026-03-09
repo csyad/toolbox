@@ -145,7 +145,7 @@ show_link(){
 }
 
 install(){
-purple "正在安装中,请稍等...\n"
+purple "正在安装...\n"
 if [[ "$HOSTNAME" =~ mtp ]]; then
     check_port
     get_ip
