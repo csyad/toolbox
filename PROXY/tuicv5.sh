@@ -135,7 +135,7 @@ uninstall_tuic() {
     rm -f "$SERVICE"
     systemctl daemon-reload
     rm -rf "$TUIC_DIR"
-    echo -e "${green}已卸载 Tuic${reset}"
+    echo -e "${green}已卸载${reset}"
 }
 
 # 显示节点信息（自动带端口，修复 IPv6 解析）
@@ -157,10 +157,10 @@ show_info() {
 menu() {
     clear
     echo -e "${green}==== TuicV5 管理菜单 ====${reset}"
-    echo -e "${green}1. 安装TuicV5${reset}"
+    echo -e "${green}1. 安装${reset}"
     echo -e "${green}2. 修改端口${reset}"
     echo -e "${green}3. 查看节点信息${reset}"
-    echo -e "${green}4. 卸载Tuic${reset}"
+    echo -e "${green}4. 卸载${reset}"
     echo -e "${green}0. 退出${reset}"
     read -p "$(echo -e ${green}请选择:${reset}) " choice
     case $choice in
