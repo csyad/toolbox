@@ -199,11 +199,14 @@ while true; do
     echo -e "${YELLOW}[02] H-UI${RESET}"
     echo -e "${YELLOW}[03] X-UI${RESET}"
     echo -e "${YELLOW}[04] yg-X-UI${RESET}"
-    echo -e "${YELLOW}[05] Xboard${RESET}"
-    echo -e "${YELLOW}[06] 3X-UI${RESET}"
-    echo -e "${YELLOW}[07] 中文版-3X-UI${RESET}"
-    echo -e "${YELLOW}[08] Alpine-3X-UI${RESET}"
-    echo -e "${YELLOW}[09] Docker-3X-UI${RESET}"
+    echo -e "${YELLOW}[05] 3X-UI${RESET}"
+    echo -e "${YELLOW}[06] 中文版-3X-UI${RESET}"
+    echo -e "${YELLOW}[07] Alpine-3X-UI${RESET}"
+    echo -e "${YELLOW}[08] Docker-3X-UI${RESET}"
+    echo -e "${YELLOW}[09] Xboard${RESET}"
+    echo -e "${YELLOW}[10] XrayR后端${RESET}"
+    echo -e "${YELLOW}[11] Heki后端${RESET}"
+    echo -e "${YELLOW}[12] DockerHeki${RESET}"
     echo -e "${GREEN}[0]  返回${RESET}"
     echo -e "${GREEN}[x]  退出${RESET}"
     
@@ -214,11 +217,14 @@ while true; do
         02) bash <(curl -fsSL https://raw.githubusercontent.com/jonssonyan/h-ui/main/install.sh) ; pause_return ;;
         03) bash <(curl -Ls https://raw.githubusercontent.com/vaxilu/x-ui/master/install.sh) ; pause_return ;;
         04) bash <(wget -qO- https://raw.githubusercontent.com/yonggekkk/x-ui-yg/main/install.sh) ; pause_return ;;
-        05) bash <(curl -fsSL https://raw.githubusercontent.com/sistarry/toolbox/main/PROXY/Xboard.sh) ; pause_return ;;
-        06) bash <(curl -fsSL https://raw.githubusercontent.com/mhsanaei/3x-ui/master/install.sh) ; pause_return ;;
-        07) bash <(curl -fsSL https://raw.githubusercontent.com/xeefei/3x-ui/master/install.sh) ; pause_return ;;
-        08) bash <(curl -sL https://raw.githubusercontent.com/sistarry/toolbox/main/Alpine/3xuiAlpine.sh) ; pause_return ;;
-        09) bash <(curl -sL https://raw.githubusercontent.com/sistarry/toolbox/main/Dockerproxy/3X-UID.sh) ; pause_return ;;
+        05) bash <(curl -fsSL https://raw.githubusercontent.com/mhsanaei/3x-ui/master/install.sh) ; pause_return ;;
+        06) bash <(curl -fsSL https://raw.githubusercontent.com/xeefei/3x-ui/master/install.sh) ; pause_return ;;
+        07) bash <(curl -sL https://raw.githubusercontent.com/sistarry/toolbox/main/Alpine/3xuiAlpine.sh) ; pause_return ;;
+        08) bash <(curl -sL https://raw.githubusercontent.com/sistarry/toolbox/main/Dockerproxy/3X-UID.sh) ; pause_return ;;
+        09) bash <(curl -sL https://raw.githubusercontent.com/sistarry/toolbox/main/PROXY/Xboard.sh) ; pause_return ;;
+        10) wget -N https://raw.githubusercontent.com/XrayR-project/XrayR-release/master/install.sh && bash install.sh ; pause_return ;;
+        11) bash <(curl -Ls https://raw.githubusercontent.com/hekicore/heki/master/install.sh) ; pause_return ;;
+        12) bash <(curl -sL https://raw.githubusercontent.com/sistarry/toolbox/main/PROXY/GLHeki.sh) ; pause_return ;;
         0) return ;;
         *) echo -e "${RED}无效选项${RESET}"; sleep 1 ;;
     esac
