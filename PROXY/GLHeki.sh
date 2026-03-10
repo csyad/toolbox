@@ -9,7 +9,7 @@ RED="\033[31m"
 RESET="\033[0m"
 
 APP_NAME="heki"
-APP_BASE_DIR="/root/$APP_NAME"
+APP_BASE_DIR="/opt/$APP_NAME"
 
 mkdir -p "$APP_BASE_DIR"
 
