@@ -11,6 +11,7 @@ menu() {
     echo -e "${GREEN}2) 路由追踪 nexttrace${RESET}"
     echo -e "${GREEN}3) 网络性能测试 iperf3${RESET}"
     echo -e "${GREEN}4) 网络诊断工具 MTR${RESET}"
+    echo -e "${GREEN}5) 大小包诊断工具${RESET}"
     echo -e "${GREEN}0) 退出${RESET}"
     read -p $'\033[32m请选择操作: \033[0m' choice
     case $choice in
@@ -32,6 +33,11 @@ menu() {
         4)
             echo -e "${GREEN}正在运行 网络诊断工具 MTR...${RESET}"
             bash <(curl -sL https://raw.githubusercontent.com/sistarry/toolbox/main/VPS/mtr.sh)
+            pause
+            ;;
+        5)
+            echo -e "${GREEN}正在运行 大小包诊断工具...${RESET}"
+            bash <(curl -sL https://raw.githubusercontent.com/sistarry/toolbox/main/VPS/DXbao.sh)
             pause
             ;;
         0)
