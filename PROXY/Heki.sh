@@ -72,16 +72,16 @@ install_app() {
     mkdir -p "$APP_DIR"
     mkdir -p /opt/heki
 
-    read -p "请输入 Panel 类型 [默认:sspanel-uim]: " PANEL_TYPE
-    PANEL_TYPE=${PANEL_TYPE:-sspanel-uim}
+    read -p "请输入 Panel 类型 [默认:xboard]: " PANEL_TYPE
+    PANEL_TYPE=${PANEL_TYPE:-xboard}
 
     # server_type
-    read -p "请输入 Server 类型 [默认:v2ray]: " SERVER_TYPE
-    SERVER_TYPE=${SERVER_TYPE:-v2ray}
+    read -p "请输入 Server 类型 [默认:vless]: " SERVER_TYPE
+    SERVER_TYPE=${SERVER_TYPE:-vless}
 
-    read -p "请输入 Node ID: " NODE_ID
-    read -p "请输入Panel URL: " PANEL_URL
-    read -p "请输入Panel Key: " PANEL_KEY
+    read -p "请输入 Node ID(节点ID): " NODE_ID
+    read -p "请输入Panel URL(面板网址): " PANEL_URL
+    read -p "请输入Panel Key(节点密钥): " PANEL_KEY
 
     cat > "$COMPOSE_FILE" <<EOF
 services:
