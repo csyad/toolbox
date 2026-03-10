@@ -113,8 +113,9 @@ clean_docker() {
 # ===============================
 while true; do
     echo -e "${GREEN}===== 系统清理菜单 =====${RESET}"
-    echo -e "${GREEN}1) 普通系统清理${RESET}"
-    echo -e "${GREEN}2) 系统+Docker 清理${RESET}"
+    echo -e "${GREEN}1) 系统清理${RESET}"
+    echo -e "${GREEN}2) 系统+Docker清理${RESET}"
+    echo -e "${GREEN}3) 定时自动清理${RESET}"
     echo -e "${GREEN}0) 退出${RESET}"
     read -p "$(echo -e ${GREEN}选择操作: ${RESET})" choice
     case $choice in
@@ -124,6 +125,9 @@ while true; do
         2)
             clean_system
             clean_docker
+            ;;
+        3)
+            bash <(curl -fsSL https://raw.githubusercontent.com/sistarry/toolbox/main/VPS/clean-server.sh)
             ;;
         0)
             exit 0
