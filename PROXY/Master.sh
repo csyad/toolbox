@@ -33,7 +33,13 @@ function menu() {
 function install_app() {
     mkdir -p "$APP_DIR/data"
 
-    read -p "请输入全局密钥 (APP_GLOBAL_SECRET): " secret
+    read -p "请输入全局密钥 (APP_GLOBAL_SECRET) [留空自动生成]: " secret
+    
+    if [ -z "$secret" ]; then
+        secret=$(tr -dc A-Za-z0-9 </dev/urandom | head -c 32)
+        echo -e "已自动生成密钥: $secret"
+    fi
+    
     read -p "请输入服务器外网 IP/域名 [默认: 本机IP]: " input_host
     SERVER_HOST=${input_host:-$(curl -s ifconfig.me || hostname -I | awk '{print $1}')}
     read -p "请输入 RPC 端口 [默认:9001]: " input_rpc
