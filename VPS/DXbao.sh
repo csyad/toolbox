@@ -15,15 +15,12 @@ RESET="\033[0m"
 # ==============================
 check_install() {
     if ! command -v nexttrace >/dev/null 2>&1; then
-        echo -e "${YELLOW}NextTrace 未安装，正在安装...${RESET}"
-        curl -fsSL nxtrace.org/nt | bash
+        # 静默安装 NextTrace
+        curl -fsSL nxtrace.org/nt | bash >/dev/null 2>&1
         if [ $? -ne 0 ]; then
-            echo -e "${RED}安装失败，请检查网络或手动安装 NextTrace${RESET}"
+            echo -e "${RED}NextTrace 安装失败，请检查网络或手动安装${RESET}"
             exit 1
         fi
-        echo -e "${GREEN}NextTrace 安装完成！${RESET}"
-    else
-        echo -e "${GREEN}NextTrace 已安装${RESET}"
     fi
 }
 
