@@ -63,7 +63,7 @@ menu(){
 
 while true; do
 clear
-echo -e "${GREEN}=== PPanel 管理菜单 ===${RESET}"
+echo -e "${GREEN}=== PPanel(远程数据) 管理菜单 ===${RESET}"
 echo -e "${GREEN}1) 安装启动${RESET}"
 echo -e "${GREEN}2) 重启${RESET}"
 echo -e "${GREEN}3) 更新${RESET}"
