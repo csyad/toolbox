@@ -53,6 +53,7 @@ run_test() {
 # 菜单函数
 # ==============================
 show_menu() {
+    clear
     echo -e "${GREEN}==== 大小包测试====${RESET}"
     echo -e "${GREEN}1) 移动${RESET}"
     echo -e "${GREEN}2) 联通${RESET}"
