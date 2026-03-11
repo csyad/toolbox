@@ -290,7 +290,7 @@ while true; do
     echo -e "${YELLOW}[03] Easytier组网${RESET}"
     echo -e "${YELLOW}[04] FRP-Panel(Web面板)${RESET}"
     echo -e "${YELLOW}[05] FRP工具(快速部署FRP服务端/客户端)${RESET}"
-    echo -e "${YELLOW}[06] 安装frpc-manager(客户端管理)${RESET}"
+    echo -e "${YELLOW}[06] 安装FRP${RESET}"
     echo -e "${GREEN}[0]  返回${RESET}"
     echo -e "${GREEN}[x]  退出${RESET}"
     
@@ -303,7 +303,7 @@ while true; do
         03) bash <(curl -sL https://raw.githubusercontent.com/ceocok/c.cococ/refs/heads/main/easytier.sh) ; pause_return ;;
         04) bash <(curl -fsSL https://raw.githubusercontent.com/sistarry/toolbox/main/PROXY/frppanel.sh) ; pause_return ;;
         05) bash <(curl -fsSL https://raw.githubusercontent.com/nuro-hia/nuro-frp/main/install.sh) ; pause_return ;;
-        06) bash <(curl -fsSL https://raw.githubusercontent.com/zeyu8023/frpc-manager/main/bootstrap.sh) ; pause_return ;;
+        06) wget -O frp.sh https://raw.githubusercontent.com/ceocok/c.cococ/main/frp.sh && chmod +x frp.sh && ./frp.sh ; pause_return ;;
         0) return ;;
         *) echo -e "${RED}无效选项${RESET}"; sleep 1 ;;
     esac
