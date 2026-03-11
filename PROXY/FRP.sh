@@ -12,7 +12,7 @@ show_menu() {
     echo -e "${GREEN}===== FRP 管理工具安装 =======${NC}"
     echo -e "${GREEN}1.安装FRP-Panel(Web面板)${NC}"
     echo -e "${GREEN}2.安装FRP工具(快速部署FRP服务端/客户端)${NC}"
-    echo -e "${GREEN}3.安装frpc-manager(客户端管理)${NC}"
+    echo -e "${GREEN}3.安装FRP${NC}"
     echo -e "${GREEN}0.退出${NC}"
     echo -n -e "${GREEN}请选择: ${NC}"
 }
@@ -33,8 +33,8 @@ install_frp_tool() {
 }
 
 install_frpc_manager() {
-    echo -e "${GREEN}开始安装 frpc-manager...${NC}"
-    bash <(curl -fsSL https://raw.githubusercontent.com/zeyu8023/frpc-manager/main/bootstrap.sh)
+    echo -e "${GREEN}开始安装FRP...${NC}"
+    wget -O frp.sh https://raw.githubusercontent.com/ceocok/c.cococ/main/frp.sh && chmod +x frp.sh && ./frp.sh
     echo -e "${GREEN}按回车返回菜单...${NC}"
     read
 }
