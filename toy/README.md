@@ -47,3 +47,8 @@ bash <(curl -sL https://raw.githubusercontent.com/sistarry/toolbox/main/toy/ACME
 bash <(curl -sL https://raw.githubusercontent.com/sistarry/toolbox/main/toy/systemdresolved.sh)
 ```
 
+### 机场签到脚本
+```bash
+bash <(curl -sL https://raw.githubusercontent.com/sistarry/toolbox/main/toy/JCQD.sh)
+```
+
