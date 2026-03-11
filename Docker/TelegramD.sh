@@ -57,7 +57,6 @@ install_app() {
     read -p "请输入密码 [默认:admin123]: " input_pass
     PASS=${input_pass:-admin123}
 
-    read -p "请输入配置目录 [默认:/opt/telegram/config]: " input_config
     CONFIG_DIR=${input_config:-/opt/telegram/config}
 
     mkdir -p "$CONFIG_DIR"
