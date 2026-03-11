@@ -289,8 +289,8 @@ while true; do
     echo -e "${YELLOW}[02] WG-Easy${RESET}"
     echo -e "${YELLOW}[03] Easytier组网${RESET}"
     echo -e "${YELLOW}[04] FRP-Panel(Web面板)${RESET}"
-    echo -e "${YELLOW}[05] FRP工具(快速部署FRP服务端/客户端)${RESET}"
-    echo -e "${YELLOW}[06] 安装FRP${RESET}"
+    echo -e "${YELLOW}[05] FRP工具(FRP服务端/客户端)${RESET}"
+    echo -e "${YELLOW}[06] 安装FRP管理${RESET}"
     echo -e "${GREEN}[0]  返回${RESET}"
     echo -e "${GREEN}[x]  退出${RESET}"
     
