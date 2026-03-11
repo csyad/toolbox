@@ -16,15 +16,17 @@ function menu() {
     echo -e "${GREEN}=== FRP-Panel Client 管理菜单 ===${RESET}"
     echo -e "${GREEN}1) 安装启动${RESET}"
     echo -e "${GREEN}2) 更新${RESET}"
-    echo -e "${GREEN}3) 卸载(含数据)${RESET}"
-    echo -e "${GREEN}4) 查看日志${RESET}"
+    echo -e "${GREEN}3) 查看日志${RESET}"
+    echo -e "${GREEN}4) 重启服务${RESET}"
+    echo -e "${GREEN}5) 卸载(含数据)${RESET}"
     echo -e "${GREEN}0) 退出${RESET}"
     read -p "$(echo -e ${GREEN}请选择:${RESET}) " choice
     case $choice in
         1) install_app ;;
         2) update_app ;;
-        3) uninstall_app ;;
-        4) view_logs ;;
+        3) view_logs ;;
+        4) restart_app ;;
+        5) uninstall_app ;;
         0) exit 0 ;;
         *) echo -e "${RED}无效选择${RESET}"; sleep 1; menu ;;
     esac
@@ -76,6 +78,19 @@ function update_app() {
     docker compose pull
     docker compose up -d
     echo -e "${GREEN}✅ FRP-Panel Client 已更新并重启完成${RESET}"
+    read -p "按回车返回菜单..."
+    menu
+}
+
+function restart_app() {
+    cd "$APP_DIR" || { echo "未检测到安装目录"; sleep 1; menu; }
+
+    echo -e "${GREEN}正在重启 FRP-Panel Client...${RESET}"
+
+    docker compose restart
+
+    echo -e "${GREEN}✅ FRP-Panel Client 已重启${RESET}"
+
     read -p "按回车返回菜单..."
     menu
 }
