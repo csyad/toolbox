@@ -156,6 +156,22 @@ timezone=$(get_timezone)
 # 架构
 cpu_arch=$(uname -m)
 
+# 获取 CPU 型号
+cpu_model=$(grep -m1 "model name" /proc/cpuinfo 2>/dev/null | cut -d: -f2)
+[ -z "$cpu_model" ] && cpu_model=$(grep -m1 "Hardware" /proc/cpuinfo 2>/dev/null | cut -d: -f2)
+[ -z "$cpu_model" ] && cpu_model=$(lscpu 2>/dev/null | grep "Model name" | cut -d: -f2)
+
+# 清理不需要的部分
+cpu_model=$(echo "$cpu_model" | sed -E \
+    -e 's/@.*GHz//g' \
+    -e 's/CPU//g' \
+    -e 's/Processor//g' \
+    -e 's/[0-9]+-Core//g' \
+    -e 's/\s+/ /g' \
+    | xargs)
+
+cpu="${cpu_model:-Unknown CPU} (${cpu_arch})"
+
 # 当前时间
 datetime=$(date "+%Y-%m-%d %H:%M:%S")
 
@@ -227,7 +243,7 @@ show_main_menu() {
 
     printf "${ORANGE}%s %-*s:${yellow} %s${re}\n" "💻" $label_w "系统" "$system_name"
     printf "${ORANGE}%s %-*s:${yellow} %s${re}\n" "🌍" $label_w "时区" "$timezone"
-    printf "${ORANGE}%s %-*s:${yellow} %s${re}\n" "🧩" $label_w "架构" "$cpu_arch"
+    printf "${ORANGE}%s %-*s:${yellow} %s${re}\n" "🧩" $label_w "架构" "$cpu"
     printf "${ORANGE}%s %-*s:${yellow} %s${re}\n" "🕒" $label_w "时间" "$datetime"
     printf "${ORANGE}%s %-*s:${ORANGE} %s${re}\n" "🚀" $label_w "在线" "$vps_uptime"
 
