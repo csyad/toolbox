@@ -168,6 +168,7 @@ while true; do
     echo -e "${YELLOW}[05] F佬-Sing-box${RESET}"
     echo -e "${YELLOW}[06] 233boy-Sing-box${RESET}"
     echo -e "${YELLOW}[07] SS+SNELL+Reality${RESET}"
+    echo -e "${YELLOW}[08] vless-all-in-one${RESET}"
     echo -e "${GREEN}[0]  返回${RESET}"
     echo -e "${GREEN}[x]  退出${RESET}"
 
@@ -181,6 +182,7 @@ while true; do
         05) bash <(wget -qO- https://raw.githubusercontent.com/fscarmen/sing-box/main/sing-box.sh) ; pause_return ;;
         06) bash <(wget -qO- -o- https://github.com/233boy/sing-box/raw/main/install.sh) ; pause_return ;;
         07) bash <(curl -L -s menu.jinqians.com) ; pause_return ;;
+        08) wget -O vless-server.sh https://raw.githubusercontent.com/Zyx0rx/vless-all-in-one/main/vless-server.sh && chmod +x vless-server.sh && ./vless-server.sh ; pause_return ;;
         *) echo -e "${RED}无效选项${RESET}"; sleep 1 ;;
     esac
 done
