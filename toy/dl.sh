@@ -129,7 +129,8 @@ EOF
     chmod +x "$RENEW_SCRIPT"
 
     # 添加 cron 自动续期任务
-    (crontab -l 2>/dev/null; echo "0 0,12 * * * $RENEW_SCRIPT >> /var/log/renew_cert.log 2>&1") | crontab -
+    CRON_JOB="0 0,12 * * * $RENEW_SCRIPT >> /var/log/renew_cert.log 2>&1"
+    (crontab -l 2>/dev/null | grep -v "$RENEW_SCRIPT"; echo "$CRON_JOB") | crontab -
 
     echo -e "${GREEN}✅ 自动续期任务已设置，每天 0 点和 12 点检测证书${RESET}"
 
