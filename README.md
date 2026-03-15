@@ -11,7 +11,7 @@ apt-get update -y && apt-get install -y curl
 ```
 
 ```bash
-bash <(curl -fsSL tool.vvvu.eu.cc)
+bash <(curl -fsSL tool.wwwo.eu.cc)
 ```
 
 ## 使用说明
