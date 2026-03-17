@@ -74,7 +74,7 @@ menu() {
             pause
             ;;
         8|08)
-            bash <(curl -sL https://raw.githubusercontent.com/sistarry/toolbox/main/Panel/haozi.sh)
+            bash <(curl -sSLm 10 https://dl.acepanel.net/helper.sh)
             pause
             ;;
         9|09)
