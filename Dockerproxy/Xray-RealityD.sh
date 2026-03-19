@@ -87,8 +87,8 @@ install_app() {
         echo -e "已自动生成未占用端口: ${PORT}"
     fi
 
-    read -p "请输入伪装域名 [默认 itunes.apple.com]: " DOMAIN
-    DOMAIN=${DOMAIN:-itunes.apple.com}
+    read -p "请输入伪装域名 [默认 www.amazon.com]: " DOMAIN
+    DOMAIN=${DOMAIN:-www.amazon.com}
 
     UUID=$(docker run --rm ghcr.io/xtls/xray-core:latest uuid)
     X25519=$(docker run --rm ghcr.io/xtls/xray-core:latest x25519)
