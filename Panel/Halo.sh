@@ -87,7 +87,7 @@ install_app() {
     DB_PASSWORD=$(openssl rand -hex 12)
 
     # external-url
-    read -p "请输入外部访问地址 [默认:http://127.0.0.1:${PORT}]: " input_url
+    read -p "请输入外部访问地址 [例如:https://bolg.eu.org]: " input_url
     EXTERNAL_URL=${input_url:-http://127.0.0.1:${PORT}}
 
     cat > "$COMPOSE_FILE" <<EOF
