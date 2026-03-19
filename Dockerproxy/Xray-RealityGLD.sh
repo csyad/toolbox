@@ -84,8 +84,8 @@ install_node() {
     PORT=${PORT:-$(random_port)}
     echo -e "${YELLOW}使用端口: ${PORT}${RESET}"
 
-    read -p "请输入伪装域名 [默认 itunes.apple.com]: " DOMAIN
-    DOMAIN=${DOMAIN:-itunes.apple.com}
+    read -p "请输入伪装域名 [默认 www.amazon.com]: " DOMAIN
+    DOMAIN=${DOMAIN:-www.amazon.com}
 
     UUID=$(docker run --rm ghcr.io/xtls/xray-core:latest uuid)
     X25519=$(docker run --rm ghcr.io/xtls/xray-core:latest x25519)
