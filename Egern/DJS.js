@@ -5,7 +5,7 @@
 // 环境变量：
 //   TITLE    - 倒计时标题，默认 "目标日"
 //   DATE     - 目标日期，ISO 8601 格式，默认 "2026-12-31T00:00:00+08:00"
-//   ICON     - SF Symbol 图标名，默认 "flag.checkered"
+//   ICON     - SF Symbol 图标名，默认 "hourglass"
 //   COLOR_1  - 渐变起始色，默认 "#6366F1"
 //   COLOR_2  - 渐变结束色，默认 "#8B5CF6"
 
@@ -13,7 +13,7 @@ export default async function (ctx) {
   const env = ctx.env;
   const title = env.TITLE || "目标日";
   const targetDate = env.DATE || "2026-12-31T00:00:00+08:00";
-  const icon = env.ICON || "flag.checkered";
+  const icon = env.ICON || "hourglass";
   const color1 = env.COLOR_1 || "#6366F1";
   const color2 = env.COLOR_2 || "#8B5CF6";
 
