@@ -67,11 +67,6 @@ https://raw.githubusercontent.com/sistarry/toolbox/refs/heads/main/Egern/gold.js
 https://raw.githubusercontent.com/sistarry/toolbox/refs/heads/main/Egern/ZSgold.js
 ```
 
-### 招商金价
-```bash
-https://raw.githubusercontent.com/sistarry/toolbox/refs/heads/main/Egern/ZSgold.js
-```
-
 ### 汇率看板
 ```bash
 https://raw.githubusercontent.com/sistarry/toolbox/refs/heads/main/Egern/exchangerate.js
