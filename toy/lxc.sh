@@ -48,10 +48,10 @@ pre_check() {
     echo "$output"
     if echo "$output" | grep -q "本机符合作为LXC母鸡的要求，可以批量开设LXC容器"; then
         echo -e "${GREEN}你的 VPS 已通过检测，可以开设 LXC 小鸡${RESET}"
-        return 0
+        break_end
     else
         echo -e "${RED}你的 VPS 不符合开设 LXC 母鸡要求，请选择 Incus 或 Docker 方式开设小鸡${RESET}"
-        return 1
+        break_end
     fi
 }
 
