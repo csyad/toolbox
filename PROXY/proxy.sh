@@ -134,6 +134,7 @@ while true; do
     echo -e "${YELLOW}[07] MTProto${RESET}"
     echo -e "${YELLOW}[08] Socks5${RESET}"
     echo -e "${YELLOW}[09] NaiveProxy${RESET}"
+    echo -e "${YELLOW}[10] Xray-Argo${RESET}"
     echo -e "${GREEN}[0]  返回${RESET}"
     echo -e "${GREEN}[x]  退出${RESET}"
 
@@ -149,6 +150,7 @@ while true; do
         07) bash <(curl -sL https://raw.githubusercontent.com/sistarry/toolbox/main/PROXY/GLMTProto.sh) ; pause_return ;;
         08) bash <(curl -fsSL https://raw.githubusercontent.com/sistarry/toolbox/main/PROXY/Socks5.sh) ; pause_return ;;
         09) bash -c "$(curl -Ls https://raw.githubusercontent.com/dododook/NaiveProxy/refs/heads/main/install.sh?v=2)" ; pause_return ;;
+        10) bash <(curl -fsSL https://raw.githubusercontent.com/sistarry/toolbox/main/PROXY/Xray2go.sh) ; pause_return ;;
         *) echo -e "${RED}无效选项${RESET}"; sleep 1 ;;
     esac
 done
@@ -181,7 +183,7 @@ while true; do
         02) bash <(wget -qO- https://raw.githubusercontent.com/fscarmen/argox/main/argox.sh) -c ; pause_return ;;
         03) wget -O install.sh https://raw.githubusercontent.com/mack-a/v2ray-agent/master/install.sh && bash install.sh ; pause_return ;;
         04) bash <(curl -Ls https://raw.githubusercontent.com/yonggekkk/sing-box-yg/main/sb.sh) ; pause_return ;;
-        05) bash <(wget -qO- https://raw.githubusercontent.com/fscarmen/sing-box/main/sing-box.sh) -c ; pause_return ;;
+        05) bash <(wget -qO- https://raw.githubusercontent.com/fscarmen/sing-box/main/sing-box.sh) ; pause_return ;;
         06) bash <(wget -qO- -o- https://github.com/233boy/sing-box/raw/main/install.sh) ; pause_return ;;
         07) bash <(curl -L -s menu.jinqians.com) ; pause_return ;;
         08) wget -O vless-server.sh https://raw.githubusercontent.com/Zyx0rx/vless-all-in-one/main/vless-server.sh && chmod +x vless-server.sh && ./vless-server.sh ; pause_return ;;
