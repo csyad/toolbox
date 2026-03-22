@@ -40,6 +40,7 @@ menu() {
     echo -e "${GREEN}[10] 雷池WAF${RESET}"
     echo -e "${GREEN}[11] Halo博客${RESET}"
     echo -e "${GREEN}[12] 个人主页${RESET}"
+    echo -e "${GREEN}[13] MomentsBlog${RESET}"
     echo -e "${YELLOW}[88] 更新脚本${RESET}"
     echo -e "${YELLOW}[99] 卸载脚本${RESET}"
     echo -e "${GREEN}[00] 退出${RESET}"
@@ -93,6 +94,10 @@ menu() {
             ;;
         12)
             bash <(curl -sL https://raw.githubusercontent.com/sistarry/toolbox/main/Panel/RemioHome.sh)
+            pause
+            ;;
+        13)
+            bash <(curl -sL https://raw.githubusercontent.com/sistarry/toolbox/main/Panel/MomentsBlog.sh)
             pause
             ;;
 
