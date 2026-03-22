@@ -111,3 +111,8 @@ https://raw.githubusercontent.com/sistarry/toolbox/refs/heads/main/Egern/AppStor
 ```bash
 https://raw.githubusercontent.com/sistarry/toolbox/refs/heads/main/Egern/RSXW.js
 ```
+
+### 金价
+```bash
+https://raw.githubusercontent.com/sistarry/toolbox/refs/heads/main/Egern/goldxt.js
+```
