@@ -765,15 +765,15 @@ while true; do
    check_argo_status=$(check_argo) > /dev/null 2>&1
    clear
    green "=== Xray-2go安装管理 ==="
-   purple " Xray 状态: ${check_xray_status}"
-   purple " Argo 状态: ${check_argo_status}"   
+   yellow " Xray 状态: ${check_xray_status}"
+   yellow " Argo 状态: ${check_argo_status}"   
    green "1. 安装"
    green "2. Xray管理"
    green "3. Argo隧道管理"
    green "4. 查看节点信息"
    green "5. 卸载"
    green "0. 退出"
-   reading "请输入选择: " choice
+   green "请输入选择: " choice
    echo ""
    case "${choice}" in
         1)  
