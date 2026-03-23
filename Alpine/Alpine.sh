@@ -77,7 +77,7 @@ menu() {
         10) bash <(curl -sL https://raw.githubusercontent.com/sistarry/toolbox/main/Alpine/AZAPReality.sh) ;;
         11) bash <(curl -sL https://raw.githubusercontent.com/sistarry/toolbox/main/Alpine/AZAPHysteria2.sh) ;;
         12) bash <(curl -fsSL https://raw.githubusercontent.com/sistarry/toolbox/main/PROXY/Xray2go.sh) ;;
-        13) bash <(curl -fsSL https://raw.githubusercontent.com/fscarmen/sing-box/main/sing-box.sh) ;; ;;
+        13) bash <(curl -fsSL https://raw.githubusercontent.com/fscarmen/sing-box/main/sing-box.sh) ;;
         14) wget -O vless-server.sh https://raw.githubusercontent.com/Zyx0rx/vless-all-in-one/main/vless-server.sh && chmod +x vless-server.sh && ./vless-server.sh ;;
         15) bash <(curl -sL https://raw.githubusercontent.com/sistarry/toolbox/main/Alpine/3xuiAlpine.sh) ;;
         16) wget -qO- https://raw.githubusercontent.com/zywe03/realm-xwPF/main/xwPF.sh | sudo bash -s install ;;
