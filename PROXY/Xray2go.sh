@@ -764,19 +764,15 @@ while true; do
    check_xray_status=$(check_xray) > /dev/null 2>&1
    check_argo_status=$(check_argo) > /dev/null 2>&1
    clear
-   echo ""
-   purple "=== 老王Xray-2go一键安装脚本 ===\n"
-   purple " Xray 状态: ${check_xray_status}\n"
-   purple " Argo 状态: ${check_argo_status}\n"   
-   green "1. 安装Xray-2go"
-   red "2. 卸载Xray-2go"
-   echo "==============="
-   green "3. Xray-2go管理"
-   green "4. Argo隧道管理"
-   echo  "==============="
-   green  "5. 查看节点信息"
-   red "0. 退出脚本"
-   echo "==========="
+   green "=== Xray-2go安装管理 ==="
+   purple " Xray 状态: ${check_xray_status}"
+   purple " Argo 状态: ${check_argo_status}"   
+   green "1. 安装"
+   green "2. Xray管理"
+   green "3. Argo隧道管理"
+   green "4. 查看节点信息"
+   green "5. 卸载"
+   green "0. 退出"
    reading "请输入选择: " choice
    echo ""
    case "${choice}" in
@@ -804,10 +800,10 @@ while true; do
                 create_shortcut
             fi
            ;;
-        2) uninstall_xray ;;
-        3) manage_xray ;;
-        4) manage_argo ;;
-        5) check_nodes ;;
+        2) manage_xray ;;
+        3) manage_argo ;;
+        4) check_nodes ;;
+        5) uninstall_xray ;;
         0) exit 0 ;;
         *) red "无效的选项，请输入 0 到 9" ;; 
    esac
