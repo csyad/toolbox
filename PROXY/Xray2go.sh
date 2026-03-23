@@ -533,7 +533,7 @@ uninstall_xray() {
            rm -rf "${work_dir}" || true
 	       rm -rf /etc/systemd/system/xray.service /etc/systemd/system/tunnel.service 2>/dev/null	
 
-            green "\nXray_2go 卸载成功\n"
+            green "\n卸载完成\n"
            ;;
        *)
            purple "已取消卸载操作\n"
