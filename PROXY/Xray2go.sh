@@ -766,7 +766,7 @@ while true; do
    check_xray_status=$(check_xray) > /dev/null 2>&1
    check_argo_status=$(check_argo) > /dev/null 2>&1
    clear
-   green "=== Xray-2go安装管理 ==="
+   green "=== Xray-Argo安装管理 ==="
    yellow " Xray 状态: ${check_xray_status}"
    yellow " Argo 状态: ${check_argo_status}"   
    green "1. 安装"
