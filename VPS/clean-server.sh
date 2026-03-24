@@ -156,7 +156,7 @@ uninstall_script() {
     echo -e "${RED}正在卸载...${RESET}"
     disable_cron
     rm -f $SCRIPT_PATH
-    rm /etc/clean-server.conf
+    rm -f /etc/clean-server.conf
     echo -e "${GREEN}卸载完成${RESET}"
     exit
 }
