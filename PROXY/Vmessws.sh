@@ -304,7 +304,7 @@ EOF
 vmess_link="vmess://$(echo -n "$vmess_json" | base64 -w0)"
 
 echo "---------------------------------------"
-echo -e "${green}VMESS WS 节点${none}"
+echo -e "${green}VMESS+WS 节点${none}"
 echo "地址: $ip"
 echo "端口: $port"
 echo "UUID: $uuid"
@@ -330,7 +330,7 @@ clear
 check_xray_status
 
 echo "--------------------------------"
-echo "Xray VMESS WS 管理脚本"
+echo "Xray VMESS+WS 管理脚本"
 echo "--------------------------------"
 echo "$xray_status_info"
 echo "--------------------------------"
