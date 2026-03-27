@@ -54,25 +54,24 @@ echo
 echo -e "${G}╔════════════════════════════════════════════╗${X}"
 echo -e "${G}           🚀 Server Dashboard                ${X}"
 echo -e "${G}╚════════════════════════════════════════════╝${X}"
-
+echo -e "${CYAN}----------------------------------------------${RESET}"
 printf "👤 用户           : %s\n" "$USER"
 printf "💻 主机           : %s\n" "$HOST"
 printf "🖥️系统           : %s\n" "$OS"
-
-echo
+echo -e "${CYAN}----------------------------------------------${RESET}"
 
 printf "⏰ 时间            : %s\n" "$DATE"
 printf "🆙 运行时间       : %s\n" "$UPTIME"
 printf "📊 系统负载       : %s\n" "$LOAD"
 
-echo
+echo -e "${CYAN}----------------------------------------------${RESET}"
 
 printf "🔥 CPU使用        : %s\n" "$CPU"
 printf "💾 内存使用       : %s\n" "$MEM"
 printf "🧠 Swap使用       : %s\n" "$SWAP"
 printf "🗂️磁盘使用       : %s\n" "$DISK"
 
-echo
+echo -e "${CYAN}----------------------------------------------${RESET}"
 
 if command -v docker >/dev/null 2>&1 && docker info >/dev/null 2>&1; then
 
@@ -112,26 +111,27 @@ else
 echo -e "${R}Docker 未安装${X}"
 fi
 
-echo
 
+echo -e "${CYAN}----------------------------------------------${RESET}"
 echo -e "${O}🛡 最近登录记录${X}"
 
-LAST_BIN=$(which last 2>/dev/null)
+LAST_BIN=$(command -v last 2>/dev/null)
 
 if [ -z "$LAST_BIN" ]; then
-if command -v apt >/dev/null 2>&1; then
-apt -qq update >/dev/null 2>&1
-apt -y install login >/dev/null 2>&1
-fi
-LAST_BIN=$(which last 2>/dev/null)
+    if command -v apt >/dev/null 2>&1; then
+        apt -qq update >/dev/null 2>&1
+        apt -y install wtmpdb >/dev/null 2>&1 || apt -y install util-linux >/dev/null 2>&1
+    fi
+    LAST_BIN=$(command -v last 2>/dev/null)
 fi
 
 if [ -n "$LAST_BIN" ]; then
 
-if [ ! -f /var/log/wtmp ]; then
-touch /var/log/wtmp
-chmod 664 /var/log/wtmp
-fi
+    if [ ! -f /var/log/wtmp ]; then
+        touch /var/log/wtmp
+        chmod 664 /var/log/wtmp
+        chown root:utmp /var/log/wtmp
+    fi
 
 echo "IP              时间"
 
