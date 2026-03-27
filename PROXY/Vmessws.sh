@@ -178,6 +178,8 @@ run_install(){
 
     info "安装 Xray..."
     execute_official_script install
+    
+    mkdir -p /usr/local/etc/xray
 
     write_config "$port" "$uuid"
 
