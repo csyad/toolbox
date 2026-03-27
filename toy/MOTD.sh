@@ -55,21 +55,21 @@ echo -e "${G}╔═════════════════════�
 echo -e "${G}           🚀 Server Dashboard                ${X}"
 echo -e "${G}╚════════════════════════════════════════════╝${X}"
 echo -e "${CYAN}----------------------------------------------${RESET}"
-printf "👤 用户           : %s\n" "$USER"
-printf "💻 主机           : %s\n" "$HOST"
-printf "🖥️系统           : %s\n" "$OS"
+printf "用户           : %s\n" "$USER"
+printf "主机           : %s\n" "$HOST"
+printf "系统           : %s\n" "$OS"
 echo -e "${CYAN}----------------------------------------------${RESET}"
 
-printf "⏰ 时间            : %s\n" "$DATE"
-printf "🆙 运行时间       : %s\n" "$UPTIME"
-printf "📊 系统负载       : %s\n" "$LOAD"
+printf "当前时间       : %s\n" "$DATE"
+printf "运行时间       : %s\n" "$UPTIME"
+printf "系统负载       : %s\n" "$LOAD"
 
 echo -e "${CYAN}----------------------------------------------${RESET}"
 
-printf "🔥 CPU使用        : %s\n" "$CPU"
-printf "💾 内存使用       : %s\n" "$MEM"
-printf "🧠 Swap使用       : %s\n" "$SWAP"
-printf "🗂️磁盘使用       : %s\n" "$DISK"
+printf "CPU使用        : %s\n" "$CPU"
+printf "内存使用       : %s\n" "$MEM"
+printf "Swap使用       : %s\n" "$SWAP"
+printf "磁盘使用       : %s\n" "$DISK"
 
 echo -e "${CYAN}----------------------------------------------${RESET}"
 
@@ -81,9 +81,9 @@ D_SIZE=$(docker system df | awk '/Images/ {print $4}')
 
 echo -e "${Y}🐳 Docker 状态${X}"
 
-printf "📦 容器数量       : %s\n" "$D_CONT"
-printf "🖼️镜像数量       : %s\n" "$D_IMG"
-printf "📦 Docker占用     : %s\n" "$D_SIZE"
+printf "容器数量       : %s\n" "$D_CONT"
+printf "镜像数量       : %s\n" "$D_IMG"
+printf "Docker占用     : %s\n" "$D_SIZE"
 
 RUN=$(docker ps --format "{{.Names}}")
 STOP=$(docker ps -a --filter status=exited --format "{{.Names}}")
@@ -133,7 +133,7 @@ if [ -n "$LAST_BIN" ]; then
         chown root:utmp /var/log/wtmp
     fi
 
-echo "IP              时间"
+echo "IP               时间"
 
 $LAST_BIN -i -n 3 | grep '^root' | grep -v reboot | while read line
 do
