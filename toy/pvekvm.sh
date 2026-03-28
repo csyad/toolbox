@@ -51,15 +51,15 @@ create_vm() {
     read -p "内存(MB): " MEM
     read -p "硬盘(GB): " DISK
     read -p "SSH端口: " SSHPORT
-    read -p "80端口: " PORT80
-    read -p "443端口: " PORT443
+    read -p "80端口(默认留空): " PORT80
+    read -p "443端口(默认留空): " PORT443
     read -p "外网端口起: " STARTPORT
     read -p "外网端口止: " ENDPORT
     read -p "系统(如 debian11 ubuntu20): " OS
     read -p "存储盘(如 local): " STORAGE
     read -p "独立IPV6地址(留空默认N): " IPV6
 
-    ./buildvm.sh $VMID $USERNAME $PASSWORD $CPU $MEM $DISK $SSHPORT $PORT80 $PORT443 $STARTPORT $ENDPORT $OS $STORAGE ${IPV6:-N}
+    ./buildvm.sh $VMID $USERNAME $PASSWORD $CPU $MEM $DISK $SSHPORT ${PORT80:-0} ${PORT443:-0} $STARTPORT $ENDPORT $OS $STORAGE ${IPV6:-N}
 }
 
 # 删除指定虚拟机
