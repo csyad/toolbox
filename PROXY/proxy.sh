@@ -136,7 +136,8 @@ while true; do
     echo -e "${YELLOW}[09] NaiveProxy${RESET}"
     echo -e "${YELLOW}[10] Xray-Argo${RESET}"
     echo -e "${YELLOW}[11] Vmess+ws${RESET}"
-    echo -e "${YELLOW}[12] VlessEncryption${RESET}"
+    echo -e "${YELLOW}[12] Vless+httpupgrade${RESET}"
+    echo -e "${YELLOW}[13] VlessEncryption${RESET}"
     echo -e "${GREEN}[0]  返回${RESET}"
     echo -e "${GREEN}[x]  退出${RESET}"
 
@@ -144,7 +145,7 @@ while true; do
 
     case "$sub" in
         01) wget -O ss-rust.sh https://raw.githubusercontent.com/xOS/Shadowsocks-Rust/master/ss-rust.sh && bash ss-rust.sh ; pause_return ;;
-        02) bash <(curl -L https://raw.githubusercontent.com/yahuisme/xray-vless-reality/main/install.sh) ; pause_return ;;
+        02) bash <(curl -fsSL https://raw.githubusercontent.com/sistarry/toolbox/main/PROXY/vlessreality.sh) ; pause_return ;;
         03) wget -O snell.sh --no-check-certificate https://git.io/Snell.sh && chmod +x snell.sh && ./snell.sh ; pause_return ;;
         04) bash <(curl -sL https://raw.githubusercontent.com/sistarry/toolbox/main/PROXY/Anytls.sh) ; pause_return ;;
         05) bash <(curl -sL https://raw.githubusercontent.com/sistarry/toolbox/main/PROXY/GLHysteria2.sh) ; pause_return ;;
@@ -154,7 +155,8 @@ while true; do
         09) bash -c "$(curl -Ls https://raw.githubusercontent.com/dododook/NaiveProxy/refs/heads/main/install.sh?v=2)" ; pause_return ;;
         10) bash <(curl -fsSL https://raw.githubusercontent.com/sistarry/toolbox/main/PROXY/Xray2go.sh) ; pause_return ;;
         11) bash <(curl -fsSL https://raw.githubusercontent.com/sistarry/toolbox/main/PROXY/Vmessws.sh) ; pause_return ;;
-        12) bash <(curl -L https://raw.githubusercontent.com/yahuisme/vless-encryption/main/install.sh) ; pause_return ;;
+        12) bash <(curl -fsSL https://raw.githubusercontent.com/sistarry/toolbox/main/PROXY/Vlesshttpupgrade.sh) ; pause_return ;;
+        13) bash <(curl -L https://raw.githubusercontent.com/yahuisme/vless-encryption/main/install.sh) ; pause_return ;;
         *) echo -e "${RED}无效选项${RESET}"; sleep 1 ;;
     esac
 done
