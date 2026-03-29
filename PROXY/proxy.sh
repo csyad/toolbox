@@ -156,7 +156,7 @@ while true; do
         10) bash <(curl -fsSL https://raw.githubusercontent.com/sistarry/toolbox/main/PROXY/Xray2go.sh) ; pause_return ;;
         11) bash <(curl -fsSL https://raw.githubusercontent.com/sistarry/toolbox/main/PROXY/Vmessws.sh) ; pause_return ;;
         12) bash <(curl -fsSL https://raw.githubusercontent.com/sistarry/toolbox/main/PROXY/Vlesshttpupgrade.sh) ; pause_return ;;
-        13) bash <(curl -L https://raw.githubusercontent.com/yahuisme/vless-encryption/main/install.sh) ; pause_return ;;
+        13) bash <(curl -fsSL https://raw.githubusercontent.com/sistarry/toolbox/main/PROXY/VLESSEncryption.sh) ; pause_return ;;
         *) echo -e "${RED}无效选项${RESET}"; sleep 1 ;;
     esac
 done
