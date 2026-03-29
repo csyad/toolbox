@@ -1,8 +1,4 @@
-# [通用设置]
 ipv6: false
-http_port: 3080
-socks_port: 3090
-allow_external_connections: true
 vif_only: true
 hide_vpn_icon: true
 hijack_dns:
