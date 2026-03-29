@@ -26,18 +26,22 @@ info() { [[ "$is_quiet" = false ]] && echo -e "\n$yellow[!] $1$none\n"; }
 success() { [[ "$is_quiet" = false ]] && echo -e "\n$green[✔] $1$none\n"; }
 
 spinner() {
-    local pid=$1; local spinstr='|/-\'
+    local pid=$1
+    local spinstr='|/-\'
+
     if [[ "$is_quiet" = true ]]; then
         wait "$pid"
         return
     fi
-    while ps -p "$pid" > /dev/null; do
+
+    while kill -0 "$pid" 2>/dev/null; do
         local temp=${spinstr#?}
         printf " [%c]  " "$spinstr"
-        local spinstr=$temp${spinstr%"$temp"}
+        spinstr=$temp${spinstr%"$temp"}
         sleep 0.1
         printf "\r"
     done
+
     printf "    \r"
 }
 
