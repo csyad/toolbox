@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -a # 自动导出变量，增加兼容性
+set -euo pipefail
 
 SCRIPT_VERSION="SINGBOX-VLESS-HTTPUPGRADE-1.0"
 
