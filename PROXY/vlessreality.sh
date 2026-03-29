@@ -59,12 +59,10 @@ get_public_ip() {
 execute_official_script() {
     local args="$1"
 
-    bash <(curl -Ls "$xray_install_script_url") $args &> /dev/null &
-    local pid=$!
+    bash <(curl -L "$xray_install_script_url") $args &> /dev/null &
+    spinner $!
 
-    spinner $pid
-
-    if ! wait $pid; then
+    if ! wait $!; then
         return 1
     fi
 }
