@@ -599,7 +599,7 @@ press_any_key_to_continue() {
 main_menu() {
     while true; do
         clear
-        cecho "$C_CYAN" "--- Xray VLESS-Encryption 一键安装管理脚本 v${SCRIPT_VERSION} ---"
+        cecho "$C_CYAN" "--- Xray VLESS-Encryption 安装管理 ---"
         echo
         check_xray_status
         echo "  ${xray_status_info}"
