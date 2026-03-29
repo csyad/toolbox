@@ -1,13 +1,5 @@
 #!/bin/bash
 
-# VLESS Encryption 一键安装管理脚本
-# 版本: V1.5.7 (UI颜色调整)
-# 更新日志 (V1.5.7):
-# - [UI] 调整菜单和输出颜色 (紫色 -> 绿色)
-# - [安全] 优化官方脚本执行方式 (预下载+内容检查)
-# - [安全] 配置文件写入后设置标准权限 (644)
-# 固定配置: native + 0-RTT + ML-KEM-768 + xtls-rprx-vision
-
 set -e
 
 # --- 全局变量 ---
@@ -621,12 +613,7 @@ main_menu() {
         cecho "$C_GREEN" "  5. 查看 Xray 日志"
         cecho "$C_GREEN" "  6. 修改节点配置"
         cecho "$C_GREEN" "  7. 查看订阅信息"
-        
-        cecho "$C_GREEN"  "─────────────────────────────────────────────────────"
         cecho "$C_RED"    "  0. 退出脚本"
-        cecho "$C_GREEN"  "─────────────────────────────────────────────────────"
-        cecho "$C_YELLOW" "  注意: 使用 native + 0-RTT + ML-KEM-768 + xtls-rprx-vision"
-        cecho "$C_GREEN"  "─────────────────────────────────────────────────────"
         echo -n "  请输入选项 [0-7]: "
         read -r choice
 
