@@ -58,20 +58,13 @@ get_public_ip() {
 
 execute_official_script() {
     local args="$1"
-    local tmp_script="/tmp/xray_install.sh"
 
-    curl -L "$xray_install_script_url" -o "$tmp_script"
-    chmod +x "$tmp_script"
-
-    bash "$tmp_script" $args &> /dev/null &
+    bash <(curl -L "$xray_install_script_url") $args &> /dev/null &
     spinner $!
 
     if ! wait $!; then
-        rm -f "$tmp_script"
         return 1
     fi
-
-    rm -f "$tmp_script"
 }
 
 # --- 改进的验证函数 ---
