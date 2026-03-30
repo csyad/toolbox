@@ -181,7 +181,7 @@ apply_and_verify() {
     echo -e "${GREEN}✅ 优化完成!${NC}"
     echo -e "拥塞控制: ${YELLOW}${cc}${NC} | 队列算法: ${YELLOW}${qdisc}${NC}"
     if [ "$reuse" == "1" ]; then
-        echo -e "并发复用: ${GREEN}已启用 (tcp_tw_reuse)${NC}"
+        echo -e "并发复用: ${GREEN}已启用${NC}"
     else
         echo -e "并发复用: ${RED}未启用 (可能被覆盖)${NC}"
     fi
@@ -197,9 +197,9 @@ main() {
         exit 0
     fi
 
-    echo -e "${CYAN}======================================================${NC}"
-    echo -e "${CYAN}   Linux Network Optimizer (Proxy Edition) v${SCRIPT_VERSION}   ${NC}"
-    echo -e "${CYAN}======================================================${NC}"
+    echo -e "${CYAN}==================================================${NC}"
+    echo -e "${CYAN}           Linux Network Optimizer                ${NC}"
+    echo -e "${CYAN}==================================================${NC}"
     
     pre_flight_checks
     get_system_info
