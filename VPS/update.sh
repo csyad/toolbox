@@ -264,10 +264,10 @@ EOF
 }
 
 # -------------------------
-# 时间同步（Debian / Ubuntu 专用）
+# 时间同步 & 设置上海时区（Debian / Ubuntu 专用）
 # -------------------------
 enable_time_sync() {
-    echo -e "${YELLOW}⏰ 配置 systemd-timesyncd 时间同步...${RESET}"
+    echo -e "${YELLOW}⏰ 配置 systemd-timesyncd 时间同步& 设置上海时区...${RESET}"
 
     if [ ! -f /etc/os-release ]; then
         echo -e "${RED}❌ 无法识别系统类型${RESET}"
@@ -299,6 +299,10 @@ enable_time_sync() {
     # 启用 NTP
     timedatectl set-ntp true
     systemctl restart systemd-timesyncd
+
+     # 设置上海时区
+    timedatectl set-timezone Asia/Shanghai
+    echo -e "${GREEN}✔ 时区已设置为上海 (Asia/Shanghai)${RESET}"
 
     # 状态检查
     if systemctl is-active --quiet systemd-timesyncd; then
