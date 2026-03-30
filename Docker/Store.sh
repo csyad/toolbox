@@ -250,6 +250,7 @@ declare -A apps=(
     [12,10]="octopusAPI聚合"
     [12,11]="AIClient2API"
     [12,12]="Codeg"
+    [12,13]="三省六部Edict"
     [13,1]="星露谷物语开服联机"
     [13,2]="MCSManager"
 
@@ -461,6 +462,7 @@ declare -A commands=(
     [12,10]='bash <(curl -sL https://raw.githubusercontent.com/sistarry/toolbox/main/Docker/Octopus.sh)'
     [12,11]='bash <(curl -sL https://raw.githubusercontent.com/sistarry/toolbox/main/Docker/AIClient2API.sh)'
     [12,12]='bash <(curl -sL https://raw.githubusercontent.com/sistarry/toolbox/main/Docker/CodeG.sh)'
+    [12,13]='bash <(curl -sL https://raw.githubusercontent.com/sistarry/toolbox/main/Docker/SXEdict.sh)'
     [13,1]='curl -sSL https://raw.githubusercontent.com/truman-world/puppy-stardew-server/main/quick-start-zh.sh | bash'
     [13,2]='bash <(curl -sL https://raw.githubusercontent.com/sistarry/toolbox/main/Docker/MCSManager.sh)'
 )
