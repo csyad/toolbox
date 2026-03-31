@@ -41,6 +41,7 @@ menu() {
     echo -e "${YELLOW}[06] 安装lookbusy保活${RESET}"
     echo -e "${YELLOW}[07] 安装Y探长${RESET}"
     echo -e "${YELLOW}[08] 安装oci-start${RESET}"
+    echo -e "${YELLOW}[09] 安装R探长${RESET}"
     echo -e "${GREEN}[88] 更新脚本${RESET}"
     echo -e "${GREEN}[99] 卸载脚本${RESET}"
     echo -e "${YELLOW}[00] 退出${RESET}"
@@ -55,6 +56,7 @@ menu() {
         6)  bash <(curl -fsSL https://raw.githubusercontent.com/sistarry/toolbox/main/Oracle/lookbusy.sh) && pause ;;
         7)  bash <(wget -qO- https://github.com/Yohann0617/oci-helper/releases/latest/download/sh_oci-helper_install.sh) && pause ;;
         8)  bash <(curl -fsSL https://raw.githubusercontent.com/sistarry/toolbox/main/Oracle/oci-start.sh) && pause ;;
+        9)  bash <(curl -fsSL https://raw.githubusercontent.com/sistarry/toolbox/main/Oracle/RBot.sh) && pause ;;
         88)
             echo -e "${YELLOW}🔄 正在更新脚本...${RESET}"
             curl -fsSL -o "$SCRIPT_PATH" "$SCRIPT_URL"
