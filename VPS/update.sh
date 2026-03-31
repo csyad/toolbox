@@ -20,7 +20,7 @@ fi
 # -------------------------
 # 常用依赖（新增 dnsutils, iperf3, mtr）
 # -------------------------
-deps=(curl wget git net-tools lsof tar unzip rsync pv sudo nc dnsutils iperf3 mtr)
+deps=(curl wget git net-tools lsof tar unzip rsync pv sudo nc dnsutils iperf3 mtr jq openssl)
 
 # -------------------------
 # 检查并安装依赖（兼容不同系统）
