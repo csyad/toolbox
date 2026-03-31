@@ -8,8 +8,9 @@ RESET="\033[0m"
 menu() {
     clear
     echo -e "${GREEN}=== DD飞牛管理菜单 ===${RESET}"
-    echo -e "${GREEN}1) 安装重装系统脚本${RESET}"
+    echo -e "${GREEN}1) 安装必要工具${RESET}"
     echo -e "${GREEN}2) DD飞牛系统${RESET}"
+    echo -e "${GREEN}3) 重启系统${RESET}"
     echo -e "${GREEN}0) 退出${RESET}"
     read -p $'\033[32m请选择操作: \033[0m' choice
     case $choice in
@@ -17,7 +18,7 @@ menu() {
             echo -e "${GREEN}正在下载重装系统脚本...${RESET}"
             curl -O https://raw.githubusercontent.com/bin456789/reinstall/main/reinstall.sh || wget -O reinstall.sh https://raw.githubusercontent.com/bin456789/reinstall/main/reinstall.sh
             chmod +x reinstall.sh
-            echo -e "${GREEN}✅ 脚本已下载完成，可以执行 DD 系统${RESET}"
+            echo -e "${GREEN}✅ 脚本已下载完成，可以执行 DD 飞牛系统${RESET}"
             pause
             ;;
         2)
@@ -35,6 +36,9 @@ menu() {
                 fi
             fi
             pause
+            ;;
+        3)
+            reboot
             ;;
         0)
             exit 0
