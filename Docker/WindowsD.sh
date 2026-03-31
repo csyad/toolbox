@@ -97,12 +97,25 @@ install_app() {
     echo -e "${GREEN}1) Windows 11${RESET}"
     echo -e "${GREEN}2) Windows 10${RESET}"
     echo -e "${GREEN}3) Windows Server 2022${RESET}"
+    echo -e "${GREEN}4) 自定义版本${RESET}"
     read -p "请选择 [默认:1]: " sys_choice
 
     case $sys_choice in
-        2) VERSION="10" ;;
-        3) VERSION="2022" ;;
-        *) VERSION="11" ;;
+        2)
+            VERSION="10"
+            ;;
+        3)
+            VERSION="2022"
+            ;;
+        4)
+            read -p "请输入 Windows 版本号 (如: 11): " VERSION
+            if [ -z "$VERSION" ]; then
+                VERSION="11"
+            fi
+            ;;
+        *)
+           VERSION="11"
+           ;;
     esac
 
     read -p "请输入 Web 控制台端口 [默认:8006]: " input_port
