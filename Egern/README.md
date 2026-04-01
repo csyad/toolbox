@@ -116,3 +116,8 @@ https://raw.githubusercontent.com/sistarry/toolbox/refs/heads/main/Egern/RSXW.js
 ```bash
 https://raw.githubusercontent.com/sistarry/toolbox/refs/heads/main/Egern/goldxt.js
 ```
+
+### 服务器监控
+```bash
+https://raw.githubusercontent.com/sistarry/toolbox/refs/heads/main/Egern/ServerMonito.js
+```
