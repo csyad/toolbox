@@ -228,7 +228,7 @@ check_xray_status() {
     local xray_version=$($xray_binary_path version 2>/dev/null | head -n 1 | awk '{print $2}' || echo "未知")
     local service_status
     if systemctl is-active --quiet xray 2>/dev/null; then service_status="${green}运行中${none}"; else service_status="${yellow}未运行${none}"; fi
-    xray_status_info="  Xray 状态: ${green}已安装${none} | ${service_status} | 版本: ${cyan}${xray_version}${none}"
+    xray_status_info="  Xray 状态: ${green}已安装${none} | ${service_status}${none}"
 }
 
 # --- 菜单功能函数 ---
@@ -341,6 +341,7 @@ modify_config() {
     local current_domain=$(jq -r '.inbounds[0].streamSettings.realitySettings.serverNames[0]' "$xray_config_path")
     local private_key=$(jq -r '.inbounds[0].streamSettings.realitySettings.privateKey' "$xray_config_path")
     local public_key=$(jq -r '.inbounds[0].streamSettings.realitySettings.publicKey' "$xray_config_path")
+    local shortid=$(jq -r '.inbounds[0].streamSettings.realitySettings.shortIds[0]' "$xray_config_path")
 
     info "请输入新配置，直接回车则保留当前值。"
     local port uuid domain
@@ -376,7 +377,7 @@ modify_config() {
         if is_valid_domain "$domain"; then break; else error "域名格式无效，请重新输入。"; fi
     done
 
-    write_config "$port" "$uuid" "$domain" "$private_key" "$public_key"
+    write_config "$port" "$uuid" "$domain" "$private_key" "$public_key" "$shortid"
     if ! restart_xray; then return; fi
 
     success "配置修改成功！"
@@ -424,7 +425,12 @@ view_subscription_info() {
 
 # --- 核心逻辑函数 ---
 write_config() {
-    local port=$1 uuid=$2 domain=$3 private_key=$4 public_key=$5 shortid="20220701"
+    local port=$1 uuid=$2 domain=$3 private_key=$4 public_key=$5 shortid=${6:-}
+
+    if [[ -z "$shortid" ]]; then
+        shortid=$(openssl rand -hex 8)
+    fi
+
     jq -n \
         --argjson port "$port" \
         --arg uuid "$uuid" \
