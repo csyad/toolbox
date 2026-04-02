@@ -259,6 +259,7 @@ declare -A apps=(
     [12,15]="codex-console注册机"
     [13,1]="星露谷物语开服联机"
     [13,2]="MCSManager"
+    [13,3]="桃花源文字游戏"
 
 )
 
@@ -477,6 +478,7 @@ declare -A commands=(
     [12,15]='bash <(curl -sL https://raw.githubusercontent.com/sistarry/toolbox/main/Docker/CodexConsole.sh)'
     [13,1]='curl -sSL https://raw.githubusercontent.com/truman-world/puppy-stardew-server/main/quick-start-zh.sh | bash'
     [13,2]='bash <(curl -sL https://raw.githubusercontent.com/sistarry/toolbox/main/Docker/MCSManager.sh)'
+    [13,3]='bash <(curl -sL https://raw.githubusercontent.com/sistarry/toolbox/main/Docker/Taoyuan.sh)'
 )
 
 # ================== 菜单显示函数 ==================
