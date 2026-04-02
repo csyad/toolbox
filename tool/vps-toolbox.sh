@@ -221,7 +221,7 @@ MAIN_MENU=(
 )
 
 # 二级菜单（编号去掉前导零，显示时格式化为两位数）
-SUB_MENU[1]="1 更新系统|2 系统信息|3 修改root密码|4 root密码登录管理|5 root公钥登录管理|6 修改SSH端口|7 修改时区|8 时间同步|9 切换v4V6|10 开放所有端口|11 更换系统源|12 DDdebian12|13 DDwindows10|14 DDNAT|15 DD飞牛|16 修改语言|17 修改主机名|18 美化命令|19 VPS重启"
+SUB_MENU[1]="1 更新系统|2 系统信息|3 修改root密码|4 root密码登录管理|5 root公钥登录管理|6 修改SSH端口|7 修改时区|8 时间同步|9 切换v4V6|10 开放所有端口|11 更换系统源|12 DDdebian12|13 DDwindows10|14 DDNAT|15 DD飞牛|16 修改语言|17 修改主机名|18 一键优化|19 VPS重启"
 SUB_MENU[2]="20 代理工具箱|21 FRP管理|22 BBRv3优化|23 WARP|24 BBR+TCP智能调参|25 Reality|26 SurgeSnell|27 Shadowsocks|28 自定义DNS解锁|29 DDNS|30 Hysteria2|31 3X-UI|32 Realm|33 GOST|34 哆啦A梦转发面板|35 easytier组网"
 SUB_MENU[3]="36 NodeQuality脚本|37 融合怪测试|38 YABS测试|39 网络质量体检脚本|40 IP质量体检脚本|41 硬盘质量体检脚本|42 三网延迟检测|43 简单回程测试|44 完整路由检测|45 流媒体解锁|46 三网延迟测速|47 检查25端口开放|48 网络工具箱"
 SUB_MENU[4]="49 Docker管理|50 DockerCompose管理|51 DockerCompose备份恢复|52 DockerCompose自动更新"
@@ -372,7 +372,7 @@ execute_choice() {
         15) bash <(curl -sL https://raw.githubusercontent.com/sistarry/toolbox/main/VPS/ddfnos.sh) ;;
         16) bash <(curl -fsSL https://raw.githubusercontent.com/sistarry/toolbox/main/VPS/xgyu.sh) ;;
         17) bash <(curl -fsSL https://raw.githubusercontent.com/sistarry/toolbox/main/VPS/home.sh) ;;
-        18) bash <(curl -sL https://raw.githubusercontent.com/sistarry/toolbox/main/VPS/mhgl.sh) ;;
+        18) bash <(curl -fsSL https://raw.githubusercontent.com/sistarry/toolbox/main/VPS/vpsup.sh) ;;
         19) sudo reboot ;;
         20) bash <(curl -fsSL https://raw.githubusercontent.com/sistarry/toolbox/main/PROXY/proxy.sh) ;;
         21) bash <(curl -fsSL https://raw.githubusercontent.com/sistarry/toolbox/main/PROXY/FRP.sh) ;;
