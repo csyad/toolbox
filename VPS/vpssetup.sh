@@ -2,7 +2,7 @@
 set -e
 
 # ==========================================================
-# VPS 全能一键优化脚本 - 最终完善版
+# VPS 全能一键优化脚本 
 # ==========================================================
 
 # -----------------------------
@@ -138,7 +138,7 @@ configure_locale() {
 # 6. BBR 高性能动态配置 (优化版)
 # -----------------------------
 configure_bbr() {
-    log "\n${YELLOW}=============== 4. BBR 高性能配置 ===============${NC}"
+    log "\n${YELLOW}=============== 4. BBR 配置 ===============${NC}"
     local config_file="/etc/sysctl.d/99-bbr.conf"
     
     if ! is_kernel_version_ge "4.9"; then
@@ -187,7 +187,7 @@ net.ipv4.tcp_notsent_lowat = 16384
 net.ipv4.tcp_mtu_probing = 1
 EOF
     sysctl --system >/dev/null
-    log "${GREEN}✅ BBR高性能参数已应用 (内存适配: ${mem_mb}MB)${NC}"
+    log "${GREEN}✅ BBR已应用 (内存适配: ${mem_mb}MB)${NC}"
 }
 
 # -----------------------------
@@ -331,7 +331,7 @@ enable_time_sync() {
 }
 
 configure_firewall() {
-    log "\n${YELLOW}=============== 7. 防火墙全开 (多系统适配版) ===============${RESET}"
+    log "\n${YELLOW}=============== 7. 防火墙全开 ===============${RESET}"
     
     # 1. 处理 firewalld (RHEL/CentOS 系)
     if command -v firewall-cmd >/dev/null 2>&1; then
@@ -425,7 +425,7 @@ main() {
     configure_firewall
     docker_install
 
-    log "\n${GREEN}✨ 所有任务已执行完毕！${RESET}"
+    log "${GREEN}✨ 所有任务已执行完毕！${RESET}"
     log "${YELLOW}系统将在 5 秒后自动重启...${RESET}"
     
     for i in {5..1}; do
