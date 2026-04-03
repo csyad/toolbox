@@ -418,6 +418,7 @@ view_subscription_info() {
         echo -e "$yellow 公钥: $cyan$public_key$none"
         echo -e "$yellow ShortId: $cyan$shortid$none"
         echo "----------------------------------------------------------------"
+        echo -e "$yellow V6VPS替换IP地址为V6$none"
         echo -e "$green 订阅链接 (已保存到 ~/xray_vless_reality_link.txt): $none\n"; echo -e "$cyan${vless_url}${none}"
         echo "----------------------------------------------------------------"
     fi
@@ -523,7 +524,7 @@ press_any_key_to_continue() {
 main_menu() {
     while true; do
         clear
-        echo -e "$cyan Xray VLESS-Reality 一键安装管理脚本$none"
+        echo -e "$cyan Xray VLESS-Reality 安装管理$none"
         echo "---------------------------------------------"
         check_xray_status
         echo -e "${xray_status_info}"
