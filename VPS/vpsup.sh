@@ -413,7 +413,7 @@ configure_ssh_security() {
         
         # 只要输入的不是 y 或 Y（包括直接回车），就视为取消
         if [[ ! "$SETUP_KEY" =~ ^[yY]$ ]]; then
-            log "${BLUE}已取消 SSH 密钥加固 (默认)${NC}"
+            log "${BLUE}已取消 SSH 密钥加固${NC}"
             return 0
         fi
     else
