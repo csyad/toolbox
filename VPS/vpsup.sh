@@ -312,16 +312,25 @@ EOF
 
 
 # -----------------------------
-# 6. Swap 配置 (固定 1GB)
+# 6. Swap 配置 (固定 1GB，且磁盘需 > 5GB)
 # -----------------------------
 configure_swap() {
     log "\n${YELLOW}=============== 7. Swap配置 ===============${NC}"
+    
+    # --- 新增判断：磁盘空间小于 5GB 则跳过 ---
+    # 获取根目录剩余空间 (单位: MB)
+    local free_space=$(df -m / | awk 'NR==2 {print $4}')
+    if [[ "$free_space" -lt 5120 ]]; then
+        log "${YELLOW}磁盘空间小于 5GB (剩余 ${free_space}MB)，为防止空间耗尽，跳过 Swap 配置。${NC}"
+        return 0
+    fi
+
     [[ "$SWAP_SIZE_MB" = "0" ]] && { log "${BLUE}Swap已禁用${NC}"; return; }
 
     local swap_mb=1024  # 固定 1GB
     log "${BLUE}设置Swap: ${swap_mb}MB${NC}"
 
-    # 检查磁盘空间
+    # 检查磁盘空间（确保创建 1GB 后还有 100MB 缓冲）
     check_disk_space $((swap_mb + 100)) || return 1
 
     # 已有 swap 检测
@@ -737,7 +746,7 @@ clean_system() {
 
     log "${BLUE}正在清理临时文件与系统日志...${NC}"
     # 清理日志文件 (保留目录结构，清空内容)
-    find /var/log -type f -regex '.*\.gz$\|.*\.[0-9]$活.*\.log$' -exec truncate -s 0 {} + 2>/dev/null || true
+    find /var/log -type f -regex '.*\.gz$\|.*\.[0-9]$.*\.log$' -exec truncate -s 0 {} + 2>/dev/null || true
     
     # 清理临时目录
     rm -rf /tmp/* /var/tmp/*
