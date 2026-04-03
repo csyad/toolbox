@@ -401,7 +401,7 @@ EOF
     # Docker Compose
     local latest=$(curl -s https://api.github.com/repos/docker/compose/releases/latest | jq -r .tag_name)
     local proxy=""
-    [[ "$country" == "CN" ]] && proxy="https://ghproxy.com/"
+    [[ "$country" == "CN" ]] && proxy="https://v6.gh-proxy.org/"
     curl -L "${proxy}https://github.com/docker/compose/releases/download/${latest:-v2.30.0}/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
     chmod +x /usr/local/bin/docker-compose
     log "${GREEN}✅ Docker & Compose 安装完成${RESET}"
