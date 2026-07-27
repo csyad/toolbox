@@ -511,7 +511,7 @@ execute_choice() {
         37) bash <(smart_curl https://raw.githubusercontent.com/sistarry/toolbox/main/PROXY/flux-panel.sh);;
         38) bash <(smart_curl https://raw.githubusercontent.com/sistarry/toolbox/main/PROXY/DDNS.sh) ;;
         39) bash <(smart_curl https://raw.githubusercontent.com/sistarry/toolbox/main/OS/SNIProxyDNSos.sh) ;;
-        40) smart_wget_run "port-traffic-dog.sh" "https://raw.githubusercontent.com/zywe03/realm-xwPF/main/port-traffic-dog.sh" ;;
+        40) bash <(smart_curl https://raw.githubusercontent.com/sistarry/toolbox/main/PROXY/port-traffic-dog.sh) ;;
         41) bash <(smart_curl https://raw.githubusercontent.com/sistarry/toolbox/main/VPS/vnstat.sh) ;;
         42) bash <(smart_curl https://raw.githubusercontent.com/sistarry/toolbox/main/VPS/NodeQuality.sh) ;;
         43) curl -L https://gitlab.com/spiritysdx/za/-/raw/main/ecs.sh -o ecs.sh && chmod +x ecs.sh && bash ecs.sh ;;
