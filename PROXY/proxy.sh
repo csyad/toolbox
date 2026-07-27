@@ -618,12 +618,13 @@ while true; do
     echo -e "${ORANGE}╔══════════════════════╗${RESET}"
     echo -e "${ORANGE}      监控通知类        ${RESET}"
     echo -e "${ORANGE}╚══════════════════════╝${RESET}"
-    echo -e "${YELLOW}[01] IP-Sentinel  送中拉回${RESET}"
-    echo -e "${YELLOW}[02] TrafficCop   流量监控${RESET}"
-    echo -e "${YELLOW}[03] Traffic-dog  端口流量狗${RESET}"
-    echo -e "${YELLOW}[04] S-UITraffic  S-UI流量管理${RESET}"
-    echo -e "${YELLOW}[05] VnstatTG     流量日报${RESET}"
-    echo -e "${YELLOW}[06] DDDNS        动态DNS管理工具${RESET}"
+    echo -e "${YELLOW}[01] IP-Sentinel       送中拉回${RESET}"
+    echo -e "${YELLOW}[02] TrafficCop        流量监控${RESET}"
+    echo -e "${YELLOW}[03] Traffic-dog       端口流量狗${RESET}"
+    echo -e "${YELLOW}[04] S-UITraffic       S-UI流量管理${RESET}"
+    echo -e "${YELLOW}[05] VnstatTG          流量日报${RESET}"
+    echo -e "${YELLOW}[06] DDDNS             动态DNS管理工具${RESET}"
+    echo -e "${YELLOW}[07] trafficcop-lite   流量监控${RESET}"
     echo -e "${GREEN}[0]  返回${RESET}"
     echo -e "${GREEN}[x]  退出${RESET}"
     
@@ -637,6 +638,7 @@ while true; do
         04) bash <(curl -sL $(proxy_url "https://raw.githubusercontent.com/sistarry/toolbox/main/PROXY/S-UITrafficReset.sh")) ;;
         05) bash <(curl -sL $(proxy_url "https://raw.githubusercontent.com/sistarry/toolbox/main/OS/vnstattgos.sh")) ;;
         06) bash <(curl -sL $(proxy_url "https://raw.githubusercontent.com/sistarry/toolbox/main/PROXY/CFDDNSManager.sh")) ;;
+        07) wget -O trafficcop-lite.sh $(proxy_url "https://raw.githubusercontent.com/duya07/trafficcop-lite/main/trafficcop-lite.sh") && chmod +x trafficcop-lite.sh && ./trafficcop-lite.sh --install && sudo ntc ;;
         0) return ;;
         *) echo -e "${RED}无效选项${RESET}"; sleep 1 ;;
     esac
