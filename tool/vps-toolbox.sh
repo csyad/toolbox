@@ -501,9 +501,9 @@ execute_choice() {
         27) bash <(smart_curl https://raw.githubusercontent.com/sistarry/toolbox/main/OS/MicaProxyos.sh) ;;
         28) bash <(smart_curl https://raw.githubusercontent.com/sistarry/toolbox/main/OS/XrayVLESS-Realityos.sh) ;;
         29) bash <(smart_curl https://raw.githubusercontent.com/sistarry/toolbox/main/OS/Snellv6SSos.sh) ;;
-        30) bash <(smart_curl https://raw.githubusercontent.com/sistarry/toolbox/main/OS/SS-2022os.sh) ;;
+        30) bash <(smart_curl https://raw.githubusercontent.com/sistarry/toolbox/main/OS/SB-SS2022os.sh) ;;
         31) bash <(smart_curl https://raw.githubusercontent.com/sistarry/toolbox/main/OS/XrayVLESS-Encryptionos.sh) ;;
-        32) bash <(smart_curl https://raw.githubusercontent.com/sistarry/toolbox/main/OS/Hysteria2os.sh) ;;
+        32) bash <(smart_curl https://raw.githubusercontent.com/sistarry/toolbox/main/OS/SB-Hy2os.sh) ;;
         33) bash <(smart_curl https://raw.githubusercontent.com/sistarry/toolbox/main/PROXY/2go.sh) ;;
         34) bash <(smart_curl https://raw.githubusercontent.com/sistarry/toolbox/main/OS/3xuios.sh) ;;
         35) bash <(smart_curl https://raw.githubusercontent.com/sistarry/toolbox/main/OS/nftablesos.sh) ;;
