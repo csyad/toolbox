@@ -98,14 +98,23 @@ get_public_ip() {
     echo "127.0.0.1" && return 0
 }
 
-# 部署 Pixtale 并初始化默认配置
+# 部署 Pixtale 并初始化默认配置 (支持自定义数据目录及自动赋权)
 install_pixtale() {
     check_dependencies
     
-    mkdir -p "$BASE_DIR"
-    mkdir -p "$BASE_DIR/data"
-
     echo -e "${CYAN}====== 自定义参数配置 ======${RESET}"
+    echo -ne "${YELLOW}请输入数据存放路径 [默认: /opt/pixtale/data]: ${RESET}"
+    read -r custom_data_dir
+    [[ -z "$custom_data_dir" ]] && custom_data_dir="$BASE_DIR/data"
+
+    # 创建基础路径及数据目录
+    mkdir -p "$BASE_DIR"
+    mkdir -p "$custom_data_dir"
+
+    # 赋予数据目录完全读写权限
+    echo -e "${YELLOW}正在为数据目录配置完全读写权限...${RESET}"
+    chmod -R 777 "$custom_data_dir"
+
     echo -ne "${YELLOW}请输入服务访问端口 (宿主机端口) [默认: 8082]: ${RESET}"
     read -r custom_port
     [[ -z "$custom_port" ]] && custom_port="8082"
@@ -134,6 +143,7 @@ PIX_PORT=$custom_port
 PIX_ADMIN=$custom_admin
 PIX_PASSWORD=$custom_password
 JWT_SECRET=$jwt_secret
+PIX_DATA_DIR=$custom_data_dir
 EOF
 
     # 生成 docker-compose.yml 配置文件
@@ -147,7 +157,7 @@ services:
         ports:
             - "\${PIX_PORT:-8082}:8082"
         volumes:
-            - ./data:/app/data
+            - \${PIX_DATA_DIR:-./data}:/app/data
         environment:
             - ADMIN=\${PIX_ADMIN:-admin}
             - PASSWORD=\${PIX_PASSWORD:-123456}
@@ -167,7 +177,8 @@ EOF
     echo -e "${YELLOW}登录用户名   : ${custom_admin}${RESET}"
     echo -e "${YELLOW}登录密码     : ${custom_password}${RESET}"
     echo -e "${YELLOW}JWT 密钥     : ${jwt_secret}${RESET}"
-    echo -e "${YELLOW}配置文件路径 : $ENV_FILE${RESET}"
+    echo -e "${YELLOW}数据存储路径 : ${custom_data_dir}${RESET}"
+    echo -e "${YELLOW}配置文件路径 : ${ENV_FILE}${RESET}"
     echo -e "${GREEN}====================================================${RESET}"
 }
 
@@ -217,14 +228,17 @@ show_info() {
     RAW_IP=$(get_public_ip)
     DETECT_IP=$(format_ip_for_url "$RAW_IP")
     
-    # 尝试从 .env 中读取当前的账号及密钥展示
     local env_admin="N/A"
     local env_pass="N/A"
     local env_jwt="N/A"
+    local env_data_dir="$BASE_DIR/data"
+    
     if [[ -f "$ENV_FILE" ]]; then
         env_admin=$(grep "^PIX_ADMIN=" "$ENV_FILE" | cut -d'=' -f2-)
         env_pass=$(grep "^PIX_PASSWORD=" "$ENV_FILE" | cut -d'=' -f2-)
         env_jwt=$(grep "^JWT_SECRET=" "$ENV_FILE" | cut -d'=' -f2-)
+        local d_dir=$(grep "^PIX_DATA_DIR=" "$ENV_FILE" | cut -d'=' -f2-)
+        [[ -n "$d_dir" ]] && env_data_dir="$d_dir"
     fi
 
     echo -e "${GREEN}========================================${RESET}"
@@ -234,6 +248,7 @@ show_info() {
     echo -e "${YELLOW}登录用户名   : ${env_admin}${RESET}"
     echo -e "${YELLOW}登录密码     : ${env_pass}${RESET}"
     echo -e "${YELLOW}JWT 密钥     : ${env_jwt}${RESET}"
+    echo -e "${YELLOW}数据存储路径 : ${env_data_dir}${RESET}"
     echo -e "${YELLOW}配置文件路径 : ${ENV_FILE}${RESET}"
     echo -e "${GREEN}========================================${RESET}"
 }
@@ -242,7 +257,7 @@ menu() {
     clear
     get_status_info
     echo -e "${GREEN}==============================${RESET}"
-    echo -e "${GREEN}   ◈  Pixtale 管理面板   ◈   ${RESET}"
+    echo -e "${GREEN}   ◈   Pixtale 管理面板  ◈   ${RESET}"
     echo -e "${GREEN}==============================${RESET}"
     echo -e "${GREEN}状态 :${RESET} $status"
     echo -e "${GREEN}端口 :${RESET} ${YELLOW}${webui_port}${RESET}"
