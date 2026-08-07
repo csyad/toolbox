@@ -25,7 +25,7 @@ LOG_FILE="/var/log/snellv6_manager.log"
 SNELL_USER="snellv6"
 
 # Snell v6 默认保底版本号
-SNELL_DEFAULT_VERSION="6.0.0rc"
+SNELL_DEFAULT_VERSION="6.0.0rc2"
 
 # ================== 工具函数 ==================
 create_user() {
@@ -270,7 +270,7 @@ _download_and_install_binary() {
     local tmp=$(mktemp -d)
     local download_url_A="https://dl.nssurge.com/snell/snell-server-v${version}-linux-${sarch}.zip"
     local download_url_B="https://dl.nssurge.com/snell/snell-server-${version}-linux-${sarch}.zip"
-    local download_url_C="https://dl.nssurge.com/snell/snell-server-v6.0.0rc-linux-${sarch}.zip"
+    local download_url_C="https://dl.nssurge.com/snell/snell-server-v6.0.0rc2-linux-${sarch}.zip"
 
     _info "正在通过智能路由下载 Snell v6 核心组件..."
     
@@ -279,12 +279,12 @@ _download_and_install_binary() {
     elif curl -sL -A "Mozilla/5.0 (Windows NT 10.0; Win64; x64)" -o "$tmp/snell.zip" --connect-timeout 15 "$download_url_B" && unzip -t "$tmp/snell.zip" >/dev/null 2>&1; then
         _info "方案 B 下载并校验成功！"
     else
-        _warn "官方链接探测受限，启动回滚，下载 v6.0.0rc 保底包..."
+        _warn "官方链接探测受限，启动回滚，下载 v6.0.0rc2 保底包..."
         if ! curl -sL -A "Mozilla/5.0" -o "$tmp/snell.zip" --connect-timeout 20 "$download_url_C" || ! unzip -t "$tmp/snell.zip" >/dev/null 2>&1; then
             _err "所有下载源均被防火墙拦截，请稍后再试！"
             rm -rf "$tmp"; return 1
         fi
-        version="6.0.0rc"
+        version="6.0.0rc2"
     fi
 
     if unzip -oq "$tmp/snell.zip" -d "$tmp/"; then
