@@ -107,7 +107,7 @@ get_latest_snell_version() {
         grep -oE 'v6\.[0-9]+\.[0-9]+(b[0-9]+)?' | head -n 1 2>/dev/null || echo "")
         
     if [ -z "$latest_version" ]; then
-        latest_version="v6.0.0rc" 
+        latest_version="v6.0.0rc2" 
     fi
     echo "$latest_version"
 }
@@ -149,7 +149,7 @@ download_and_extract_snell() {
 
     if [ "$success" = false ]; then
         echo -e "${YELLOW}动态获取的路径可能已失效，使用标准保底渠道下载...${RESET}"
-        local FALLBACK_URL="https://dl.nssurge.com/snell/snell-server-v6.0.0rc-${URL_ARCH}.zip"
+        local FALLBACK_URL="https://dl.nssurge.com/snell/snell-server-v6.0.0rc2-${URL_ARCH}.zip"
         curl -sL -A "Mozilla/5.0" -o "$tmp/snell.zip" "$FALLBACK_URL" || { error "下载 Snell 核心引擎失败！"; rm -rf "$tmp"; return 1; }
     fi
 
