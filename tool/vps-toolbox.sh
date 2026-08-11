@@ -341,7 +341,7 @@ MAIN_MENU=(
 
 # 二级菜单（编号去掉前导零，显示时格式化为两位数）
 SUB_MENU[1]="1 更新系统|2 系统信息|3 修改root密码|4 root登录管理|5 修改SSH端口|6 修改时区|7 时间同步|8 切换v4V6|9 开放所有端口|10 更换系统源|11 DDdebian13|12 DDwindows|13 NAT鸡重装系统|14 DD飞牛|15 修改语言|16 修改主机名|17 DNS优化|18 一键优化✨|19 VPS重启"
-SUB_MENU[2]="20 代理工具箱|21 FRP管理|22 EasyTier组网|23 ShellCrash|24 CFWARP|25 BBRv3|26 BBR+TCP智能调参|27 Socks5/HTTP|28 VlessReality|29 Snell|30 Shadowsocks|31 VlessEncryption|32 Hysteria2|33 Xray-Argo|34 3X-UI|35 nftables|36 Realm|37 哆啦A梦转发面板|38 DDNS动态域名|39 流媒体DNS解锁|40 流量狗|41 流量监控"
+SUB_MENU[2]="20 代理工具箱|21 FRP管理|22 EasyTier组网|23 ShellCrash|24 CFWARP|25 Tcpfit动态TCP调优|26 BBR+TCP智能调参|27 Socks5/HTTP|28 VlessReality|29 Snell|30 Shadowsocks|31 VlessEncryption|32 Hysteria2|33 Xray-Argo|34 3X-UI|35 nftables|36 Realm|37 哆啦A梦转发面板|38 DDNS动态域名|39 流媒体DNS解锁|40 流量狗|41 流量监控"
 SUB_MENU[3]="42 NodeQuality|43 融合怪测试|44 YABS测试|45 网络质量体检|46 IP质量体检|47 硬盘质量体检|48 TcpQuality|49 简单回程测试|50 完整路由检测|51 流媒体解锁|52 三网测速|53 网络PING/DNS检测|54 检查25端口开放|55 网络工具箱"
 SUB_MENU[4]="56 Docker管理|57 DockerCompose管理|58 DockerCompose备份恢复|59 DockerCompose自动更新"
 SUB_MENU[5]="60 应用管理|61 宝塔面板|62 1Panel面板|63 MCSManager游戏开服|64 CLICD开小鸡|65 OpenClaw|66 HermesAgent"
@@ -496,7 +496,7 @@ execute_choice() {
         22) bash <(smart_curl https://raw.githubusercontent.com/sistarry/toolbox/main/PROXY/EasyTierx.sh) ;;
         23) bash <(smart_curl https://raw.githubusercontent.com/sistarry/toolbox/main/PROXY/ShellCrash.sh) ;;
         24) wget -N https://gitlab.com/fscarmen/warp/-/raw/main/menu.sh && bash menu.sh ;;
-        25) bash <(smart_curl https://raw.githubusercontent.com/sistarry/toolbox/main/OS/BBRv3os.sh) ;;
+        25) bash <(curl -fsSL https://raw.githubusercontent.com/Kylin010/tcpfit/main/tcpfit.sh) ;;
         26) bash <(smart_curl https://raw.githubusercontent.com/sistarry/toolbox/main/PROXY/BBR.sh) ;;
         27) bash <(smart_curl https://raw.githubusercontent.com/sistarry/toolbox/main/OS/MicaProxyos.sh) ;;
         28) bash <(smart_curl https://raw.githubusercontent.com/sistarry/toolbox/main/OS/XrayVLESS-Realityos.sh) ;;
