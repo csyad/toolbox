@@ -341,6 +341,7 @@ while true; do
     echo -e "${YELLOW}[10] AimiliVPN  干净IP出口${RESET}"
     echo -e "${YELLOW}[11] MiGate     代理面板${RESET}"
     echo -e "${YELLOW}[12] 1S-UI      代理面板${RESET}"
+    echo -e "${YELLOW}[13] 2S-UI      代理面板${RESET}"
     echo -e "${GREEN}[0]  返回${RESET}"
     echo -e "${GREEN}[x]  退出${RESET}"
     
@@ -359,6 +360,7 @@ while true; do
         10) bash <(curl -fsSL $(proxy_url "https://raw.githubusercontent.com/baoweise-bot/aimili-vpngate/main/install.sh")) ; pause_return ;;
         11) bash <(curl -fsSL $(proxy_url "https://raw.githubusercontent.com/sistarry/toolbox/main/PROXY/MiGate.sh")) ;;
         12) bash <(curl -Ls https://raw.githubusercontent.com/Hhz0823/1s-ui/main/install.sh) ; pause_return ;;
+        13) bash <(curl -Ls https://raw.githubusercontent.com/shenaba/2s-ui/main/install.sh) ; pause_return ;;
         0) return ;;
         *) echo -e "${RED}无效选项${RESET}"; sleep 1 ;;
     esac
