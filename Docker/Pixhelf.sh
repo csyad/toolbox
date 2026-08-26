@@ -1,6 +1,6 @@
 #!/bin/bash
 # =================================================================
-# Pixhelf Gallery Docker Compose 管理面板
+# Pixhelf Docker Compose 管理面板 
 # =================================================================
 
 # 颜色
@@ -10,22 +10,10 @@ YELLOW="\033[33m"
 CYAN="\033[36m"
 RESET="\033[0m"
 
-CONTAINER_NAME="gallery"
-BASE_DIR="/opt/gallery"
+CONTAINER_NAME="pixhelf"
+BASE_DIR="/opt/pixhelf"
 COMPOSE_FILE="$BASE_DIR/docker-compose.yml"
-ENV_FILE="$BASE_DIR/.env"
-
-# 加载保存的环境变量（如果存在）
-load_env() {
-    if [[ -f "$ENV_FILE" ]]; then
-        # 读取配置
-        PICTURES_DIR=$(grep -E '^PICTURES_DIR=' "$ENV_FILE" | cut -d'=' -f2-)
-        DATA_DIR=$(grep -E '^DATA_DIR=' "$ENV_FILE" | cut -d'=' -f2-)
-    fi
-    # 默认兜底路径
-    PICTURES_DIR="${PICTURES_DIR:-$BASE_DIR/pictures}"
-    DATA_DIR="${DATA_DIR:-$BASE_DIR/data}"
-}
+PIC_DIR="$BASE_DIR/pic"
 
 # 检测依赖
 check_dependencies() {
@@ -45,9 +33,8 @@ format_ip_for_url() {
     fi
 }
 
-# 动态获取容器状态、映射端口
+# 动态获取容器状态
 get_status_info() {
-    load_env
     if ! command -v docker &> /dev/null; then
         status="${RED}未安装 Docker${RESET}"
         img_version="${RED}未安装${RESET}"
@@ -73,7 +60,7 @@ get_status_info() {
         status="${RED}未部署${RESET}"
     fi
 
-    # 2. 如果容器存在，从容器状态中提取信息
+    # 2. 如果容器存在，提取镜像版本与主机端口
     if [ "$(docker ps -aq -f name=^/${CONTAINER_NAME}$)" ]; then
         img_version=$(docker inspect -f '{{.Config.Image}}' "$CONTAINER_NAME" 2>/dev/null)
         [[ -z "$img_version" ]] && img_version="已安装"
@@ -111,16 +98,15 @@ get_public_ip() {
     echo "127.0.0.1" && return 0
 }
 
-# 部署 Gallery
-install_gallery() {
+# 部署服务
+install_app() {
     check_dependencies
     
     mkdir -p "$BASE_DIR"
+    mkdir -p "$PIC_DIR"
 
     echo -e "${CYAN}====== 自定义参数配置 ======${RESET}"
-    
-    # 1. 配置端口
-    echo -ne "${YELLOW}请输入服务访问端口 [默认: 3002]: ${RESET}"
+    echo -ne "${YELLOW}请输入 WebUI 访问端口 (宿主机端口) [默认: 3002]: ${RESET}"
     read -r custom_port
     [[ -z "$custom_port" ]] && custom_port="3002"
     if ! [[ "$custom_port" =~ ^[0-9]+$ ]]; then
@@ -128,67 +114,49 @@ install_gallery() {
         return
     fi
 
-    # 2. 配置图片挂载目录
-    echo -ne "${YELLOW}请输入图片存储目录 [默认: /opt/gallery/pictures]: ${RESET}"
-    read -r input_pictures_dir
-    if [[ -n "$input_pictures_dir" ]]; then
-        PICTURES_DIR="$input_pictures_dir"
-    else
-        PICTURES_DIR="/opt/gallery/pictures"
-    fi
+    echo -ne "${YELLOW}请输入图片存储挂载路径 [默认: $PIC_DIR]: ${RESET}"
+    read -r custom_pic_dir
+    [[ -z "$custom_pic_dir" ]] && custom_pic_dir="$PIC_DIR"
+    mkdir -p "$custom_pic_dir"
 
-    # 3. 配置应用数据存储目录
-    echo -ne "${YELLOW}请输入应用数据目录 [默认: /opt/gallery/data]: ${RESET}"
-    read -r input_data_dir
-    if [[ -n "$input_data_dir" ]]; then
-        DATA_DIR="$input_data_dir"
-    else
-        DATA_DIR="/opt/gallery/data"
-    fi
+    # 赋予项目目录权限
+    chmod -R 755 "$BASE_DIR"
 
-    # 自动创建目录并赋予权限
-    mkdir -p "$PICTURES_DIR" "$DATA_DIR"
-    chmod -R 777 "$PICTURES_DIR" "$DATA_DIR" "$BASE_DIR"
-
-    # 保存配置到 .env 文件
-    cat <<EOF > "$ENV_FILE"
-PICTURES_DIR=${PICTURES_DIR}
-DATA_DIR=${DATA_DIR}
-EOF
-
-    # 生成 docker-compose.yml
+    # 生成符合标准的 docker-compose.yml 配置文件
     echo -e "${YELLOW}正在生成 docker-compose.yml 配置文件...${RESET}"
     cat <<EOF > "$COMPOSE_FILE"
 services:
-  gallery:
+  pixhelf:
     image: eureka6688/pixhelf:latest
     container_name: ${CONTAINER_NAME}
     restart: unless-stopped
     ports:
       - "${custom_port}:3002"
     volumes:
-      - ${PICTURES_DIR}:/pictures:ro
-      - ${DATA_DIR}:/data
+      - "${custom_pic_dir}:/data/pic:ro"
+      - pixhelf-cache:/data/.pixhelf-cache
+
+volumes:
+  pixhelf-cache:
 EOF
 
-    echo -e "${YELLOW}正在通过 Docker Compose 启动 Pixhelf Gallery 服务...${RESET}"
+    echo -e "${YELLOW}正在通过 Docker Compose 启动 Pixhelf 服务...${RESET}"
     cd "$BASE_DIR" && docker compose up -d --force-recreate
 
     RAW_IP=$(get_public_ip)
     DETECT_IP=$(format_ip_for_url "$RAW_IP")
 
     echo -e "${GREEN}====================================================${RESET}"
-    echo -e "${GREEN}          Pixhelf Gallery 部署及启动成功！          ${RESET}"
+    echo -e "${GREEN}          Pixhelf 部署及启动成功！                  ${RESET}"
     echo -e "${GREEN}====================================================${RESET}"
     echo -e "${YELLOW}服务访问地址 : http://${DETECT_IP}:${custom_port}${RESET}"
-    echo -e "${YELLOW}图片存储目录 : $PICTURES_DIR (只读挂载)${RESET}"
-    echo -e "${YELLOW}应用数据目录 : $DATA_DIR${RESET}"
-    echo -e "${CYAN}提示: 请将你需要展示的图片放入上面列出的图片存储目录中。${RESET}"
+    echo -e "${YELLOW}图片只读目录 : ${custom_pic_dir}${RESET}"
+    echo -e "${YELLOW}配置文件路径 : ${COMPOSE_FILE}${RESET}"
     echo -e "${GREEN}====================================================${RESET}"
 }
 
 # 更新镜像
-update_gallery() {
+update_app() {
     if [[ ! -f "$COMPOSE_FILE" ]]; then
         echo -e "${RED}错误: 未检测到配置文件，请先执行选项 1 进行部署！${RESET}"
         return
@@ -199,28 +167,43 @@ update_gallery() {
     echo -e "${GREEN}更新完成！容器已处于最新状态。${RESET}"
 }
 
-# 卸载服务
-uninstall_gallery() {
-    load_env
-    echo -ne "${YELLOW}确定要卸载并删除 Pixhelf Gallery 容器吗？(y/n): ${RESET}"
+# 清理缓存 Volume
+clear_cache() {
+    echo -ne "${YELLOW}确定要清理 Pixhelf 的缓存数据卷 (pixhelf-cache) 吗？(y/n): ${RESET}"
     read -r confirm
-    if [ "$confirm" = "y" ] || [ "$confirm" = "Y" ]; then
+    if [[ "$confirm" == "y" || "$confirm" == "Y" ]]; then
         if [ -f "$COMPOSE_FILE" ]; then
             cd "$BASE_DIR" && docker compose down
-            echo -e "${GREEN}容器已停止并移除。${RESET}"
-            
-            echo -e "${YELLOW}当前配置的目录信息：${RESET}"
-            echo -e "  - 基础配置路径: $BASE_DIR"
-            echo -e "  - 图片存储路径: $PICTURES_DIR"
-            echo -e "  - 应用数据路径: $DATA_DIR"
-            
-            echo -ne "${YELLOW}是否同时彻底删除上述所有图片及应用数据目录？(y/n): ${RESET}"
-            read -r clean_data
-            if [ "$clean_data" = "y" ] || [ "$clean_data" = "Y" ]; then
+            docker volume rm pixhelf_pixhelf-cache 2>/dev/null || docker volume rm $(docker volume ls -q -f name=pixhelf-cache) 2>/dev/null
+            cd "$BASE_DIR" && docker compose up -d
+            echo -e "${GREEN}缓存数据卷已清理并重启服务！${RESET}"
+        else
+            echo -e "${RED}未检测到 Compose 部署文件！${RESET}"
+        fi
+    fi
+}
+
+# 卸载服务
+uninstall_app() {
+    echo -ne "${YELLOW}确定要卸载并删除 Pixhelf 容器吗？(y/n): ${RESET}"
+    read -r confirm
+    if [[ "$confirm" == "y" || "$confirm" == "Y" ]]; then
+        if [ -f "$COMPOSE_FILE" ]; then
+            echo -ne "${YELLOW}是否同时清理缓存数据卷 (pixhelf-cache)？(y/n): ${RESET}"
+            read -r clean_vol
+            if [[ "$clean_vol" == "y" || "$clean_vol" == "Y" ]]; then
+                cd "$BASE_DIR" && docker compose down -v
+                echo -e "${GREEN}容器与缓存 Volume 数据已完全清理。${RESET}"
+            else
+                cd "$BASE_DIR" && docker compose down
+                echo -e "${GREEN}容器已停止并移除 (保留缓存 Volume)。${RESET}"
+            fi
+
+            echo -ne "${YELLOW}是否同时删除项目所在本地目录？(注: 不会删除自定义的图片目录) (y/n): ${RESET}"
+            read -r clean_dir
+            if [[ "$clean_dir" == "y" || "$clean_dir" == "Y" ]]; then
                 rm -rf "$BASE_DIR"
-                rm -rf "$PICTURES_DIR"
-                rm -rf "$DATA_DIR"
-                echo -e "${GREEN}配置、图片及数据目录已彻底清理。${RESET}"
+                echo -e "${GREEN}项目目录已彻底删除。${RESET}"
             fi
         else
             docker rm -f "$CONTAINER_NAME" 2>/dev/null
@@ -229,33 +212,12 @@ uninstall_gallery() {
     fi
 }
 
-start_gallery() {
-    if [[ -f "$COMPOSE_FILE" ]]; then
-        cd "$BASE_DIR" && docker compose start && echo -e "${GREEN}容器已启动${RESET}"
-    else
-        echo -e "${RED}未找到配置文件，请先部署服务。${RESET}"
-    fi
-}
-
-stop_gallery() {
-    if [[ -f "$COMPOSE_FILE" ]]; then
-        cd "$BASE_DIR" && docker compose stop && echo -e "${YELLOW}容器已停止${RESET}"
-    else
-        echo -e "${RED}未找到配置文件，请先部署服务。${RESET}"
-    fi
-}
-
-restart_gallery() {
-    if [[ -f "$COMPOSE_FILE" ]]; then
-        cd "$BASE_DIR" && docker compose restart && echo -e "${GREEN}容器已重启${RESET}"
-    else
-        echo -e "${RED}未找到配置文件，请先部署服务。${RESET}"
-    fi
-}
-
-logs_gallery() { 
+start_app() { cd "$BASE_DIR" && docker compose start && echo -e "${GREEN}容器已启动${RESET}"; }
+stop_app() { cd "$BASE_DIR" && docker compose stop && echo -e "${YELLOW}容器已停止${RESET}"; }
+restart_app() { cd "$BASE_DIR" && docker compose restart && echo -e "${GREEN}容器已重启${RESET}"; }
+logs_app() { 
     echo -e "${CYAN}--- 容器当前运行日志 (按 Ctrl+C 退出查看) ---${RESET}"
-    docker logs -f "$CONTAINER_NAME"
+    docker logs -f "$CONTAINER_NAME"; 
 }
 
 show_info() {
@@ -266,8 +228,8 @@ show_info() {
     echo -e "${YELLOW}当前状态     : $status"
     echo -e "${YELLOW}镜像名称     : ${img_version}${RESET}"
     echo -e "${YELLOW}服务访问地址 : http://${DETECT_IP}:${webui_port}${RESET}"
-    echo -e "${YELLOW}图片存储目录 : ${PICTURES_DIR}${RESET}"
-    echo -e "${YELLOW}应用数据目录 : ${DATA_DIR}${RESET}"
+    echo -e "${YELLOW}图片挂载目录 : ${PIC_DIR}${RESET}"
+    echo -e "${YELLOW}项目目录路径 : ${BASE_DIR}${RESET}"
     echo -e "${GREEN}========================================${RESET}"
 }
 
@@ -275,7 +237,7 @@ menu() {
     clear
     get_status_info
     echo -e "${GREEN}==============================${RESET}"
-    echo -e "${GREEN}    ◈  Pixhelf Gallery  ◈    ${RESET}"
+    echo -e "${GREEN}   ◈ Pixhelf 服务管理面板 ◈  ${RESET}"
     echo -e "${GREEN}==============================${RESET}"
     echo -e "${GREEN}状态 :${RESET} $status"
     echo -e "${GREEN}端口 :${RESET} ${YELLOW}${webui_port}${RESET}"
@@ -293,13 +255,13 @@ menu() {
     echo -ne "${GREEN}请输入选项: ${RESET}"
     read -r choice
     case "$choice" in
-        1) install_gallery ;;
-        2) update_gallery ;;
-        3) uninstall_gallery ;;
-        4) start_gallery ;;
-        5) stop_gallery ;;
-        6) restart_gallery ;;
-        7) logs_gallery ;;
+        1) install_app ;;
+        2) update_app ;;
+        3) uninstall_app ;;
+        4) start_app ;;
+        5) stop_app ;;
+        6) restart_app ;;
+        7) logs_app ;;
         8) show_info ;;
         0) exit 0 ;;
         *) echo -e "${RED}无效选项${RESET}" ;;
