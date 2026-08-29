@@ -1,6 +1,6 @@
 #!/bin/bash
 # =================================================================
-# Komari 监控服务 Docker Compose 管理面板 
+# Lite 监控服务 Docker Compose 管理面板 
 # =================================================================
 
 # 颜色
@@ -10,8 +10,8 @@ YELLOW="\033[33m"
 CYAN="\033[36m"
 RESET="\033[0m"
 
-CONTAINER_NAME="komari"
-BASE_DIR="/opt/komari"
+CONTAINER_NAME="Lite"
+BASE_DIR="/opt/Lite"
 COMPOSE_FILE="$BASE_DIR/docker-compose.yml"
 
 # 检测依赖
@@ -42,8 +42,8 @@ get_status_info() {
         img_version=$(docker inspect -f '{{.Config.Image}}' "$CONTAINER_NAME" 2>/dev/null)
         [[ -z "$img_version" ]] && img_version="已安装"
 
-        webui_port=$(docker inspect -f '{{(index (index .NetworkSettings.Ports "25774/tcp") 0).HostPort}}' "$CONTAINER_NAME" 2>/dev/null)
-        [[ -z "$webui_port" ]] && webui_port="25774"
+        webui_port=$(docker inspect -f '{{(index (index .NetworkSettings.Ports "27777/tcp") 0).HostPort}}' "$CONTAINER_NAME" 2>/dev/null)
+        [[ -z "$webui_port" ]] && webui_port="27777"
         port_display="${webui_port}"
     else
         img_version="${RED}未安装${RESET}"
@@ -88,7 +88,7 @@ get_real_path() {
     fi
 }
 
-# 部署 Komari
+# 部署Lite
 install_utils() {
     check_dependencies
     
@@ -107,9 +107,9 @@ install_utils() {
     chmod -R 777 "$real_path_data"
 
     echo -e "\n${CYAN}====== 3. 网络端口配置 ======${RESET}"
-    echo -ne "${YELLOW}请输入 Komari 访问端口 [默认: 25774]: ${RESET}"
+    echo -ne "${YELLOW}请输入 Lite 访问端口 [默认: 27777]: ${RESET}"
     read -r custom_port
-    [[ -z "$custom_port" ]] && custom_port="25774"
+    [[ -z "$custom_port" ]] && custom_port="27777"
     if ! [[ "$custom_port" =~ ^[0-9]+$ ]]; then
         echo -e "${RED}错误: 端口必须是纯数字！${RESET}"
         return
@@ -119,24 +119,24 @@ install_utils() {
     echo -e "${YELLOW}正在生成规范的 docker-compose.yml 配置文件...${RESET}"
     cat <<EOF > "$COMPOSE_FILE"
 services:
-  komari:
-    image: ghcr.io/nuomiiiii/komari:latest
+  Lite:
+    image: ghcr.io/nuomiiiii/lite:latest
     container_name: ${CONTAINER_NAME}
     restart: unless-stopped
     ports:
-      - "${custom_port}:25774"
+      - "${custom_port}:27777"
     volumes:
       - ${path_data_raw}:/app/data
 EOF
 
-    echo -e "${YELLOW}正在通过 Docker Compose 启动 Komari...${RESET}"
+    echo -e "${YELLOW}正在通过 Docker Compose 启动 Lite...${RESET}"
     cd "$BASE_DIR" && docker compose up -d --force-recreate
 
     echo -e "${YELLOW}等待容器初始化 (约3秒)...${RESET}"
     sleep 3
 
     echo -e "${GREEN}================================${RESET}"
-    echo -e "${GREEN}          Komari 部署成功！       ${RESET}"
+    echo -e "${GREEN}          Lite 部署成功！       ${RESET}"
     echo -e "${GREEN}================================${RESET}"
     echo -e "${YELLOW}访问地址       : http://${DETECT_IP}:${custom_port}${RESET}"
     echo -e "${YELLOW}数据直挂路径   : ${real_path_data}${RESET}"
@@ -144,22 +144,22 @@ EOF
     echo -e "${GREEN}================================${RESET}"
 }
 
-# 更新 Komari 镜像
+# 更新 Lite 镜像
 update_utils() {
     if [[ ! -f "$COMPOSE_FILE" ]]; then
         echo -e "${RED}错误: 未检测到配置文件，请先执行选项 1 进行部署！${RESET}"
         return
     fi
-    echo -e "${YELLOW}正在从远端拉取 Komari 最新镜像...${RESET}"
+    echo -e "${YELLOW}正在从远端拉取 Lite 最新镜像...${RESET}"
     cd "$BASE_DIR" && docker compose pull
     docker compose up -d --remove-orphans
     echo -e "${GREEN}更新完成！容器已处于最新状态。${RESET}"
 }
 
-# 卸载 Komari
+# 卸载 Lite
 uninstall_utils() {
     echo -e "${RED}警告: 卸载如果清理数据，将永久丢失您的监控项配置！${RESET}"
-    echo -ne "${YELLOW}确定要卸载并删除 Komari 容器吗？(y/n): ${RESET}"
+    echo -ne "${YELLOW}确定要卸载并删除 Lite 容器吗？(y/n): ${RESET}"
     read -r confirm
     if [ "$confirm" = "y" ] || [ "$confirm" = "Y" ]; then
         if [ -f "$COMPOSE_FILE" ]; then
@@ -198,7 +198,7 @@ menu() {
     clear
     get_status_info
     echo -e "${GREEN}================================${RESET}"
-    echo -e "${GREEN}     ◈  Komari 管理面板  ◈     ${RESET}"
+    echo -e "${GREEN}      ◈  Lite 管理面板  ◈      ${RESET}"
     echo -e "${GREEN}================================${RESET}"
     echo -e "${GREEN}状态 :${RESET} $status"
     echo -e "${GREEN}端口 :${RESET} ${YELLOW}${port_display}${RESET}"
