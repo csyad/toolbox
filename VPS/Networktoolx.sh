@@ -414,6 +414,19 @@ run_nwssh() {
 }
 
 
+# ==========================================
+# 10) TaierSpeedtest 模块
+# ==========================================
+run_Taier() {
+    clear
+    echo -e "${GREEN}================================${RESET}"
+    echo -e "${GREEN}    ◈   TaierSpeedtest   ◈     ${RESET}"
+    echo -e "${GREEN}================================${RESET}"
+    echo "-------------------------------------"
+    bash <(curl -fsSL https://raw.githubusercontent.com/MiaM1ku/taierspeedtest/main/run.sh)
+    echo "-------------------------------------"
+    read -p "测试完成，按回车返回面板..." dummy
+}
 
 
 # ==========================================
@@ -431,19 +444,20 @@ while true; do
     echo -e "${GREEN}iperf3    :${RESET} $(get_status iperf3)"
     echo -e "${GREEN}MTR       :${RESET} $(get_status mtr)"
     echo -e "${GREEN}================================${RESET}"
-    echo -e " ${GREEN}1) 运行 Speedtest  网速测试${RESET}"
-    echo -e " ${GREEN}2) 运行 NextTrace  路由追踪${RESET}"
-    echo -e " ${GREEN}3) 运行 iperf3     测速${RESET}"
-    echo -e " ${GREEN}4) 运行 MTR        链路诊断${RESET}"
-    echo -e " ${GREEN}5) 运行 Telegram   TG测速${RESET}"
+    echo -e " ${GREEN} 1) 运行 Speedtest  网速测试${RESET}"
+    echo -e " ${GREEN} 2) 运行 NextTrace  路由追踪${RESET}"
+    echo -e " ${GREEN} 3) 运行 iperf3     测速${RESET}"
+    echo -e " ${GREEN} 4) 运行 MTR        链路诊断${RESET}"
+    echo -e " ${GREEN} 5) 运行 Telegram   TG测速${RESET}"
     echo -e "${GREEN}--------------------------------${RESET}"
-    echo -e " ${GREEN}6) 运行 iNetSpeed  测速 (AppleCDN)${RESET}"
-    echo -e " ${GREEN}7) 运行 Cloudflare 测速${RESET}"
+    echo -e " ${GREEN} 6) 运行 iNetSpeed  测速 (AppleCDN)${RESET}"
+    echo -e " ${GREEN} 7) 运行 Cloudflare 测速${RESET}"
     echo -e "${GREEN}--------------------------------${RESET}"
-    echo -e " ${GREEN}8) 运行 TCPBench   全球主流站点TCP延迟${RESET}"
-    echo -e " ${GREEN}9) 运行 nws.sh     测速${RESET}"
+    echo -e " ${GREEN} 8) 运行 TCPBench   全球主流站点TCP延迟${RESET}"
+    echo -e " ${GREEN} 9) 运行 nws.sh     测速${RESET}"
+    echo -e " ${GREEN}10) 运行 Taier      全球网测${RESET}"
     echo -e "${GREEN}--------------------------------${RESET}"
-    echo -e " ${GREEN}0) 退出${RESET}"
+    echo -e " ${GREEN} 0) 退出${RESET}"
     echo -e "${GREEN}================================${RESET}"
     read -p $'\033[32m 请选择: \033[0m' choice
 
@@ -457,6 +471,7 @@ while true; do
         7) run_cloudflare_cli ;;
         8) run_TCPBench ;;
         9) run_nwssh ;;
+        10) run_Taier ;;
         0) exit 0 ;;
         *) echo -e "${RED}输入错误,重新输入${RESET}"; sleep 1 ;;
     esac
