@@ -573,7 +573,7 @@ execute_choice() {
         107) bash <(smart_curl https://raw.githubusercontent.com/sistarry/toolbox/main/VPS/test.sh) ;;
         108) bash <(smart_curl https://raw.githubusercontent.com/sistarry/toolbox/main/Docker/Dockermo.sh) ;;
         109) bash <(smart_curl https://raw.githubusercontent.com/sistarry/toolbox/main/Docker/Dockerclear.sh) ;;
-        110) bash <(smart_curl https://raw.githubusercontent.com/sistarry/toolbox/main/VPS/unagent.sh) ;;
+        110) bash <(smart_curl https://raw.githubusercontent.com/sistarry/toolbox/main/VPS/Agents.sh) ;;
 
         #  自动更新脚本
         77) bash <(smart_curl https://raw.githubusercontent.com/sistarry/toolbox/main/tool/toolboxupdates.sh) ;; 
