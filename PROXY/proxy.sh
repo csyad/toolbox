@@ -389,6 +389,7 @@ while true; do
     echo -e "${YELLOW}[09] FLVX         Gost转发面板${RESET}"
     echo -e "${YELLOW}[10] NodePass     隧道转发面板${RESET}"
     echo -e "${YELLOW}[11] ForwardXPlus 端口转发面板${RESET}"
+    echo -e "${YELLOW}[12] Gost-webui   Gost转发面板${RESET}"
     echo -e "${GREEN}[0]  返回${RESET}"
     echo -e "${GREEN}[x]  退出${RESET}"
     
@@ -406,6 +407,7 @@ while true; do
         09) bash <(curl -sL $(proxy_url "https://raw.githubusercontent.com/sistarry/toolbox/main/PROXY/flvx-panel.sh")) ;;
         10) bash <(curl -sL $(proxy_url "https://raw.githubusercontent.com/sistarry/toolbox/main/PROXY/NodePassDash.sh")) ;;
         11) bash <(curl -sL $(proxy_url "https://raw.githubusercontent.com/sistarry/toolbox/main/PROXY/ForwardXplus.sh")) ;;
+        12) bash <(curl -fsSL https://raw.githubusercontent.com/baiduxc/gost-webui/main/install.sh) ; pause_return ;;
         0) return ;;
         *) echo -e "${RED}无效选项${RESET}"; sleep 1 ;;
     esac
