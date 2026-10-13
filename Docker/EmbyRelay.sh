@@ -166,16 +166,22 @@ update_utils() {
     echo -e "${GREEN}更新完成！容器已处于最新状态。${RESET}"
 }
 
+
 # 卸载 EmbyRelay
 uninstall_utils() {
-    echo -e "${RED}警告: 卸载如果清理数据卷，将永久丢失中转配置和数据库！${RESET}"
     echo -ne "${YELLOW}确定要卸载并删除 EmbyRelay 容器吗？(y/n): ${RESET}"
     read -r confirm
     if [ "$confirm" = "y" ] || [ "$confirm" = "Y" ]; then
         if [ -f "$COMPOSE_FILE" ]; then
-            cd "$BASE_DIR" && docker compose down -v
-            echo -e "${GREEN}容器及数据卷已彻底清除。${RESET}"
-            rm -rf "$BASE_DIR"
+            cd "$BASE_DIR" && docker compose down
+            echo -e "${GREEN}容器已停止并移除。${RESET}"
+            echo -ne "${YELLOW}是否同时删除本地数据卷及整个项目文件夹 (${BASE_DIR})？(y/n): ${RESET}"
+            read -r clean_data
+            if [ "$clean_data" = "y" ] || [ "$clean_data" = "Y" ]; then
+                cd "$BASE_DIR" && docker compose down -v 2>/dev/null
+                rm -rf "$BASE_DIR"
+                echo -e "${GREEN}项目及本地数据卷已彻底清理。${RESET}"
+            fi
         else
             docker rm -f "$CONTAINER_NAME" 2>/dev/null
         fi
