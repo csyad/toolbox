@@ -144,7 +144,7 @@ EOF
     sleep 3
 
     echo -e "${GREEN}================================${RESET}"
-    echo -e "${GREEN}    DailyCheckIn 部署成功！     ${RESET}"
+    echo -e "${GREEN}   DailyCheckIn-plus 部署成功！  ${RESET}"
     echo -e "${GREEN}================================${RESET}"
     echo -e "${YELLOW}访问地址     : http://${DETECT_IP}:${custom_port}${RESET}"
     echo -e "${YELLOW}挂载根目录   : ${custom_base}${RESET}"
