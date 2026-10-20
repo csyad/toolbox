@@ -84,7 +84,7 @@ get_latest_snell_version() {
         grep -oE 'v6\.[0-9]+\.[0-9]+(b[0-9]+)?' | head -n 1 2>/dev/null || echo "")
         
     if [[ -z "$latest_version" ]]; then
-        latest_version="v6.0.0rc2"
+        latest_version="v6.0.0"
     fi
     echo "$latest_version"
 }
@@ -346,8 +346,8 @@ download_and_extract_snell() {
     done
 
     if [ "$success" = false ]; then
-        echo -e "${YELLOW}[提示] 动态版本下载失败，尝试使用已知稳定的 v6.0.0rc2 保底下载...${RESET}"
-        local FALLBACK_URL="https://dl.nssurge.com/snell/snell-server-v6.0.0rc2-${URL_ARCH}.zip"
+        echo -e "${YELLOW}[提示] 动态版本下载失败，尝试使用已知稳定的 v6.0.0 保底下载...${RESET}"
+        local FALLBACK_URL="https://dl.nssurge.com/snell/snell-server-v6.0.0-${URL_ARCH}.zip"
         if wget -O snell.zip "$FALLBACK_URL"; then
             success=true
         fi
