@@ -377,10 +377,10 @@ download_snell_core() {
             wget -O snell.zip "$url_no_v"
             echo "$ver_without_v" > "${SNELL_DIR}/version.txt"
         else
-            echo -e "${RED}[警告] 远程正式版文件未就绪，使用 v6.0.0rc2 进行弹性回滚...${RESET}"
-            local fallback_url="https://dl.nssurge.com/snell/snell-server-v6.0.0rc2-${target_arch}.zip"
+            echo -e "${RED}[警告] 远程正式版文件未就绪，使用 v6.0.0 进行弹性回滚...${RESET}"
+            local fallback_url="https://dl.nssurge.com/snell/snell-server-v6.0.0-${target_arch}.zip"
             wget -O snell.zip "$fallback_url"
-            echo "v6.0.0rc2" > "${SNELL_DIR}/version.txt"
+            echo "v6.0.0" > "${SNELL_DIR}/version.txt"
         fi
     fi
 }
