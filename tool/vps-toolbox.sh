@@ -341,14 +341,14 @@ MAIN_MENU=(
 
 # 二级菜单（编号去掉前导零，显示时格式化为两位数）
 SUB_MENU[1]="1 更新系统|2 系统信息|3 修改root密码|4 root登录管理|5 修改SSH端口|6 修改时区|7 时间同步|8 切换v4V6|9 开放所有端口|10 更换系统源|11 DDdebian13|12 DDwindows|13 NAT鸡重装系统|14 DD飞牛|15 修改语言|16 修改主机名|17 DNS优化|18 一键优化✨|19 VPS重启"
-SUB_MENU[2]="20 代理工具箱|21 FRP管理|22 EasyTier组网|23 ShellCrash|24 CFWARP|25 Tcpfit动态TCP调优|26 BBR+TCP智能调参|27 Socks5/HTTP|28 VlessReality|29 Snell|30 Shadowsocks|31 VlessEncryption|32 Hysteria2|33 Xray-Argo|34 3X-UI|35 nftables|36 Realm|37 哆啦A梦转发面板|38 DDNS动态域名|39 流媒体DNS解锁|40 流量狗|41 流量监控"
+SUB_MENU[2]="20 代理工具箱|21 FRP管理|22 EasyTier组网|23 ShellCrash|24 CFWARP|25 Tcpfit动态TCP调优|26 BBR+TCP智能调参|27 Socks5/HTTP|28 VlessReality|29 Snell|30 Shadowsocks|31 VlessEncryption|32 Hysteria2|33 Xray-Argo|34 AnyTLS|35 nftables|36 Realm|37 哆啦A梦转发面板|38 DDNS动态域名|39 流媒体DNS解锁|40 流量狗|41 流量监控"
 SUB_MENU[3]="42 NodeQuality|43 融合怪测试|44 YABS测试|45 网络质量体检|46 IP质量体检|47 硬盘质量体检|48 TcpQuality|49 简单回程测试|50 完整路由检测|51 流媒体解锁|52 三网测速|53 网络PING/DNS检测|54 检查25端口开放|55 网络工具箱"
 SUB_MENU[4]="56 Docker管理|57 DockerCompose管理|58 DockerCompose备份恢复|59 DockerCompose自动更新"
 SUB_MENU[5]="60 应用管理|61 宝塔面板|62 1Panel面板|63 MCSManager游戏开服|64 CLICD开小鸡|65 OpenClaw|66 HermesAgent"
 SUB_MENU[6]="67 NGINXV4反代✨|68 NGINXV6反代|69 Caddy反代|70 Acme申请证书|71 Lucky反代"
 SUB_MENU[7]="72 系统清理|73 重装系统|74 系统组件|75 开发环境|76 工作区管理|78 防火墙管理|79 Fail2ban|80 系统监控|81 添加SWAP|82 DNS管理|83 定时任务"
 SUB_MENU[8]="84 系统快照|85 系统恢复|86 本地备份|87 Rsync同步|89 Rclone备份|90 Croc文件传输|91 TGBot备份|92 压缩文件|93 解压文件"
-SUB_MENU[9]="100 GProxy加速|101 Cloudflare隧道|102 Aria2|103 yt-dlp|104 机场签到|105 关闭哪吒监控SSH|106 AI检测|107 代理检测|108 容器检测|109 清理镜像卷|110 卸载探针"
+SUB_MENU[9]="100 GProxy加速|101 Cloudflare隧道|102 Aria2|103 yt-dlp|104 机场签到|105 AI检测|106 代理检测|107 容器检测|108 清理镜像卷|110 卸载探针"
 SUB_MENU[10]="77 自动更新|88 更新工具箱|99 卸载工具箱"
 
 # 显示一级菜单
@@ -505,7 +505,7 @@ execute_choice() {
         31) bash <(smart_curl https://raw.githubusercontent.com/sistarry/toolbox/main/OS/XrayVLESS-Encryptionos.sh) ;;
         32) bash <(smart_curl https://raw.githubusercontent.com/sistarry/toolbox/main/OS/SB-Hy2os.sh) ;;
         33) bash <(smart_curl https://raw.githubusercontent.com/sistarry/toolbox/main/PROXY/2go.sh) ;;
-        34) bash <(smart_curl https://raw.githubusercontent.com/sistarry/toolbox/main/OS/3xuios.sh) ;;
+        34) bash <(smart_curl https://raw.githubusercontent.com/sistarry/toolbox/main/OS/AnyTLSos.sh) ;;
         35) bash <(smart_curl https://raw.githubusercontent.com/sistarry/toolbox/main/OS/nftablesos.sh) ;;
         36) smart_pipe_run "https://raw.githubusercontent.com/zywe03/realm-xwPF/main/xwPF.sh" "install" ;;
         37) bash <(smart_curl https://raw.githubusercontent.com/sistarry/toolbox/main/PROXY/flux-panel.sh);;
@@ -568,11 +568,10 @@ execute_choice() {
         102) bash <(smart_curl https://raw.githubusercontent.com/sistarry/toolbox/main/Docker/Aria2.sh) ;;
         103) bash <(smart_curl https://raw.githubusercontent.com/sistarry/toolbox/main/Docker/yt-dlp.sh) ;;
         104) bash <(smart_curl https://raw.githubusercontent.com/sistarry/toolbox/main/toy/JCQD.sh) ;;
-        105) bash <(smart_curl https://raw.githubusercontent.com/sistarry/toolbox/main/VPS/nezhassh.sh) ;;
-		106) bash <(smart_curl https://raw.githubusercontent.com/sistarry/toolbox/main/AI/AIcheck.sh) ;;
-        107) bash <(smart_curl https://raw.githubusercontent.com/sistarry/toolbox/main/VPS/test.sh) ;;
-        108) bash <(smart_curl https://raw.githubusercontent.com/sistarry/toolbox/main/Docker/Dockermo.sh) ;;
-        109) bash <(smart_curl https://raw.githubusercontent.com/sistarry/toolbox/main/Docker/Dockerclear.sh) ;;
+		105) bash <(smart_curl https://raw.githubusercontent.com/sistarry/toolbox/main/AI/AIcheck.sh) ;;
+        106) bash <(smart_curl https://raw.githubusercontent.com/sistarry/toolbox/main/VPS/test.sh) ;;
+        107) bash <(smart_curl https://raw.githubusercontent.com/sistarry/toolbox/main/Docker/Dockermo.sh) ;;
+        108) bash <(smart_curl https://raw.githubusercontent.com/sistarry/toolbox/main/Docker/Dockerclear.sh) ;;
         110) bash <(smart_curl https://raw.githubusercontent.com/sistarry/toolbox/main/VPS/Agents.sh) ;;
 
         #  自动更新脚本
