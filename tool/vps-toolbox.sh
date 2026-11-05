@@ -505,7 +505,7 @@ execute_choice() {
         31) bash <(smart_curl https://raw.githubusercontent.com/sistarry/toolbox/main/OS/XrayVLESS-Encryptionos.sh) ;;
         32) bash <(smart_curl https://raw.githubusercontent.com/sistarry/toolbox/main/OS/SB-Hy2os.sh) ;;
         33) bash <(smart_curl https://raw.githubusercontent.com/sistarry/toolbox/main/PROXY/2go.sh) ;;
-        34) bash <(smart_curl https://raw.githubusercontent.com/sistarry/toolbox/main/OS/AnyTLSos.sh) ;;
+        34) bash <(smart_curl https://raw.githubusercontent.com/sistarry/toolbox/main/OS/SB-AnyTLSos.sh) ;;
         35) bash <(smart_curl https://raw.githubusercontent.com/sistarry/toolbox/main/OS/nftablesos.sh) ;;
         36) smart_pipe_run "https://raw.githubusercontent.com/zywe03/realm-xwPF/main/xwPF.sh" "install" ;;
         37) bash <(smart_curl https://raw.githubusercontent.com/sistarry/toolbox/main/PROXY/flux-panel.sh);;
