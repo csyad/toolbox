@@ -117,7 +117,7 @@ install_gpt_image() {
     echo -e "${YELLOW}正在生成 .env 配置文件...${RESET}"
     cat <<EOF > "$ENV_FILE"
 # Published application image used by Docker Compose.
-GPT_IMAGE_PANEL_IMAGE=ghcr.io/z1rconium/gpt-image-linux:v1.1.0
+GPT_IMAGE_PANEL_IMAGE=ghcr.io/z1rconium/gpt-image-linux:v1.9.3
 
 # -- Default upstream API preset ----------------------------------
 DEFAULT_API_URL=${default_api_url}
@@ -234,7 +234,7 @@ EOF
     cat <<EOF > "$COMPOSE_FILE"
 services:
   web:
-    image: \${GPT_IMAGE_PANEL_IMAGE:-ghcr.io/z1rconium/gpt-image-linux:v1.1.0}
+    image: \${GPT_IMAGE_PANEL_IMAGE:-ghcr.io/z1rconium/gpt-image-linux:v1.9.3}
     container_name: ${CONTAINER_NAME}
     ports:
       - "${custom_port}:9090"
