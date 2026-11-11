@@ -297,7 +297,10 @@ generate_link() {
     hostname=$(hostname -s 2>/dev/null || echo "Xray")
     
     cat > "${LINK_DIR}/xray_${instance}.txt" <<EOF
+V2rayN 订阅链接:
 vless://${uuid}@${display_ip}:${port}?flow=xtls-rprx-vision&encryption=none&type=tcp&security=reality&sni=${domain}&fp=chrome&pbk=${pubkey}&sid=${shortid}&spx=%2F#${hostname}-${instance}-Reality
+Surge 专属配置格式:
+${hostname}-${instance}-Reality = vless, ${display_ip},${port}, username= ${uuid}, flow=xtls-rprx-vision, sni= ${domain}, reality-public-key= ${pubkey}, reality-short-id= ${shortid}
 EOF
 }
 
