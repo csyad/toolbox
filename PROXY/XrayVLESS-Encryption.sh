@@ -29,7 +29,7 @@ export BLUE='\033[0;34m'
 export CYAN='\033[0;36m'
 
 # 降级备用版本
-readonly BACKUP_VERSION="26.3.27"
+readonly BACKUP_VERSION="26.11.9"
 
 # 动态临时目录
 TMP_DIR=$(mktemp -d -t xray.XXXXXX)
