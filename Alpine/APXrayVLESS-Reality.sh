@@ -29,7 +29,7 @@ export BLUE='\033[0;34m'
 export CYAN='\033[0;36m'
 
 # 降级备用版本
-readonly BACKUP_VERSION="26.3.27"
+readonly BACKUP_VERSION="26.11.9"
 
 # 动态临时目录
 TMP_DIR=$(mktemp -d -t xray.XXXXXX)
@@ -309,7 +309,10 @@ generate_link() {
     hostname=$(hostname -s 2>/dev/null | sed 's/ /_/g' || echo "Xray")
     
     cat > "${LINK_DIR}/xray_${instance}.txt" <<EOF
+V2rayN 订阅链接:
 vless://${uuid}@${display_ip}:${port}?flow=xtls-rprx-vision&encryption=none&type=tcp&security=reality&sni=${domain}&fp=chrome&pbk=${pubkey}&sid=${shortid}#${hostname}-${instance}-Reality
+Surge 专属配置格式:
+${hostname}-${instance}-Reality = vless, ${display_ip},${port}, username= ${uuid}, flow=xtls-rprx-vision, sni= ${domain}, reality-public-key= ${pubkey}, reality-short-id= ${shortid}
 EOF
 }
 
