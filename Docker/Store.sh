@@ -367,6 +367,7 @@ declare -A apps=(
     [15,26]="Code Whale         CLI工具"
     [15,27]="Claude Code        CLI工具"
     [15,28]="Codex CLI          CLI工具"
+    [15,29]="TG4OpenCodeGo      OpenCodeGo用量查询和告警"
 )
 
 # ================== 二级菜单命令 ==================
@@ -651,6 +652,7 @@ declare -A commands=(
     [15,26]='bash <(curl -fsSL https://raw.githubusercontent.com/sistarry/toolbox/main/AI/CodeWhale.sh)'
     [15,27]='bash <(curl -fsSL https://raw.githubusercontent.com/sistarry/toolbox/main/AI/ClaudeCode.sh)'
     [15,28]='bash <(curl -fsSL https://raw.githubusercontent.com/sistarry/toolbox/main/AI/CodexCLI.sh)'
+    [15,29]='bash <(curl -fsSL https://raw.githubusercontent.com/sistarry/toolbox/main/AI/TG4OpenCodeGo.sh)'
 
 )
 
