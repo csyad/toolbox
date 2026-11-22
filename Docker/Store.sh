@@ -238,6 +238,7 @@ declare -A apps=(
     [7,28]="bbs1org          轻量级论坛"
     [7,29]="daily-checkin    每日签到面板"
     [7,30]="dailycheckinplus 每日签到面板"
+    [7,31]="simple-blog      简单博客"
     [8,1]="Windows          DockerWin"
     [8,2]="Firefox          Docker浏览器"
     [8,3]="Chrom            Docker浏览器"
@@ -307,6 +308,7 @@ declare -A apps=(
     [10,25]="Foxel          图床项目"
     [10,26]="LskyPro2       图床项目"
     [10,27]="Picloom        图床项目"
+    [10,28]="mifunstorage   米饭云盘"
     [11,1]="SaveAnyBot    TG转存文件"
     [11,2]="TeleBoxTG     TG人形机器人"
     [11,3]="LangBot       AI即时通信机器人"
@@ -368,6 +370,7 @@ declare -A apps=(
     [15,27]="Claude Code        CLI工具"
     [15,28]="Codex CLI          CLI工具"
     [15,29]="TG4OpenCodeGo      OpenCodeGo用量查询和告警"
+    [15,30]="ClaudeGate         AI模型聚合网关"
 )
 
 # ================== 二级菜单命令 ==================
@@ -523,6 +526,7 @@ declare -A commands=(
     [7,28]='bash <(curl -sL https://raw.githubusercontent.com/sistarry/toolbox/main/Panel/BBS1ORG.sh)'
     [7,29]='bash <(curl -sL https://raw.githubusercontent.com/sistarry/toolbox/main/Docker/DailyCheck.sh)'
     [7,30]='bash <(curl -sL https://raw.githubusercontent.com/sistarry/toolbox/main/Docker/DailyCheckIn-Plus.sh)'
+    [7,31]='bash <(curl -sL https://raw.githubusercontent.com/sistarry/toolbox/main/Panel/simple-blog.sh)'
     [8,1]='bash <(curl -sL https://raw.githubusercontent.com/sistarry/toolbox/main/Docker/DockerWindows.sh)'
     [8,2]='bash <(curl -sL https://raw.githubusercontent.com/sistarry/toolbox/main/Docker/FirefoxJ.sh)'
     [8,3]='bash <(curl -sL https://raw.githubusercontent.com/sistarry/toolbox/main/Docker/Chromium.sh)'
@@ -592,6 +596,7 @@ declare -A commands=(
     [10,25]='bash <(curl -sL https://raw.githubusercontent.com/sistarry/toolbox/main/Docker/Foxel.sh)'
     [10,26]='bash <(curl -sL https://raw.githubusercontent.com/sistarry/toolbox/main/Docker/LskyPro2.sh)'
     [10,27]='bash <(curl -sL https://raw.githubusercontent.com/sistarry/toolbox/main/Docker/Picloom.sh)'
+    [10,28]='bash <(curl -sL https://raw.githubusercontent.com/sistarry/toolbox/main/Docker/tgfs.sh)'
     [11,1]='bash <(curl -sL https://raw.githubusercontent.com/sistarry/toolbox/main/Docker/SaveAnyBot.sh)'
     [11,2]='bash <(curl -sL https://raw.githubusercontent.com/sistarry/toolbox/main/Docker/TeleBox.sh)'
     [11,3]='bash <(curl -sL https://raw.githubusercontent.com/sistarry/toolbox/main/Docker/LangBot.sh)'
@@ -653,6 +658,7 @@ declare -A commands=(
     [15,27]='bash <(curl -fsSL https://raw.githubusercontent.com/sistarry/toolbox/main/AI/ClaudeCode.sh)'
     [15,28]='bash <(curl -fsSL https://raw.githubusercontent.com/sistarry/toolbox/main/AI/CodexCLI.sh)'
     [15,29]='bash <(curl -fsSL https://raw.githubusercontent.com/sistarry/toolbox/main/AI/TG4OpenCodeGo.sh)'
+    [15,30]='bash <(curl -fsSL https://raw.githubusercontent.com/sistarry/toolbox/main/AI/ClaudeGate.sh)'
 
 )
 
