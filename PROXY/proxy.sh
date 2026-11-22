@@ -347,6 +347,7 @@ while true; do
     echo -e "${YELLOW}[14] 3m-UI      代理面板${RESET}"
     echo -e "${YELLOW}[15] Nexora     代理面板${RESET}"
     echo -e "${YELLOW}[16] M-UI       代理面板${RESET}"
+    echo -e "${YELLOW}[17] mihob      代理面板${RESET}"
     echo -e "${GREEN}[0]  返回${RESET}"
     echo -e "${GREEN}[x]  退出${RESET}"
     
@@ -369,6 +370,7 @@ while true; do
         14) bash <(curl -fsSL https://raw.githubusercontent.com/kazeyukiro/3m-ui/main/scripts/install.sh) ; pause_return ;;
         15) bash <(curl -fsSL $(proxy_url "https://raw.githubusercontent.com/sistarry/toolbox/main/PROXY/Nexora-VPN.sh")) ;;
         16) bash <(curl -Ls https://raw.githubusercontent.com/RomanovCaesar/m-ui/main/install.sh) ; pause_return ;;
+        17) bash <(curl -fsSL $(proxy_url "https://raw.githubusercontent.com/sistarry/toolbox/main/PROXY/mihob.sh")) ;;
         0) return ;;
         *) echo -e "${RED}无效选项${RESET}"; sleep 1 ;;
     esac
